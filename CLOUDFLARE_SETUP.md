@@ -8,13 +8,25 @@ The `wrangler.toml` file was causing validation errors. It has been removed to p
 
 ## ✅ Required Cloudflare Pages Dashboard Settings
 
-### CRITICAL: Update these settings in your Cloudflare Pages project:
+### 🚨 CRITICAL: Update these settings in your Cloudflare Pages project:
 
-1. **Framework preset**: `Vite` (or `None`)
+1. **Framework preset**: `Vite`
 2. **Build command**: `npm run build`
-3. **Build output directory**: `dist`
+3. **🎯 Build output directory**: `dist` ⭐ **MOST IMPORTANT - SET THIS TO `dist`!**
 4. **Root directory**: Leave empty (use repository root)
 5. **Node.js version**: `18` (auto-detected from .nvmrc)
+
+## ⚠️ WHY BUILD OUTPUT DIRECTORY = `dist` IS ESSENTIAL:
+
+**❌ Current Problem (deploying from repository root):**
+- Browser loads `/index.tsx` (raw TypeScript) → MIME type error
+- No build process runs → raw source files served
+- `application/octet-stream` MIME type → module loading fails
+
+**✅ Solution (deploying from `dist` directory):**
+- Browser loads `/assets/index-[hash].js` (compiled JavaScript)
+- Build process runs → optimized production files
+- Proper `application/javascript` MIME type → modules load correctly
 
 ### Steps to Fix:
 1. Go to your Cloudflare Pages project dashboard
