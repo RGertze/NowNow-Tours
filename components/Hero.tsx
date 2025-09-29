@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { HERO_IMAGES } from '../constants';
+import TourPlanningForm from './TourPlanningForm';
 
 const Hero: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isPlanningFormOpen, setIsPlanningFormOpen] = useState(false);
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -49,7 +51,7 @@ const Hero: React.FC = () => {
             Explore Our Tours
           </button>
           <button 
-            onClick={() => scrollToSection('contact')} 
+            onClick={() => setIsPlanningFormOpen(true)} 
             className="btn-secondary shadow-xl"
           >
             Plan Your Journey
@@ -63,6 +65,11 @@ const Hero: React.FC = () => {
           </div>
         </div>
       </div>
+      
+      <TourPlanningForm 
+        isOpen={isPlanningFormOpen} 
+        onClose={() => setIsPlanningFormOpen(false)} 
+      />
     </section>
   );
 };

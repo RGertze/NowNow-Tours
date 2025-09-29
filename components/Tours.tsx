@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { FaWhatsapp } from 'react-icons/fa';
 import { TOURS_DATA } from '../constants';
 import type { Tour } from '../types';
+import TourPlanningForm from './TourPlanningForm';
 
 const TourCard: React.FC<{ tour: Tour }> = ({ tour }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -110,6 +111,8 @@ const TourCard: React.FC<{ tour: Tour }> = ({ tour }) => {
 };
 
 const Tours: React.FC = () => {
+  const [isPlanningFormOpen, setIsPlanningFormOpen] = useState(false);
+
   return (
     <section className="py-24 bg-gradient-to-br from-earth-50 to-safari-100 relative overflow-hidden">
       {/* Decorative background elements */}
@@ -137,11 +140,19 @@ const Tours: React.FC = () => {
           <p className="text-baobab-600 mb-6">
             Can't find what you're looking for? We create custom itineraries too!
           </p>
-          <button className="btn-primary">
+          <button 
+            onClick={() => setIsPlanningFormOpen(true)}
+            className="btn-primary"
+          >
             Request Custom Tour
           </button>
         </div>
       </div>
+      
+      <TourPlanningForm 
+        isOpen={isPlanningFormOpen} 
+        onClose={() => setIsPlanningFormOpen(false)} 
+      />
     </section>
   );
 };
