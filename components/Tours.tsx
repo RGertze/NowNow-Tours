@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { FaWhatsapp } from 'react-icons/fa';
 import { TOURS_DATA } from '../constants';
 import type { Tour } from '../types';
 
@@ -73,7 +74,7 @@ const TourCard: React.FC<{ tour: Tour }> = ({ tour }) => {
         </div>
         <p className="text-lg font-bold text-stone-800 mb-4">{tour.priceRange}</p>
         <a href="https://wa.me/1234567890" target="_blank" rel="noopener noreferrer" className="mt-auto w-full text-center bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded-full transition-all duration-300 flex items-center justify-center gap-2 transform hover:scale-105">
-          <i className="fab fa-whatsapp"></i>
+          <FaWhatsapp />
           Contact on WhatsApp
         </a>
       </div>

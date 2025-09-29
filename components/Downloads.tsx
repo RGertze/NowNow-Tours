@@ -1,11 +1,12 @@
 import React from 'react';
+import { FaFilePdf, FaDownload } from 'react-icons/fa';
 import { DOWNLOADS_DATA } from '../constants';
 import type { DownloadableDocument } from '../types';
 
 const DownloadCard: React.FC<{ doc: DownloadableDocument }> = ({ doc }) => (
   <div className="bg-white rounded-lg shadow-lg p-6 flex flex-col items-start transform hover:-translate-y-1 transition-transform duration-300">
     <div className="flex items-center mb-4 w-full">
-        <i className="fas fa-file-pdf text-4xl text-red-500 mr-4"></i>
+        <FaFilePdf className="text-4xl text-red-500 mr-4" />
         <h3 className="text-xl font-bold text-sky-800 flex-1">{doc.title}</h3>
     </div>
     <p className="text-stone-600 mb-6 flex-grow">{doc.description}</p>
@@ -16,7 +17,7 @@ const DownloadCard: React.FC<{ doc: DownloadableDocument }> = ({ doc }) => (
       rel="noopener noreferrer"
       className="mt-auto w-full text-center bg-orange-500 hover:bg-orange-600 text-white font-bold py-2 px-4 rounded-full transition-all duration-300 flex items-center justify-center gap-2 transform hover:scale-105"
     >
-      <i className="fas fa-download"></i>
+      <FaDownload />
       Download PDF
     </a>
   </div>

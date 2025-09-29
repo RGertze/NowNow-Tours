@@ -1,5 +1,6 @@
 
 import React, { useState } from 'react';
+import { FaPhone, FaEnvelope, FaWhatsapp } from 'react-icons/fa';
 
 const Contact: React.FC = () => {
   const [submitted, setSubmitted] = useState(false);
@@ -54,10 +55,10 @@ const Contact: React.FC = () => {
             <div className="bg-white p-8 rounded-lg shadow-lg mb-8">
                 <h3 className="text-2xl font-bold text-sky-800 mb-4">Contact Information</h3>
                 <div className="space-y-4 text-stone-700">
-                    <p><i className="fas fa-phone mr-3 text-orange-500"></i> +1 (234) 567-890</p>
-                    <p><i className="fas fa-envelope mr-3 text-orange-500"></i> contact@nownowtours.com</p>
+                    <p><FaPhone className="inline mr-3 text-orange-500" /> +1 (234) 567-890</p>
+                    <p><FaEnvelope className="inline mr-3 text-orange-500" /> contact@nownowtours.com</p>
                     <a href="https://wa.me/1234567890" target="_blank" rel="noopener noreferrer" className="inline-block text-green-600 font-bold hover:underline">
-                        <i className="fab fa-whatsapp mr-2"></i> Chat with us on WhatsApp
+                        <FaWhatsapp className="inline mr-2" /> Chat with us on WhatsApp
                     </a>
                 </div>
             </div>
