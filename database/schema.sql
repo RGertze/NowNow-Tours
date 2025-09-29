@@ -99,6 +99,23 @@ CREATE TABLE IF NOT EXISTS admin_users (
     created_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
+-- Custom document requests table
+CREATE TABLE IF NOT EXISTS custom_document_requests (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    request_id TEXT UNIQUE NOT NULL,
+    document_type TEXT NOT NULL, -- detailed-itinerary, travel-guide, budget-breakdown, etc.
+    destination TEXT,
+    travel_dates TEXT,
+    group_size TEXT,
+    specific_requests TEXT,
+    contact_name TEXT NOT NULL,
+    contact_email TEXT NOT NULL,
+    contact_phone TEXT,
+    status TEXT DEFAULT 'pending', -- pending, in-progress, completed, sent
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    completed_at DATETIME
+);
+
 -- Insert initial tour data
 INSERT OR REPLACE INTO tours (id, name, destination, description, base_price, duration_days, max_capacity, images, itinerary) VALUES
 (1, 'Zanzibar Getaway', 'Tanzania', 'Relax on the pristine white-sand beaches of the Spice Islands. Explore historic Stone Town and swim with turtles.', 1200.00, 5, 20, 

@@ -1,7 +1,8 @@
 
-import React from 'react';
+import React, { useState } from 'react';
 import { TESTIMONIALS_DATA } from '../constants';
 import type { Testimonial } from '../types';
+import TravelPlanningWizard from './TravelPlanningWizard';
 
 const TestimonialCard: React.FC<{ testimonial: Testimonial }> = ({ testimonial }) => (
   <div className="bg-white/90 backdrop-blur-sm p-8 rounded-2xl shadow-xl text-center relative card-hover border border-safari-100">
@@ -35,6 +36,8 @@ const TestimonialCard: React.FC<{ testimonial: Testimonial }> = ({ testimonial }
 
 
 const Testimonials: React.FC = () => {
+  const [isPlanningWizardOpen, setIsPlanningWizardOpen] = useState(false);
+
   return (
     <section className="py-24 bg-gradient-to-br from-sunset-50 to-safari-50 relative overflow-hidden">
       {/* Background pattern */}
@@ -69,12 +72,20 @@ const Testimonials: React.FC = () => {
             <p className="text-baobab-700 mb-6">
               Ready to create your own unforgettable African adventure?
             </p>
-            <button className="btn-primary">
+            <button 
+              onClick={() => setIsPlanningWizardOpen(true)}
+              className="btn-primary"
+            >
               Start Planning Today
             </button>
           </div>
         </div>
       </div>
+      
+      <TravelPlanningWizard 
+        isOpen={isPlanningWizardOpen} 
+        onClose={() => setIsPlanningWizardOpen(false)} 
+      />
     </section>
   );
 };

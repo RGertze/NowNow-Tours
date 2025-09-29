@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FaFilePdf, FaDownload } from 'react-icons/fa';
 import { DOWNLOADS_DATA } from '../constants';
 import type { DownloadableDocument } from '../types';
+import CustomDocumentRequest from './CustomDocumentRequest';
 
 const DownloadCard: React.FC<{ doc: DownloadableDocument }> = ({ doc }) => (
   <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-xl p-6 flex flex-col items-start card-hover border border-safari-100 relative overflow-hidden">
@@ -41,6 +42,8 @@ const DownloadCard: React.FC<{ doc: DownloadableDocument }> = ({ doc }) => (
 
 
 const Downloads: React.FC = () => {
+  const [isCustomRequestOpen, setIsCustomRequestOpen] = useState(false);
+
   return (
     <section className="py-24 bg-gradient-to-br from-white to-safari-50 relative overflow-hidden">
       {/* Decorative elements */}
@@ -71,12 +74,20 @@ const Downloads: React.FC = () => {
             <p className="text-baobab-700 mb-6">
               Can't find the document you're looking for? Let us know and we'll create it for you.
             </p>
-            <button className="btn-primary">
+            <button 
+              onClick={() => setIsCustomRequestOpen(true)}
+              className="btn-primary"
+            >
               Request Custom Document
             </button>
           </div>
         </div>
       </div>
+      
+      <CustomDocumentRequest 
+        isOpen={isCustomRequestOpen} 
+        onClose={() => setIsCustomRequestOpen(false)} 
+      />
     </section>
   );
 };

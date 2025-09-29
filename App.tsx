@@ -9,6 +9,7 @@ import Gallery from './components/Gallery';
 import Contact from './components/Contact';
 import Downloads from './components/Downloads';
 import Footer from './components/Footer';
+import AIChat from './components/AIChat';
 
 const App: React.FC = () => {
   return (
@@ -34,6 +35,7 @@ const App: React.FC = () => {
         </div>
       </main>
       <Footer />
+      <AIChat />
     </div>
   );
 };
