@@ -3,15 +3,24 @@
 ## Issue Diagnosis
 The MIME type errors are occurring because Cloudflare Pages is not running the build process and is deploying raw source files instead of the built `dist` folder.
 
-## Required Cloudflare Pages Settings
+## ❌ Problem: wrangler.toml Conflicts
+The `wrangler.toml` file was causing validation errors. It has been removed to prevent conflicts with Cloudflare Pages auto-detection.
 
-### In your Cloudflare Pages dashboard, ensure these settings:
+## ✅ Required Cloudflare Pages Dashboard Settings
 
-1. **Framework preset**: `None` or `Vite`
+### CRITICAL: Update these settings in your Cloudflare Pages project:
+
+1. **Framework preset**: `Vite` (or `None`)
 2. **Build command**: `npm run build`
 3. **Build output directory**: `dist`
-4. **Root directory**: Leave empty (use root)
-5. **Node.js version**: `18` (specified in .nvmrc)
+4. **Root directory**: Leave empty (use repository root)
+5. **Node.js version**: `18` (auto-detected from .nvmrc)
+
+### Steps to Fix:
+1. Go to your Cloudflare Pages project dashboard
+2. Navigate to Settings > Build & Deployments  
+3. Update the build settings as specified above
+4. Trigger a new deployment
 
 ### Environment Variables (if needed)
 - No environment variables required for basic functionality

@@ -26,5 +26,9 @@
     "tailwindcss": "^3.4.17",
     "typescript": "~5.8.2",
     "vite": "^6.2.0"
+  },
+  "cloudflare": {
+    "build_command": "npm run build",
+    "build_output_dir": "dist"
   }
 }
