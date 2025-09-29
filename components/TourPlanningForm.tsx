@@ -135,11 +135,32 @@ const TourPlanningForm: React.FC<TourPlanningFormProps> = ({ isOpen, onClose }) 
     }
   };
 
-  const handleSubmit = () => {
-    // Here you would typically send the data to your backend
-    console.log('Tour planning data:', formData);
-    alert('Thank you! We\'ll contact you within 24 hours with a personalized tour proposal.');
-    onClose();
+  const handleSubmit = async () => {
+    try {
+      const response = await fetch('/api/tour-booking', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        alert(`Thank you! Your booking request has been submitted successfully. 
+               Booking Reference: ${result.bookingReference}
+               Estimated Price: $${result.estimatedPrice.toLocaleString()}
+               
+               We'll contact you within 24 hours with a personalized tour proposal.`);
+        onClose();
+      } else {
+        alert(`Error: ${result.error}`);
+      }
+    } catch (error) {
+      console.error('Booking submission error:', error);
+      alert('Sorry, there was an error submitting your booking. Please try again or contact us directly.');
+    }
   };
 
   const renderStep = () => {
@@ -306,7 +327,7 @@ const TourPlanningForm: React.FC<TourPlanningFormProps> = ({ isOpen, onClose }) 
                       { value: 'luxury', label: 'Luxury', desc: '4-star hotels' },
                       { value: 'premium', label: 'Premium', desc: '5-star resorts' }
                     ].map((option) => (
-                      <label key={option.value} className="flex items-center space-x-3 p-3 border rounded-lg cursor-pointer hover:bg-gray-50">
+                      <label key={option.value} className="flex items-center space-x-3 p-3 border rounded-lg cursor-pointer hover:bg-gray-50 bg-white">
                         <input
                           type="radio"
                           name="accommodation"
@@ -316,7 +337,7 @@ const TourPlanningForm: React.FC<TourPlanningFormProps> = ({ isOpen, onClose }) 
                           className="text-orange-600"
                         />
                         <div>
-                          <div className="font-medium">{option.label}</div>
+                          <div className="font-medium text-gray-800">{option.label}</div>
                           <div className="text-sm text-gray-600">{option.desc}</div>
                         </div>
                       </label>
@@ -334,7 +355,7 @@ const TourPlanningForm: React.FC<TourPlanningFormProps> = ({ isOpen, onClose }) 
                       { value: 'medium', label: 'Standard', desc: '$1,500 - $3,000' },
                       { value: 'high', label: 'Luxury', desc: '$3,000+' }
                     ].map((option) => (
-                      <label key={option.value} className="flex items-center space-x-3 p-3 border rounded-lg cursor-pointer hover:bg-gray-50">
+                      <label key={option.value} className="flex items-center space-x-3 p-3 border rounded-lg cursor-pointer hover:bg-gray-50 bg-white">
                         <input
                           type="radio"
                           name="budget"
@@ -344,7 +365,7 @@ const TourPlanningForm: React.FC<TourPlanningFormProps> = ({ isOpen, onClose }) 
                           className="text-orange-600"
                         />
                         <div>
-                          <div className="font-medium">{option.label}</div>
+                          <div className="font-medium text-gray-800">{option.label}</div>
                           <div className="text-sm text-gray-600">{option.desc}</div>
                         </div>
                       </label>
@@ -436,7 +457,7 @@ const TourPlanningForm: React.FC<TourPlanningFormProps> = ({ isOpen, onClose }) 
                       return dest ? (
                         <div key={destId} className="flex items-center space-x-2">
                           <MapPin className="w-4 h-4 text-orange-600" />
-                          <span>{dest.name}, {dest.country}</span>
+                          <span className="text-gray-800">{dest.name}, {dest.country}</span>
                         </div>
                       ) : null;
                     })}
@@ -446,19 +467,19 @@ const TourPlanningForm: React.FC<TourPlanningFormProps> = ({ isOpen, onClose }) 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div>
                     <h4 className="font-semibold text-gray-800">Travel Dates:</h4>
-                    <p>{formData.startDate} to {formData.endDate}</p>
+                    <p className="text-gray-700">{formData.startDate} to {formData.endDate}</p>
                   </div>
                   <div>
                     <h4 className="font-semibold text-gray-800">Travelers:</h4>
-                    <p>{formData.adults} Adults, {formData.children} Children</p>
+                    <p className="text-gray-700">{formData.adults} Adults, {formData.children} Children</p>
                   </div>
                   <div>
                     <h4 className="font-semibold text-gray-800">Accommodation:</h4>
-                    <p className="capitalize">{formData.accommodationType}</p>
+                    <p className="capitalize text-gray-700">{formData.accommodationType}</p>
                   </div>
                   <div>
                     <h4 className="font-semibold text-gray-800">Budget Range:</h4>
-                    <p className="capitalize">{formData.budgetRange}</p>
+                    <p className="capitalize text-gray-700">{formData.budgetRange}</p>
                   </div>
                 </div>
 
@@ -481,21 +502,22 @@ const TourPlanningForm: React.FC<TourPlanningFormProps> = ({ isOpen, onClose }) 
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto">
-        <div className="flex justify-between items-center p-6 border-b">
+      <div className="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto shadow-2xl">
+        <div className="flex justify-between items-center p-6 border-b bg-white">
           <div>
             <h2 className="text-2xl font-bold text-gray-800">Plan Your Journey</h2>
             <p className="text-gray-600">Step {currentStep} of {totalSteps}</p>
           </div>
           <button
             onClick={onClose}
-            className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+            className="p-2 hover:bg-gray-100 rounded-full transition-colors text-gray-600 hover:text-gray-800"
+            aria-label="Close form"
           >
             <X className="w-6 h-6" />
           </button>
         </div>
 
-        <div className="p-6">
+        <div className="p-6 bg-white">
           {/* Progress Bar */}
           <div className="mb-8">
             <div className="flex justify-between mb-2">

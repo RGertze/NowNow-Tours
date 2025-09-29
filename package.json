@@ -11,7 +11,11 @@
     "build": "vite build && echo '✅ Build completed successfully'",
     "preview": "vite preview",
     "build:debug": "vite build --mode development",
-    "clean": "rm -rf dist && npm run build"
+    "clean": "rm -rf dist && npm run build",
+    "db:create": "wrangler d1 create nownow-tours-db",
+    "db:setup": "wrangler d1 execute nownow-tours-db --file=./database/schema.sql",
+    "db:query": "wrangler d1 execute nownow-tours-db --command",
+    "deploy": "npm run build && wrangler pages deploy dist"
   },
   "dependencies": {
     "lucide-react": "^0.544.0",

@@ -5,10 +5,36 @@ import { FaPhone, FaEnvelope, FaWhatsapp } from 'react-icons/fa';
 const Contact: React.FC = () => {
   const [submitted, setSubmitted] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // In a real app, you'd handle form submission here (e.g., API call)
-    setSubmitted(true);
+    
+    const formData = new FormData(e.target as HTMLFormElement);
+    const contactData = {
+      name: formData.get('name') as string,
+      email: formData.get('email') as string,
+      message: formData.get('message') as string,
+    };
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(contactData),
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        setSubmitted(true);
+      } else {
+        alert(`Error: ${result.error}`);
+      }
+    } catch (error) {
+      console.error('Contact form error:', error);
+      alert('Sorry, there was an error sending your message. Please try again or contact us directly.');
+    }
   };
 
   return (
@@ -130,16 +156,28 @@ const Contact: React.FC = () => {
               </div>
             </div>
             
-            <div className="bg-gradient-to-br from-safari-200 to-earth-200 h-64 rounded-2xl shadow-xl flex items-center justify-center text-baobab-600 border border-safari-100 relative overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-br from-safari-300/20 to-earth-300/20"></div>
-              <div className="relative z-10 text-center">
-                <div className="w-16 h-16 bg-white/80 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <svg className="w-8 h-8 text-safari-600" fill="currentColor" viewBox="0 0 20 20">
+            <div className="bg-white rounded-2xl shadow-xl border border-safari-100 overflow-hidden">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3310.474!2d18.4241!3d-33.9249!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1dcc5e5b9a0c2329%3A0x801c1b2b0a0c2329!2sV%26A%20Waterfront%2C%20Cape%20Town%2C%20South%20Africa!5e0!3m2!1sen!2sus!4v1640995200000!5m2!1sen!2sus"
+                width="100%"
+                height="256"
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="NowNow Tours - V&A Waterfront, Cape Town"
+                className="w-full h-64"
+              ></iframe>
+              <div className="p-4 bg-gradient-to-r from-safari-50 to-earth-50">
+                <div className="flex items-center space-x-2">
+                  <svg className="w-5 h-5 text-safari-600" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z" clipRule="evenodd" />
                   </svg>
+                  <div>
+                    <p className="font-semibold text-safari-800">Our Office</p>
+                    <p className="text-sm text-baobab-600">V&A Waterfront, Cape Town, South Africa</p>
+                  </div>
                 </div>
-                <p className="font-semibold">Interactive Map Coming Soon</p>
-                <p className="text-sm">Find us across Africa</p>
               </div>
             </div>
           </div>
