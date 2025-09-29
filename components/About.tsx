@@ -8,7 +8,14 @@ const About: React.FC = () => {
         <div className="flex flex-col md:flex-row items-center gap-12">
           <div className="md:w-1/2">
             <img 
-              src="https://picsum.photos/seed/guide/600/400" 
+              src={`data:image/svg+xml,${encodeURIComponent(`
+                <svg width="600" height="400" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="100%" height="100%" fill="#0ea5e9"/>
+                  <text x="50%" y="50%" text-anchor="middle" dy=".3em" font-family="Arial, sans-serif" font-size="24" fill="white">
+                    Tour Guide
+                  </text>
+                </svg>
+              `)}`}
               alt="Friendly tour guide smiling" 
               className="rounded-lg shadow-2xl w-full"
             />

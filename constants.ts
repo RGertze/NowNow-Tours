@@ -1,18 +1,30 @@
 import type { Tour, Testimonial, DownloadableDocument } from './types';
 
+// Create placeholder data URLs for images to avoid external requests
+const createPlaceholderImage = (width: number, height: number, color: string, label: string) => {
+  return `data:image/svg+xml,${encodeURIComponent(`
+    <svg width="${width}" height="${height}" xmlns="http://www.w3.org/2000/svg">
+      <rect width="100%" height="100%" fill="${color}"/>
+      <text x="50%" y="50%" text-anchor="middle" dy=".3em" font-family="Arial, sans-serif" font-size="24" fill="white">
+        ${label}
+      </text>
+    </svg>
+  `)}`;
+};
+
 export const HERO_IMAGES = [
-    'https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?q=80&w=1966&auto=format&fit=crop', // Zanzibar
-    'https://images.unsplash.com/photo-1563911674452-d34a4a53a81a?q=80&w=1974&auto=format&fit=crop', // Cape Town tourists
-    'https://images.unsplash.com/photo-1546412414-e1885259563a?q=80&w=1936&auto=format&fit=crop', // Safari
-    'https://images.unsplash.com/photo-1604725333758-294b45151b72?q=80&w=1974&auto=format&fit=crop', // Hot air balloon
+    createPlaceholderImage(1966, 800, '#0ea5e9', 'Zanzibar Beach'),
+    createPlaceholderImage(1974, 800, '#059669', 'Cape Town Views'),
+    createPlaceholderImage(1936, 800, '#dc2626', 'Safari Adventure'),
+    createPlaceholderImage(1974, 800, '#7c2d12', 'Desert Journey'),
 ];
 
 export const TOURS_DATA: Tour[] = [
   {
     images: [
-        'https://images.unsplash.com/photo-1601752801594-8a892a01ce58?q=80&w=800&auto=format&fit=crop', 
-        'https://images.unsplash.com/photo-1596913401214-4161f3d327ce?q=80&w=800&auto=format&fit=crop',
-        'https://images.unsplash.com/photo-1622329719488-063a8a9611ea?q=80&w=800&auto=format&fit=crop',
+        createPlaceholderImage(800, 600, '#0ea5e9', 'Zanzibar Beach'),
+        createPlaceholderImage(800, 600, '#06b6d4', 'Stone Town'),
+        createPlaceholderImage(800, 600, '#0284c7', 'Spice Island'),
     ],
     name: 'Zanzibar Getaway',
     destination: 'Tanzania',
@@ -22,9 +34,9 @@ export const TOURS_DATA: Tour[] = [
   },
   {
     images: [
-        'https://images.unsplash.com/photo-1590033431379-3c5a65a3d7e4?q=80&w=800&auto=format&fit=crop',
-        'https://images.unsplash.com/photo-1552599131-4ac53b49e099?q=80&w=800&auto=format&fit=crop',
-        'https://images.unsplash.com/photo-1629272134221-001d87d159a4?q=80&w=800&auto=format&fit=crop',
+        createPlaceholderImage(800, 600, '#059669', 'Table Mountain'),
+        createPlaceholderImage(800, 600, '#047857', 'Cape Peninsula'),
+        createPlaceholderImage(800, 600, '#065f46', 'Winelands'),
     ],
     name: 'Cape Town Adventure',
     destination: 'South Africa',
@@ -34,9 +46,9 @@ export const TOURS_DATA: Tour[] = [
   },
   {
     images: [
-        'https://images.unsplash.com/photo-1650372986438-c92a9b3a5394?q=80&w=800&auto=format&fit=crop',
-        'https://images.unsplash.com/photo-1652701410149-55688a14b35f?q=80&w=800&auto=format&fit=crop',
-        'https://images.unsplash.com/photo-1628286938221-9da8a523b169?q=80&w=800&auto=format&fit=crop',
+        createPlaceholderImage(800, 600, '#dc2626', 'Luanda City'),
+        createPlaceholderImage(800, 600, '#b91c1c', 'Kalandula Falls'),
+        createPlaceholderImage(800, 600, '#991b1b', 'Kissama Safari'),
     ],
     name: 'Angolan Wonders',
     destination: 'Angola',
@@ -46,9 +58,9 @@ export const TOURS_DATA: Tour[] = [
   },
   {
     images: [
-        'https://images.unsplash.com/photo-1518684079-3c830dcef090?q=80&w=800&auto=format&fit=crop',
-        'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?q=80&w=800&auto=format&fit=crop',
-        'https://images.unsplash.com/photo-1522956239912-11e2f759685e?q=80&w=800&auto=format&fit=crop',
+        createPlaceholderImage(800, 600, '#7c2d12', 'Burj Khalifa'),
+        createPlaceholderImage(800, 600, '#92400e', 'Desert Safari'),
+        createPlaceholderImage(800, 600, '#a16207', 'Dubai Marina'),
     ],
     name: 'Dubai Stopover',
     destination: 'United Arab Emirates',
@@ -62,43 +74,43 @@ export const TESTIMONIALS_DATA: Testimonial[] = [
   {
     quote: 'NowNow Tours made our dream trip to Cape Town a reality. Every detail was perfect, and our guide was phenomenal. Truly an unforgettable experience!',
     name: 'Aisha & Mohammed',
-    image: 'https://images.unsplash.com/photo-1529626455594-4ff0802cfb7e?q=80&w=200&auto=format&fit=crop',
+    image: createPlaceholderImage(200, 200, '#6366f1', 'A&M'),
   },
   {
     quote: 'The Zanzibar getaway was pure magic. Safe, seamless, and so much fun. I felt completely looked after. Highly recommend this amazing company!',
     name: 'Samantha G.',
-    image: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=200&auto=format&fit=crop',
+    image: createPlaceholderImage(200, 200, '#8b5cf6', 'SG'),
   },
 ];
 
 export const GALLERY_IMAGES: string[] = [
-    'https://images.unsplash.com/photo-1533106418989-88901b050f6f?q=80&w=1600&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1587740998493-4414f63be3a4?q=80&w=1600&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1504150558240-0b4fd23ab667?q=80&w=1600&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1516483638261-f4dbaf036963?q=80&w=1600&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1549492423-400259a4e2e5?q=80&w=1600&auto=format&fit=crop',
-    'https://images.unsplash.com/photo-1517423568366-8b83523034fd?q=80&w=1600&auto=format&fit=crop',
+    createPlaceholderImage(1600, 900, '#0ea5e9', 'Safari Adventure'),
+    createPlaceholderImage(1600, 900, '#059669', 'Mountain Hike'),
+    createPlaceholderImage(1600, 900, '#dc2626', 'Beach Sunset'),
+    createPlaceholderImage(1600, 900, '#7c2d12', 'City Skyline'),
+    createPlaceholderImage(1600, 900, '#6366f1', 'Cultural Tour'),
+    createPlaceholderImage(1600, 900, '#8b5cf6', 'Wildlife'),
 ];
 
 export const DOWNLOADS_DATA: DownloadableDocument[] = [
   {
     title: 'Zanzibar Getaway Brochure',
     description: 'All the details about our most popular beach escape. Itinerary, inclusions, and stunning photos.',
-    fileUrl: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf',
+    fileUrl: '#',
   },
   {
     title: 'Cape Town Adventure Brochure',
     description: 'Explore the Mother City with this detailed guide. Learn about activities, sights, and pricing.',
-    fileUrl: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf',
+    fileUrl: '#',
   },
   {
     title: 'General Terms & Conditions',
     description: 'Our complete terms and conditions document. Please read before booking your tour.',
-    fileUrl: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf',
+    fileUrl: '#',
   },
   {
     title: 'Essential Travel Checklist',
     description: 'A handy checklist to make sure you have everything you need for a smooth and enjoyable trip.',
-    fileUrl: 'https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf',
+    fileUrl: '#',
   },
 ];

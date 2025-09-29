@@ -57,9 +57,12 @@ const Contact: React.FC = () => {
                 <div className="space-y-4 text-stone-700">
                     <p><FaPhone className="inline mr-3 text-orange-500" /> +1 (234) 567-890</p>
                     <p><FaEnvelope className="inline mr-3 text-orange-500" /> contact@nownowtours.com</p>
-                    <a href="https://wa.me/1234567890" target="_blank" rel="noopener noreferrer" className="inline-block text-green-600 font-bold hover:underline">
+                    <button 
+                        onClick={() => alert('WhatsApp integration coming soon!')}
+                        className="inline-block text-green-600 font-bold hover:underline cursor-pointer"
+                    >
                         <FaWhatsapp className="inline mr-2" /> Chat with us on WhatsApp
-                    </a>
+                    </button>
                 </div>
             </div>
             <div className="bg-stone-300 h-64 rounded-lg shadow-lg flex items-center justify-center text-stone-500">

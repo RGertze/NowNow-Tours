@@ -18,6 +18,22 @@ export default defineConfig(({ mode }) => {
         alias: {
           '@': path.resolve(__dirname, '.'),
         }
+      },
+      build: {
+        outDir: 'dist',
+        assetsDir: 'assets',
+        emptyOutDir: true,
+        rollupOptions: {
+          output: {
+            manualChunks: undefined,
+          }
+        },
+        minify: 'esbuild',
+        sourcemap: false,
+        target: 'es2015'
+      },
+      esbuild: {
+        legalComments: 'none'
       }
     };
 });

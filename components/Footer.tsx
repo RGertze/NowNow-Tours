@@ -18,9 +18,9 @@ const Footer: React.FC = () => {
                     <p className="text-stone-400">Your African adventure starts here.</p>
                 </div>
                 <div className="flex justify-center gap-6 mb-6 md:mb-0">
-                    <SocialIcon href="https://wa.me/1234567890" icon={<FaWhatsapp />} />
-                    <SocialIcon href="#" icon={<FaInstagram />} />
-                    <SocialIcon href="#" icon={<FaFacebookF />} />
+                    <SocialIcon href="#whatsapp" icon={<FaWhatsapp />} />
+                    <SocialIcon href="#instagram" icon={<FaInstagram />} />
+                    <SocialIcon href="#facebook" icon={<FaFacebookF />} />
                 </div>
             </div>
             <div className="border-t border-sky-800 mt-8 pt-6 text-center text-stone-400 text-sm">
