@@ -1,7 +1,7 @@
-
 import React from 'react';
 import Header from './components/Header';
 import Hero from './components/Hero';
+import WhyChooseUs from './components/WhyChooseUs';
 import About from './components/About';
 import Tours from './components/Tours';
 import Testimonials from './components/Testimonials';
@@ -9,31 +9,59 @@ import Gallery from './components/Gallery';
 import Contact from './components/Contact';
 import Downloads from './components/Downloads';
 import Footer from './components/Footer';
+import AnimationToggle from './components/AnimationToggle';
+
+// Import global styles
+import './styles/globals.css';
 
 const App: React.FC = () => {
   return (
-    <div className="bg-stone-50 text-stone-800 font-sans">
+    <div className="bg-stone-50 text-stone-800 font-sans antialiased">
+      {/* Header with scroll progress */}
       <Header />
+      
+      {/* Main content */}
       <main>
-        <div id="home">
+        {/* Hero section with canvas and Ken Burns effect */}
+        <section id="home">
           <Hero />
-        </div>
-        <div id="about">
+        </section>
+        
+        {/* Why Choose Us section */}
+        <WhyChooseUs />
+        
+        {/* About section with scroll reveals */}
+        <section id="about">
           <About />
-        </div>
-        <div id="tours">
+        </section>
+        
+        {/* Tours section with hover effects and quick view */}
+        <section id="tours">
           <Tours />
-        </div>
+        </section>
+        
+        {/* Testimonials with video lightbox */}
         <Testimonials />
+        
+        {/* Gallery with masonry layout and lightbox */}
         <Gallery />
-        <div id="downloads">
+        
+        {/* Downloads section */}
+        <section id="downloads">
           <Downloads />
-        </div>
-        <div id="contact">
+        </section>
+        
+        {/* Contact form with validation and confetti */}
+        <section id="contact">
           <Contact />
-        </div>
+        </section>
       </main>
+      
+      {/* Footer with gradient animations */}
       <Footer />
+      
+      {/* Accessibility animation toggle */}
+      <AnimationToggle />
     </div>
   );
 };

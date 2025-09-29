@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -6,18 +5,146 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>NowNow Tours - Discover Africa</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Preconnect to external domains for better performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://images.unsplash.com">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    
+    <!-- Meta tags for SEO and social sharing -->
+    <meta name="description" content="Discover authentic African adventures with NowNow Tours. We create unforgettable, safe, and hassle-free travel experiences across the magnificent continent of Africa.">
+    <meta name="keywords" content="Africa tours, African safari, Zanzibar tours, Cape Town tours, African travel, adventure travel">
+    <meta name="author" content="NowNow Tours">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://nownowtours.com">
+    <meta property="og:title" content="NowNow Tours - Discover Africa">
+    <meta property="og:description" content="Authentic African adventures. Safe, memorable, and hassle-free travel experiences across Africa.">
+    <meta property="og:image" content="https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?q=80&w=1200&auto=format&fit=crop">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://nownowtours.com">
+    <meta property="twitter:title" content="NowNow Tours - Discover Africa">
+    <meta property="twitter:description" content="Authentic African adventures. Safe, memorable, and hassle-free travel experiences across Africa.">
+    <meta property="twitter:image" content="https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?q=80&w=1200&auto=format&fit=crop">
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?q=80&w=1966&auto=format&fit=crop" as="image" type="image/jpeg">
+    
+    <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <script type="importmap">
-{
-  "imports": {
-    "react-dom/": "https://esm.sh/react-dom@^19.1.0/",
-    "react/": "https://esm.sh/react@^19.1.0/",
-    "react": "https://esm.sh/react@^19.1.0"
-  }
-}
-</script>
-</head>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              stone: {
+                50: 'hsl(60, 9%, 98%)',
+                100: 'hsl(60, 9%, 96%)',
+                200: 'hsl(20, 6%, 90%)',
+                300: 'hsl(24, 6%, 83%)',
+                400: 'hsl(24, 5%, 64%)',
+                500: 'hsl(25, 5%, 45%)',
+                600: 'hsl(33, 5%, 32%)',
+                700: 'hsl(30, 6%, 25%)',
+                800: 'hsl(12, 6%, 15%)',
+                900: 'hsl(24, 10%, 10%)',
+              },
+              sky: {
+                50: 'hsl(204, 100%, 97%)',
+                100: 'hsl(204, 93%, 93%)',
+                200: 'hsl(201, 94%, 86%)',
+                300: 'hsl(199, 95%, 74%)',
+                400: 'hsl(198, 93%, 60%)',
+                500: 'hsl(199, 89%, 48%)',
+                600: 'hsl(200, 98%, 39%)',
+                700: 'hsl(201, 96%, 32%)',
+                800: 'hsl(201, 90%, 27%)',
+                900: 'hsl(202, 80%, 24%)',
+              },
+              orange: {
+                50: 'hsl(33, 100%, 96%)',
+                100: 'hsl(34, 100%, 92%)',
+                200: 'hsl(32, 97%, 83%)',
+                300: 'hsl(31, 97%, 72%)',
+                400: 'hsl(27, 96%, 61%)',
+                500: 'hsl(25, 95%, 53%)',
+                600: 'hsl(21, 90%, 48%)',
+                700: 'hsl(17, 88%, 40%)',
+                800: 'hsl(15, 79%, 34%)',
+                900: 'hsl(15, 75%, 28%)',
+              },
+            },
+            fontFamily: {
+              sans: ['Inter', 'system-ui', 'sans-serif'],
+              display: ['Outfit', 'Inter', 'system-ui', 'sans-serif'],
+            },
+            boxShadow: {
+              'soft': '0 2px 15px -3px rgba(0, 0, 0, 0.07), 0 10px 20px -2px rgba(0, 0, 0, 0.04)',
+              'medium': '0 4px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 20px -5px rgba(0, 0, 0, 0.04)',
+              'strong': '0 10px 40px -10px rgba(0, 0, 0, 0.15), 0 2px 10px -2px rgba(0, 0, 0, 0.04)',
+              'glow': '0 0 20px rgba(249, 115, 22, 0.15)',
+            },
+          }
+        }
+      }
+    </script>
+    
+    <!-- Import map for ES modules -->
+    <script type="importmap">
+    {
+      "imports": {
+        "react-dom/": "https://esm.sh/react-dom@^19.1.0/",
+        "react/": "https://esm.sh/react@^19.1.0/",
+        "react": "https://esm.sh/react@^19.1.0",
+        "framer-motion": "https://esm.sh/framer-motion@^11.0.0",
+        "react-hook-form": "https://esm.sh/react-hook-form@^7.52.0",
+        "zod": "https://esm.sh/zod@^3.23.0",
+        "canvas-confetti": "https://esm.sh/canvas-confetti@^1.9.3",
+        "@hookform/resolvers/zod": "https://esm.sh/@hookform/resolvers@^3.9.0/zod"
+      }
+    }
+    </script>
+    
+    <!-- Structured data for SEO -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "TravelAgency",
+      "name": "NowNow Tours",
+      "description": "Authentic African adventures. Safe, memorable, and hassle-free travel experiences across Africa.",
+      "url": "https://nownowtours.com",
+      "telephone": "+1-234-567-890",
+      "email": "contact@nownowtours.com",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "Multiple African Countries"
+      },
+      "areaServed": [
+        {
+          "@type": "Country",
+          "name": "Tanzania"
+        },
+        {
+          "@type": "Country", 
+          "name": "South Africa"
+        },
+        {
+          "@type": "Country",
+          "name": "Angola"
+        }
+      ],
+      "serviceType": "Travel Tours",
+      "priceRange": "$900-$2800"
+    }
+    </script>
+  </head>
   <body class="bg-stone-50">
     <div id="root"></div>
     <script type="module" src="/index.tsx"></script>
