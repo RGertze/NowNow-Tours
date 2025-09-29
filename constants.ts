@@ -1,30 +1,19 @@
 import type { Tour, Testimonial, DownloadableDocument } from './types';
 
-// Create placeholder data URLs for images to avoid external requests
-const createPlaceholderImage = (width: number, height: number, color: string, label: string) => {
-  return `data:image/svg+xml,${encodeURIComponent(`
-    <svg width="${width}" height="${height}" xmlns="http://www.w3.org/2000/svg">
-      <rect width="100%" height="100%" fill="${color}"/>
-      <text x="50%" y="50%" text-anchor="middle" dy=".3em" font-family="Arial, sans-serif" font-size="24" fill="white">
-        ${label}
-      </text>
-    </svg>
-  `)}`;
-};
-
+// High-quality African tourism images from Unsplash
 export const HERO_IMAGES = [
-    createPlaceholderImage(1966, 800, '#0ea5e9', 'Zanzibar Beach'),
-    createPlaceholderImage(1974, 800, '#059669', 'Cape Town Views'),
-    createPlaceholderImage(1936, 800, '#dc2626', 'Safari Adventure'),
-    createPlaceholderImage(1974, 800, '#7c2d12', 'Desert Journey'),
+    'https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2072&q=80', // Serengeti Safari
+    'https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80', // Cape Town Table Mountain
+    'https://images.unsplash.com/photo-1547036967-23d11aacaee0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80', // Zanzibar Beach
+    'https://images.unsplash.com/photo-1559827260-dc66d52bef19?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2074&q=80', // African Sunset
 ];
 
 export const TOURS_DATA: Tour[] = [
   {
     images: [
-        createPlaceholderImage(800, 600, '#0ea5e9', 'Zanzibar Beach'),
-        createPlaceholderImage(800, 600, '#06b6d4', 'Stone Town'),
-        createPlaceholderImage(800, 600, '#0284c7', 'Spice Island'),
+        'https://images.unsplash.com/photo-1547036967-23d11aacaee0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80', // Zanzibar Beach
+        'https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80', // Stone Town
+        'https://images.unsplash.com/photo-1571771019784-3ff35f4f4277?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80', // Spice Market
     ],
     name: 'Zanzibar Getaway',
     destination: 'Tanzania',
@@ -34,9 +23,9 @@ export const TOURS_DATA: Tour[] = [
   },
   {
     images: [
-        createPlaceholderImage(800, 600, '#059669', 'Table Mountain'),
-        createPlaceholderImage(800, 600, '#047857', 'Cape Peninsula'),
-        createPlaceholderImage(800, 600, '#065f46', 'Winelands'),
+        'https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80', // Table Mountain
+        'https://images.unsplash.com/photo-1580060839134-75a5edca2e99?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80', // Cape Peninsula
+        'https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80', // Winelands
     ],
     name: 'Cape Town Adventure',
     destination: 'South Africa',
@@ -46,9 +35,9 @@ export const TOURS_DATA: Tour[] = [
   },
   {
     images: [
-        createPlaceholderImage(800, 600, '#dc2626', 'Luanda City'),
-        createPlaceholderImage(800, 600, '#b91c1c', 'Kalandula Falls'),
-        createPlaceholderImage(800, 600, '#991b1b', 'Kissama Safari'),
+        'https://images.unsplash.com/photo-1544735716-392fe2489ffa?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80', // Luanda Cityscape
+        'https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80', // African Waterfall
+        'https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80', // Safari Wildlife
     ],
     name: 'Angolan Wonders',
     destination: 'Angola',
@@ -58,9 +47,9 @@ export const TOURS_DATA: Tour[] = [
   },
   {
     images: [
-        createPlaceholderImage(800, 600, '#7c2d12', 'Burj Khalifa'),
-        createPlaceholderImage(800, 600, '#92400e', 'Desert Safari'),
-        createPlaceholderImage(800, 600, '#a16207', 'Dubai Marina'),
+        'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80', // Dubai Skyline
+        'https://images.unsplash.com/photo-1539650116574-75c0c6d73c6e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80', // Desert Safari
+        'https://images.unsplash.com/photo-1518684079-3c830dcef090?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80', // Dubai Marina
     ],
     name: 'Dubai Stopover',
     destination: 'United Arab Emirates',
@@ -74,22 +63,22 @@ export const TESTIMONIALS_DATA: Testimonial[] = [
   {
     quote: 'NowNow Tours made our dream trip to Cape Town a reality. Every detail was perfect, and our guide was phenomenal. Truly an unforgettable experience!',
     name: 'Aisha & Mohammed',
-    image: createPlaceholderImage(200, 200, '#6366f1', 'A&M'),
+    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&q=80', // Happy couple
   },
   {
     quote: 'The Zanzibar getaway was pure magic. Safe, seamless, and so much fun. I felt completely looked after. Highly recommend this amazing company!',
     name: 'Samantha G.',
-    image: createPlaceholderImage(200, 200, '#8b5cf6', 'SG'),
+    image: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=200&q=80', // Smiling woman
   },
 ];
 
 export const GALLERY_IMAGES: string[] = [
-    createPlaceholderImage(1600, 900, '#0ea5e9', 'Safari Adventure'),
-    createPlaceholderImage(1600, 900, '#059669', 'Mountain Hike'),
-    createPlaceholderImage(1600, 900, '#dc2626', 'Beach Sunset'),
-    createPlaceholderImage(1600, 900, '#7c2d12', 'City Skyline'),
-    createPlaceholderImage(1600, 900, '#6366f1', 'Cultural Tour'),
-    createPlaceholderImage(1600, 900, '#8b5cf6', 'Wildlife'),
+    'https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1600&q=80', // Safari Adventure
+    'https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1600&q=80', // Table Mountain
+    'https://images.unsplash.com/photo-1559827260-dc66d52bef19?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1600&q=80', // African Sunset
+    'https://images.unsplash.com/photo-1547036967-23d11aacaee0?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1600&q=80', // Zanzibar Beach
+    'https://images.unsplash.com/photo-1571771019784-3ff35f4f4277?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1600&q=80', // Cultural Market
+    'https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1600&q=80', // Waterfall
 ];
 
 export const DOWNLOADS_DATA: DownloadableDocument[] = [

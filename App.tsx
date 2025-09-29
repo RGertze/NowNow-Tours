@@ -12,7 +12,7 @@ import Footer from './components/Footer';
 
 const App: React.FC = () => {
   return (
-    <div className="bg-stone-50 text-stone-800 font-sans">
+    <div className="bg-gradient-to-br from-safari-50 to-earth-50 text-baobab-800 font-body">
       <Header />
       <main>
         <div id="home">

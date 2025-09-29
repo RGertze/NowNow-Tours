@@ -17,40 +17,50 @@ const Hero: React.FC = () => {
 
   return (
     <section className="relative h-screen flex items-center justify-center text-white overflow-hidden">
-      <div className="absolute inset-0 bg-black opacity-50 z-10"></div>
+      <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/50 to-black/60 z-10"></div>
       {HERO_IMAGES.map((src, index) => (
          <img 
             key={index}
             src={src} 
-            alt="Happy tourists on an adventure in Africa" 
+            alt="Stunning African landscapes and safari adventures" 
             className="absolute inset-0 w-full h-full object-cover"
             style={{
-              transition: 'opacity 1s ease-in-out, transform 1.5s ease-in-out',
+              transition: 'opacity 1.5s ease-in-out, transform 2s ease-in-out',
               opacity: index === currentIndex ? 1 : 0,
-              transform: `scale(${index === currentIndex ? 1 : 1.05})`,
+              transform: `scale(${index === currentIndex ? 1 : 1.08})`,
             }}
           />
       ))}
-      <div className="relative z-20 text-center px-4">
-        <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-4 tracking-tight" style={{textShadow: '2px 2px 8px rgba(0,0,0,0.7)'}}>
-          Discover Africa with NowNow Tours
+      <div className="relative z-20 text-center px-4 animate-fade-in">
+        <h1 className="font-display text-4xl md:text-6xl lg:text-7xl font-bold mb-6 tracking-tight text-shadow animate-slide-up">
+          Discover Africa with{' '}
+          <span className="bg-gradient-to-r from-sunset-400 to-safari-400 bg-clip-text text-transparent">
+            NowNow Tours
+          </span>
         </h1>
-        <p className="text-lg md:text-xl max-w-2xl mx-auto mb-8" style={{textShadow: '1px 1px 4px rgba(0,0,0,0.7)'}}>
-          We create authentic, memorable, and hassle-free travel experiences across the continent.
+        <p className="text-lg md:text-xl lg:text-2xl max-w-3xl mx-auto mb-10 text-shadow-sm font-light leading-relaxed animate-slide-up">
+          We create authentic, memorable, and hassle-free travel experiences across the magnificent continent of Africa.
         </p>
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+        <div className="flex flex-col sm:flex-row gap-6 justify-center animate-slide-up">
           <button 
             onClick={() => scrollToSection('tours')} 
-            className="bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 px-8 rounded-full transition-transform duration-300 ease-in-out transform hover:scale-105"
+            className="btn-primary shadow-2xl"
           >
-            Explore Tours
+            Explore Our Tours
           </button>
           <button 
             onClick={() => scrollToSection('contact')} 
-            className="bg-white/20 backdrop-blur-sm border-2 border-white hover:bg-white/30 text-white font-bold py-3 px-8 rounded-full transition-transform duration-300 ease-in-out transform hover:scale-105"
+            className="btn-secondary shadow-xl"
           >
-            Get In Touch
+            Plan Your Journey
           </button>
+        </div>
+        
+        {/* Scroll indicator */}
+        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-float">
+          <div className="w-6 h-10 border-2 border-white/60 rounded-full flex justify-center">
+            <div className="w-1 h-3 bg-white/60 rounded-full mt-2 animate-pulse"></div>
+          </div>
         </div>
       </div>
     </section>
