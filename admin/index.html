@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Now Now Tours & Safaris - Admin Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-gray-100">
+    <div class="min-h-screen">
+        <!-- Header -->
+        <header class="bg-white shadow-sm border-b">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between items-center py-4">
+                    <h1 class="text-2xl font-bold text-gray-900">Now Now Tours & Safaris Admin</h1>
+                    <div class="flex space-x-4">
+                        <button id="bookingsTab" class="px-4 py-2 bg-orange-600 text-white rounded-md">Bookings</button>
+                        <button id="contactsTab" class="px-4 py-2 bg-gray-200 text-gray-700 rounded-md">Contacts</button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            <!-- Auth Section -->
+            <div id="authSection" class="max-w-md mx-auto bg-white rounded-lg shadow-md p-6">
+                <h2 class="text-xl font-semibold mb-4">Admin Login</h2>
+                <div class="space-y-4">
+                    <input type="password" id="adminToken" placeholder="Enter admin token" 
+                           class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-orange-500">
+                    <button onclick="authenticate()" class="w-full bg-orange-600 text-white py-2 rounded-md hover:bg-orange-700">
+                        Login
+                    </button>
+                </div>
+            </div>
+
+            <!-- Dashboard Content -->
+            <div id="dashboardContent" class="hidden">
+                <!-- Bookings Section -->
+                <div id="bookingsSection">
+                    <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+                        <h2 class="text-xl font-semibold mb-4">Tour Bookings</h2>
+                        <div class="flex space-x-4 mb-4">
+                            <select id="bookingStatusFilter" class="px-3 py-2 border border-gray-300 rounded-md">
+                                <option value="">All Statuses</option>
+                                <option value="pending">Pending</option>
+                                <option value="confirmed">Confirmed</option>
+                                <option value="cancelled">Cancelled</option>
+                            </select>
+                            <button onclick="loadBookings()" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
+                                Refresh
+                            </button>
+                        </div>
+                        <div id="bookingsTable" class="overflow-x-auto">
+                            <!-- Bookings will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Contacts Section -->
+                <div id="contactsSection" class="hidden">
+                    <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+                        <h2 class="text-xl font-semibold mb-4">Contact Messages</h2>
+                        <div class="flex space-x-4 mb-4">
+                            <select id="contactStatusFilter" class="px-3 py-2 border border-gray-300 rounded-md">
+                                <option value="">All Statuses</option>
+                                <option value="new">New</option>
+                                <option value="read">Read</option>
+                                <option value="replied">Replied</option>
+                            </select>
+                            <button onclick="loadContacts()" class="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
+                                Refresh
+                            </button>
+                        </div>
+                        <div id="contactsTable" class="overflow-x-auto">
+                            <!-- Contacts will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        let authToken = '';
+        let currentPage = 1;
+
+        // Authentication
+        function authenticate() {
+            const token = document.getElementById('adminToken').value;
+            if (token) {
+                authToken = token;
+                document.getElementById('authSection').classList.add('hidden');
+                document.getElementById('dashboardContent').classList.remove('hidden');
+                loadBookings();
+            } else {
+                alert('Please enter an admin token');
+            }
+        }
+
+        // Tab switching
+        document.getElementById('bookingsTab').addEventListener('click', () => {
+            switchTab('bookings');
+            loadBookings();
+        });
+
+        document.getElementById('contactsTab').addEventListener('click', () => {
+            switchTab('contacts');
+            loadContacts();
+        });
+
+        function switchTab(tab) {
+            // Update tab buttons
+            document.getElementById('bookingsTab').className = tab === 'bookings' 
+                ? 'px-4 py-2 bg-orange-600 text-white rounded-md'
+                : 'px-4 py-2 bg-gray-200 text-gray-700 rounded-md';
+            
+            document.getElementById('contactsTab').className = tab === 'contacts' 
+                ? 'px-4 py-2 bg-orange-600 text-white rounded-md'
+                : 'px-4 py-2 bg-gray-200 text-gray-700 rounded-md';
+
+            // Show/hide sections
+            document.getElementById('bookingsSection').classList.toggle('hidden', tab !== 'bookings');
+            document.getElementById('contactsSection').classList.toggle('hidden', tab !== 'contacts');
+        }
+
+        // Load bookings
+        async function loadBookings() {
+            try {
+                const status = document.getElementById('bookingStatusFilter').value;
+                const url = `/api/admin/bookings?page=${currentPage}&limit=20${status ? `&status=${status}` : ''}`;
+                
+                const response = await fetch(url, {
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`
+                    }
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    displayBookings(result.data.bookings);
+                } else {
+                    alert('Error loading bookings: ' + result.error);
+                }
+            } catch (error) {
+                console.error('Error loading bookings:', error);
+                alert('Failed to load bookings');
+            }
+        }
+
+        function displayBookings(bookings) {
+            const tableHtml = `
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Reference</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Customer</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Destinations</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Dates</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Travelers</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Price</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                        ${bookings.map(booking => `
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${booking.booking_reference}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                    <div>${booking.customer_name || 'N/A'}</div>
+                                    <div class="text-gray-500">${booking.customer_email || 'N/A'}</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${booking.selected_destinations.join(', ')}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                                    <div>${booking.start_date}</div>
+                                    <div class="text-gray-500">to ${booking.end_date}</div>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${booking.total_travelers}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">$${booking.estimated_price?.toLocaleString() || 'N/A'}</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${getStatusColor(booking.status)}">
+                                        ${booking.status}
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                    <select onchange="updateBookingStatus(${booking.id}, this.value)" class="text-sm border border-gray-300 rounded px-2 py-1">
+                                        <option value="pending" ${booking.status === 'pending' ? 'selected' : ''}>Pending</option>
+                                        <option value="confirmed" ${booking.status === 'confirmed' ? 'selected' : ''}>Confirmed</option>
+                                        <option value="cancelled" ${booking.status === 'cancelled' ? 'selected' : ''}>Cancelled</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            `;
+            document.getElementById('bookingsTable').innerHTML = tableHtml;
+        }
+
+        // Load contacts
+        async function loadContacts() {
+            try {
+                const status = document.getElementById('contactStatusFilter').value;
+                const url = `/api/admin/contacts?page=${currentPage}&limit=20${status ? `&status=${status}` : ''}`;
+                
+                const response = await fetch(url, {
+                    headers: {
+                        'Authorization': `Bearer ${authToken}`
+                    }
+                });
+
+                const result = await response.json();
+
+                if (result.success) {
+                    displayContacts(result.data.messages);
+                } else {
+                    alert('Error loading contacts: ' + result.error);
+                }
+            } catch (error) {
+                console.error('Error loading contacts:', error);
+                alert('Failed to load contacts');
+            }
+        }
+
+        function displayContacts(messages) {
+            const tableHtml = `
+                <table class="min-w-full divide-y divide-gray-200">
+                    <thead class="bg-gray-50">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Name</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Subject</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Message</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="bg-white divide-y divide-gray-200">
+                        ${messages.map(message => `
+                            <tr>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">${message.name}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${message.email}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${message.subject || 'General Inquiry'}</td>
+                                <td class="px-6 py-4 text-sm text-gray-900 max-w-xs truncate">${message.message}</td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-900">${new Date(message.created_at).toLocaleDateString()}</td>
+                                <td class="px-6 py-4 whitespace-nowrap">
+                                    <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${getStatusColor(message.status)}">
+                                        ${message.status}
+                                    </span>
+                                </td>
+                                <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                                    <select onchange="updateContactStatus(${message.id}, this.value)" class="text-sm border border-gray-300 rounded px-2 py-1">
+                                        <option value="new" ${message.status === 'new' ? 'selected' : ''}>New</option>
+                                        <option value="read" ${message.status === 'read' ? 'selected' : ''}>Read</option>
+                                        <option value="replied" ${message.status === 'replied' ? 'selected' : ''}>Replied</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            `;
+            document.getElementById('contactsTable').innerHTML = tableHtml;
+        }
+
+        // Update booking status
+        async function updateBookingStatus(bookingId, status) {
+            try {
+                const response = await fetch('/api/admin/bookings', {
+                    method: 'PATCH',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${authToken}`
+                    },
+                    body: JSON.stringify({ bookingId, status })
+                });
+
+                const result = await response.json();
+                if (result.success) {
+                    alert('Booking status updated successfully');
+                } else {
+                    alert('Error updating booking: ' + result.error);
+                }
+            } catch (error) {
+                console.error('Error updating booking:', error);
+                alert('Failed to update booking status');
+            }
+        }
+
+        // Update contact status
+        async function updateContactStatus(messageId, status) {
+            try {
+                const response = await fetch('/api/admin/contacts', {
+                    method: 'PATCH',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${authToken}`
+                    },
+                    body: JSON.stringify({ messageId, status })
+                });
+
+                const result = await response.json();
+                if (result.success) {
+                    alert('Contact status updated successfully');
+                } else {
+                    alert('Error updating contact: ' + result.error);
+                }
+            } catch (error) {
+                console.error('Error updating contact:', error);
+                alert('Failed to update contact status');
+            }
+        }
+
+        // Helper function for status colors
+        function getStatusColor(status) {
+            switch (status) {
+                case 'pending':
+                case 'new':
+                    return 'bg-yellow-100 text-yellow-800';
+                case 'confirmed':
+                case 'read':
+                    return 'bg-blue-100 text-blue-800';
+                case 'cancelled':
+                    return 'bg-red-100 text-red-800';
+                case 'replied':
+                    return 'bg-green-100 text-green-800';
+                default:
+                    return 'bg-gray-100 text-gray-800';
+            }
+        }
+    </script>
+</body>
+</html>
