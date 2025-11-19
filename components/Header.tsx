@@ -36,11 +36,6 @@ const Header: React.FC = () => {
     setIsOpen(false);
   };
 
-  const scrollToSection = (id: string) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
-    setIsOpen(false);
-  };
-
   useEffect(() => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 10);
@@ -58,7 +53,7 @@ const Header: React.FC = () => {
       <div className="container mx-auto px-6 py-4 flex justify-between items-center">
         <a 
           href="#home" 
-          onClick={(e) => { e.preventDefault(); scrollToSection('home'); }} 
+          onClick={(e) => { e.preventDefault(); handleNavigation(navLinks[0]); }} 
           className={`font-display text-2xl font-bold transition-all duration-300 ${
             isScrolled ? 'text-safari-800' : 'text-white text-shadow'
           }`}
@@ -71,7 +66,7 @@ const Header: React.FC = () => {
             <a 
               key={link.id} 
               href={`#${link.id}`} 
-              onClick={(e) => { e.preventDefault(); scrollToSection(link.id); }} 
+              onClick={(e) => { e.preventDefault(); handleNavigation(link); }} 
               className={`font-medium transition-all duration-300 transform hover:scale-105 relative group ${
                 isScrolled 
                   ? 'text-baobab-700 hover:text-sunset-600' 
@@ -105,7 +100,7 @@ const Header: React.FC = () => {
             <a 
               key={link.id} 
               href={`#${link.id}`} 
-              onClick={(e) => { e.preventDefault(); scrollToSection(link.id); }} 
+              onClick={(e) => { e.preventDefault(); handleNavigation(link); }} 
               className="block py-3 px-6 text-baobab-700 hover:text-sunset-600 w-full text-center font-medium transition-colors duration-300 hover:bg-safari-50 rounded-lg mx-4"
             >
               {link.name}
