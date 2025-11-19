@@ -5,6 +5,8 @@ export interface Tour {
   description: string;
   itinerary: string[];
   priceRange: string;
+  upcomingDates?: string[];
+  extras?: { [key: string]: string };
 }
 
 export interface Testimonial {
@@ -17,4 +19,5 @@ export interface DownloadableDocument {
   title: string;
   description: string;
   fileUrl: string;
+  category?: string;
 }

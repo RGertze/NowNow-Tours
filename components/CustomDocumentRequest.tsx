@@ -150,7 +150,7 @@ const CustomDocumentRequest: React.FC<CustomDocumentRequestProps> = ({ isOpen, o
         {/* Header */}
         <div className="flex justify-between items-center p-6 border-b bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-t-xl">
           <div>
-            <h2 className="text-2xl font-bold">📋 Custom Document Request</h2>
+            <h2 className="text-2xl font-bold">📥 Download Custom Document</h2>
             <p className="opacity-90">Get personalized travel documents tailored to your needs</p>
           </div>
           <button

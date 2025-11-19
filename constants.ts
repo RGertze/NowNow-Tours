@@ -120,24 +120,75 @@ export const GALLERY_IMAGES: string[] = [
 ];
 
 export const DOWNLOADS_DATA: DownloadableDocument[] = [
+  // Trip Brochures
   {
     title: 'Zanzibar Getaway Brochure',
-    description: 'All the details about our Zanzibar Getaway including itinerary, inclusions, and pricing (N$ 21,800 pp · N$ 2,500.00 Non-Refundable Deposit).',
+    description: 'Complete details about our Zanzibar Getaway: itinerary, inclusions, pricing (N$ 24,800 pp), and booking information.',
     fileUrl: '#',
+    category: 'Trip Brochure',
   },
   {
     title: 'Cape Town Adventure Brochure',
-    description: 'Explore the Mother City with this detailed guide. Includes activities, sights, and pricing (N$ 6,800 pp · N$ 1,000.00 Non-Refundable Deposit).',
+    description: 'Explore the Mother City with this detailed guide. Activities, sights, pricing (N$ 6,800 pp), and travel tips.',
     fileUrl: '#',
+    category: 'Trip Brochure',
   },
   {
-    title: 'General Terms & Conditions',
-    description: 'Our complete terms and conditions document. Please read before booking your tour.',
+    title: 'Lubango Wonders Brochure',
+    description: 'Discover Angola\'s hidden gems. Itinerary, Cristo Rei, Pulukua Resort, pricing (N$ 5,400 pp).',
     fileUrl: '#',
+    category: 'Trip Brochure',
   },
+  {
+    title: 'Victoria Falls Brochure',
+    description: 'Experience the awe-inspiring Victoria Falls. Activities, Livingstone, pricing (N$ 7,650 pp).',
+    fileUrl: '#',
+    category: 'Trip Brochure',
+  },
+  {
+    title: 'Lesotho Highlands Brochure',
+    description: 'Snow, adventure, and scenic beauty. Afriski, Maletsunyane, pricing (N$ 13,800 pp).',
+    fileUrl: '#',
+    category: 'Trip Brochure',
+  },
+  {
+    title: 'Bali Cultural & Adventure Brochure',
+    description: 'Temples, waterfalls, and island magic. 5-night package, full itinerary, pricing (N$ 33,500 pp).',
+    fileUrl: '#',
+    category: 'Trip Brochure',
+  },
+  
+  // Policy & Legal Documents
+  {
+    title: 'Terms & Conditions',
+    description: 'General terms and conditions. Read before booking any tour with Now Now Tours & Safaris.',
+    fileUrl: '#',
+    category: 'Legal Document',
+  },
+  {
+    title: 'Indemnity Form',
+    description: 'Risk acknowledgment and indemnity form. Required for all tour bookings.',
+    fileUrl: '#',
+    category: 'Legal Document',
+  },
+  
+  // Travel Guides & Checklists
   {
     title: 'Essential Travel Checklist',
-    description: 'A handy checklist to make sure you have everything you need for a smooth and enjoyable trip.',
+    description: 'Complete packing checklist and travel preparation guide. Never leave anything behind!',
     fileUrl: '#',
+    category: 'Travel Guide',
+  },
+  {
+    title: 'Tour Dates Calendar',
+    description: 'Full calendar of all upcoming tour departures for 2025. Plan your adventure now!',
+    fileUrl: '#',
+    category: 'Travel Guide',
+  },
+  {
+    title: 'Travel Insurance Guide',
+    description: 'Important information about travel insurance recommendations and coverage options.',
+    fileUrl: '#',
+    category: 'Travel Guide',
   },
 ];
