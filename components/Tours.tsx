@@ -25,12 +25,14 @@ const TourCard: React.FC<{ tour: Tour }> = ({ tour }) => {
   };
 
   return (
-    <div 
-      className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-xl overflow-hidden flex flex-col card-hover border border-safari-100 transform transition-all duration-300 hover:-translate-y-2 hover:scale-[1.01] w-80 md:w-96 flex-shrink-0 snap-start"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      role="article"
-    >
+    <div className="group relative h-full w-80 md:w-96 flex-shrink-0 snap-start">
+      <div className="absolute inset-0 bg-gradient-to-r from-sunset-400 to-safari-400 rounded-2xl opacity-0 group-hover:opacity-100 transition-all duration-300 blur group-hover:blur-xl"></div>
+      <div 
+        className="relative bg-white/90 backdrop-blur-sm rounded-2xl shadow-xl overflow-hidden flex flex-col border border-white/50 group-hover:border-safari-200 transform transition-all duration-300 group-hover:shadow-2xl group-hover:-translate-y-2"
+        onMouseEnter={() => setIsHovered(true)}
+        onMouseLeave={() => setIsHovered(false)}
+        role="article"
+      >
       <div className="relative w-full h-64 overflow-hidden group">
         <div className="flex transition-transform ease-in-out duration-500 h-full" style={{ transform: `translateX(-${currentIndex * 100}%)` }}>
           {tour.images.map((src, index) => (
@@ -120,6 +122,7 @@ const TourCard: React.FC<{ tour: Tour }> = ({ tour }) => {
           Contact on WhatsApp
         </a>
       </div>
+    </div>
     </div>
   );
 };

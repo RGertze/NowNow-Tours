@@ -31,8 +31,10 @@ const getCategoryColor = (category?: string) => {
 };
 
 const DownloadCard: React.FC<{ doc: DownloadableDocument }> = ({ doc }) => (
-  <div className="bg-white/90 backdrop-blur-sm rounded-2xl shadow-xl p-6 flex flex-col items-start card-hover border border-safari-100 relative overflow-hidden transform transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
-    <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-bl from-safari-100 to-transparent rounded-full -translate-y-10 translate-x-10"></div>
+  <div className="group relative h-full">
+    <div className="absolute inset-0 bg-gradient-to-r from-sunset-400 to-safari-400 rounded-2xl opacity-0 group-hover:opacity-100 transition-all duration-300 blur group-hover:blur-xl"></div>
+    <div className="relative bg-white/90 backdrop-blur-sm rounded-2xl shadow-xl p-6 flex flex-col items-start border border-white/50 group-hover:border-safari-200 overflow-hidden transform transition-all duration-300 group-hover:shadow-2xl group-hover:-translate-y-2">
+      <div className="absolute top-0 right-0 w-20 h-20 bg-gradient-to-bl from-safari-100 to-transparent rounded-full -translate-y-10 translate-x-10"></div>
     
     <div className="flex items-center mb-4 w-full relative z-10 gap-3">
       <div className={`w-12 h-12 bg-gradient-to-br ${getCategoryColor(doc.category)} rounded-xl flex items-center justify-center shadow-lg flex-shrink-0`}>
@@ -66,6 +68,7 @@ const DownloadCard: React.FC<{ doc: DownloadableDocument }> = ({ doc }) => (
         Download PDF
       </a>
     )}
+  </div>
   </div>
 );
 

@@ -65,7 +65,7 @@ const GalleryGrid: React.FC<GalleryGridProps> = ({
         {images.map((src, i) => (
           <figure
             key={i}
-            className="relative group rounded-xl overflow-hidden bg-gradient-to-br from-white/80 to-white/40 shadow-lg hover:shadow-2xl border border-safari-100/50 cursor-pointer transition-all duration-300 transform hover:-translate-y-1"
+            className="group relative rounded-xl overflow-hidden"
             onClick={() => openLightbox(i)}
             role="button"
             tabIndex={0}
@@ -76,7 +76,8 @@ const GalleryGrid: React.FC<GalleryGridProps> = ({
               }
             }}
           >
-            <div className="relative h-64 overflow-hidden bg-gray-200">
+            <div className="absolute inset-0 bg-gradient-to-r from-sunset-400 to-safari-400 rounded-2xl opacity-0 group-hover:opacity-100 transition-all duration-300 blur group-hover:blur-xl"></div>
+            <div className="relative bg-gradient-to-br from-white/80 to-white/40 h-64 overflow-hidden rounded-xl border border-white/50 group-hover:border-safari-200 transform transition-all duration-300 group-hover:shadow-2xl group-hover:-translate-y-2">
               <img
                 src={src}
                 alt={`Gallery image ${i + 1}`}

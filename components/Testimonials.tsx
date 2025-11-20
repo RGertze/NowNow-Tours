@@ -5,7 +5,9 @@ import type { Testimonial } from '../types';
 import TravelPlanningWizard from './TravelPlanningWizard';
 
 const TestimonialCard: React.FC<{ testimonial: Testimonial }> = ({ testimonial }) => (
-  <div className="bg-white/90 backdrop-blur-sm p-8 rounded-2xl shadow-xl text-center relative card-hover border border-safari-100">
+  <div className="group relative h-full">
+    <div className="absolute inset-0 bg-gradient-to-r from-sunset-400 to-safari-400 rounded-2xl opacity-0 group-hover:opacity-100 transition-all duration-300 blur group-hover:blur-xl"></div>
+    <div className="relative bg-white/90 backdrop-blur-sm p-8 rounded-2xl shadow-xl text-center border border-white/50 group-hover:border-safari-200 transform transition-all duration-300 group-hover:shadow-2xl group-hover:-translate-y-2">
     <div className="absolute -top-6 left-1/2 transform -translate-x-1/2">
       <img 
         src={testimonial.image} 
@@ -31,6 +33,7 @@ const TestimonialCard: React.FC<{ testimonial: Testimonial }> = ({ testimonial }
     
     <p className="font-semibold text-safari-800 text-lg">{testimonial.name}</p>
     <p className="text-baobab-500 text-sm">Verified Traveler</p>
+    </div>
   </div>
 );
 

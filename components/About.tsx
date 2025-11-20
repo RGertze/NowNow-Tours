@@ -15,6 +15,8 @@ const About: React.FC = () => {
               <img 
                 src="/updates-jet-ski.jpg"
                 alt="Couple on a jet ski in turquoise water"
+                loading="lazy"
+                onError={(e) => { (e.currentTarget as HTMLImageElement).src = 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80'; }}
                 className="rounded-2xl shadow-2xl w-full object-cover transform hover:scale-105 transition-transform duration-500"
               />
               <div className="absolute -bottom-6 -right-6 w-24 h-24 bg-gradient-to-br from-sunset-500 to-safari-600 rounded-2xl flex items-center justify-center shadow-xl">
