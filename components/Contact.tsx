@@ -125,7 +125,11 @@ const Contact: React.FC = () => {
                   </div>
                   <div>
                     <p className="font-semibold text-baobab-800">Call Us</p>
-                    <p className="text-baobab-600">+1 (234) 567-890</p>
+                    <div className="space-y-1 text-baobab-600">
+                      <a href="tel:+264814525199" className="block hover:underline">+264 81 452 5199</a>
+                      <a href="tel:+264818419858" className="block hover:underline">+264 81 841 9858</a>
+                      <a href="tel:+264818619533" className="block hover:underline">+264 81 861 9533</a>
+                    </div>
                   </div>
                 </div>
                 
@@ -135,7 +139,7 @@ const Contact: React.FC = () => {
                   </div>
                   <div>
                     <p className="font-semibold text-baobab-800">Email Us</p>
-                    <p className="text-baobab-600">contact@nownowtours.com</p>
+                    <p className="text-baobab-600">nownowtands@gmail.com</p>
                   </div>
                 </div>
                 
@@ -145,11 +149,11 @@ const Contact: React.FC = () => {
                   </div>
                   <div>
                     <p className="font-semibold text-baobab-800">WhatsApp</p>
-                    <button 
-                      onClick={() => window.open('https://wa.me/1234567890', '_blank')}
+                    <button
+                      onClick={() => window.open('https://wa.me/264814525199', '_blank')}
                       className="text-green-600 font-semibold hover:text-green-700 transition-colors"
                     >
-                      Chat with us instantly
+                      Chat with us on WhatsApp
                     </button>
                   </div>
                 </div>
