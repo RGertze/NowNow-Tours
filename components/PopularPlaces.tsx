@@ -10,6 +10,7 @@ const createSlug = (name: string) => name.toLowerCase().replace(/[^a-z0-9]+/g, '
 const PopularPlaces: React.FC<Props> = () => {
   const tours = TOURS_DATA as Tour[];
   const [active, setActive] = useState(0);
+  const [flipping, setFlipping] = useState(false);
   const intervalRef = useRef<number | null>(null);
   const pausedRef = useRef(false);
   const navigate = useNavigate();
@@ -42,12 +43,28 @@ const PopularPlaces: React.FC<Props> = () => {
           const scale = idx === 0 ? 1 : idx === 1 ? 0.96 : idx === 2 ? 0.92 : 0.88;
           const opacity = idx === 0 ? 1 : idx === 1 ? 0.92 : idx === 2 ? 0.72 : 0.5;
 
+          const isActive = idx === 0;
+          const extraRotateY = isActive && flipping ? ' rotateY(180deg)' : '';
+
+          const combinedTransform = `translateY(${translateY}px) rotate(${rotate}deg) scale(${scale})${extraRotateY}`;
+
+          const handleImageClick = (e: React.MouseEvent) => {
+            e.stopPropagation();
+            if (flipping) return;
+            setFlipping(true);
+            // advance after flip animation
+            window.setTimeout(() => {
+              setActive((s) => (s + 1) % tours.length);
+              setFlipping(false);
+            }, 420);
+          };
+
           return (
             <article
               key={t.slug ?? t.name}
               className="absolute left-0 right-0 mx-auto w-76 rounded-[24px] overflow-hidden border bg-white/5 backdrop-blur-md shadow-2xl flex flex-col cursor-pointer"
               style={{
-                transform: `translateY(${translateY}px) rotate(${rotate}deg) scale(${scale})`,
+                transform: combinedTransform,
                 zIndex: 50 - idx,
                 opacity,
                 transition: 'transform 700ms ease-in-out, opacity 600ms ease-in-out'
@@ -61,7 +78,7 @@ const PopularPlaces: React.FC<Props> = () => {
                   src={`${t.images[0]}?q=80&w=1200&auto=format&fit=crop`}
                   alt={t.name}
                   className="w-full h-full object-cover"
-                  onClick={(e) => { e.stopPropagation(); goToNext(); }}
+                  onClick={handleImageClick}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
                 <div className="absolute left-4 bottom-4 right-4 text-white">
