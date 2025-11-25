@@ -44,19 +44,18 @@ const PopularPlaces: React.FC<Props> = () => {
           const opacity = idx === 0 ? 1 : idx === 1 ? 0.92 : idx === 2 ? 0.72 : 0.5;
 
           const isActive = idx === 0;
-          const extraRotateY = isActive && flipping ? ' rotateY(180deg)' : '';
 
-          const combinedTransform = `translateY(${translateY}px) rotate(${rotate}deg) scale(${scale})${extraRotateY}`;
+          const combinedTransform = `translateY(${translateY}px) rotate(${rotate}deg) scale(${scale})`;
 
           const handleImageClick = (e: React.MouseEvent) => {
             e.stopPropagation();
-            if (flipping) return;
+            if (flipping || !isActive) return;
             setFlipping(true);
-            // advance after flip animation
+            // show backside for a moment, then advance
             window.setTimeout(() => {
               setActive((s) => (s + 1) % tours.length);
               setFlipping(false);
-            }, 420);
+            }, 900);
           };
 
           return (
@@ -73,17 +72,45 @@ const PopularPlaces: React.FC<Props> = () => {
               onMouseEnter={() => { pausedRef.current = true; }}
               onMouseLeave={() => { pausedRef.current = false; }}
             >
-              <div className="relative h-80 w-full overflow-hidden">
-                <img
-                  src={`${t.images[0]}?q=80&w=1200&auto=format&fit=crop`}
-                  alt={t.name}
-                  className="w-full h-full object-cover"
-                  onClick={handleImageClick}
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
-                <div className="absolute left-4 bottom-4 right-4 text-white">
-                  <h4 className="text-lg font-semibold drop-shadow">{t.name}</h4>
-                  <p className="text-sm text-white/80 mt-1">{t.destination}</p>
+              <div className="relative h-80 w-full overflow-hidden" style={{ perspective: 1200 }}>
+                <div
+                  className="w-full h-full"
+                  style={{
+                    transformStyle: 'preserve-3d',
+                    transition: 'transform 700ms ease',
+                    transform: isActive && flipping ? 'rotateY(180deg)' : 'rotateY(0deg)'
+                  }}
+                >
+                  {/* Front face */}
+                  <div style={{ backfaceVisibility: 'hidden' as const }} className="absolute inset-0">
+                    <img
+                      src={`${t.images[0]}?q=80&w=1200&auto=format&fit=crop`}
+                      alt={t.name}
+                      className="w-full h-full object-cover"
+                      onClick={handleImageClick}
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
+                    <div className="absolute left-4 bottom-4 right-4 text-white">
+                      <h4 className="text-lg font-semibold drop-shadow">{t.name}</h4>
+                      <p className="text-sm text-white/80 mt-1">{t.destination}</p>
+                    </div>
+                  </div>
+
+                  {/* Back face */}
+                  <div style={{ transform: 'rotateY(180deg)', backfaceVisibility: 'hidden' as const }} className="absolute inset-0 bg-gradient-to-b from-safari-900/60 to-black/60 p-4 flex flex-col justify-between text-white">
+                    <div>
+                      <h4 className="text-xl font-bold">{t.name}</h4>
+                      <p className="text-sm mt-2">{t.description}</p>
+                      <ul className="mt-3 text-sm space-y-1">
+                        {t.itinerary.slice(0, 3).map((it, idx) => (
+                          <li key={idx} className="opacity-90">• {it}</li>
+                        ))}
+                      </ul>
+                    </div>
+                    <div className="flex justify-end gap-2">
+                      <button onClick={(e) => { e.stopPropagation(); onExplore(t); }} className="bg-white/10 hover:bg-white/20 py-2 px-4 rounded-md">Explore</button>
+                    </div>
+                  </div>
                 </div>
               </div>
               <div className="p-3 flex items-center justify-between">
