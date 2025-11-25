@@ -16,6 +16,8 @@ export const TOURS_DATA: Tour[] = [
         'https://images.unsplash.com/photo-1571771019784-3ff35f4f4277?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80', // Spice Market
     ],
     name: 'Zanzibar Getaway',
+    slug: 'zanzibar-getaway',
+    flyerUrl: '/flyers/zanzibar-getaway.pdf',
     destination: 'Tanzania',
     description: 'Relax on the pristine white-sand beaches of the Spice Islands. Explore historic Stone Town and swim with turtles.',
     itinerary: ['Return ticket from Windhoek to Zanzibar', 'Boat Trip', 'Dolphin Snorkel'],
@@ -29,6 +31,8 @@ export const TOURS_DATA: Tour[] = [
         'https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80', // Winelands
     ],
     name: 'Cape Town Adventure',
+    slug: 'cape-town-adventure',
+    flyerUrl: '/flyers/cape-town-adventure.pdf',
     destination: 'South Africa',
     description: 'Experience the vibrant culture and breathtaking landscapes of the Mother City, from Table Mountain to the Cape Winelands.',
     itinerary: ['Table Mountain', 'Daily Breakfast (included)', 'Wine Tasting', 'Soufriere Boat Cruise'],
@@ -43,6 +47,8 @@ export const TOURS_DATA: Tour[] = [
         'https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80', // Safari Wildlife
     ],
     name: 'Lubango Wonders',
+    slug: 'lubango-wonders',
+    flyerUrl: '/flyers/lubango-wonders.pdf',
     destination: 'Angola',
     description: 'Discover the raw, untouched beauty of Angola. From the bustling capital Luanda to the stunning Kalandula Falls.',
     itinerary: ['Cristo Rei Miradouro', 'Pulukua Resort', 'Beach Hopping'],
@@ -56,6 +62,8 @@ export const TOURS_DATA: Tour[] = [
         'https://images.unsplash.com/photo-1518684079-3c830dcef090?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80', // Sunset Cruise
     ],
     name: 'Victoria Falls',
+    slug: 'victoria-falls',
+    flyerUrl: '/flyers/victoria-falls.pdf',
     destination: 'Zambia',
     description: 'Experience the awe-inspiring Victoria Falls and the nearby Livingstone attractions for a memorable, water-themed escape.',
     itinerary: ['Day Visit to Victoria Falls', 'Livingstone Waterfront', 'Sunset Cruise (Optional)'],
@@ -67,6 +75,8 @@ export const TOURS_DATA: Tour[] = [
       'https://images.unsplash.com/photo-1508264165352-c5c0b6b9c1d6?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', // Lesotho
     ],
     name: 'Lesotho Highlands Escape',
+    slug: 'lesotho-highlands-escape',
+    flyerUrl: '/flyers/lesotho-highlands-escape.pdf',
     destination: 'Lesotho',
     description: 'Snow-sport friendly escape to Afriski and scenic canyon views at Maletsunyane and Maliba Lodge.',
     itinerary: ['Accommodation', 'Round-trip flight', 'Afriski Mountain Resort snow', 'Maletsunyane', 'Daily breakfast', 'Maliba Lodge'],
@@ -78,6 +88,8 @@ export const TOURS_DATA: Tour[] = [
       'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', // Bali beach
     ],
     name: 'Bali Cultural & Adventure',
+    slug: 'bali-cultural-adventure',
+    flyerUrl: '/flyers/bali-cultural-adventure.pdf',
     destination: 'Indonesia',
     description: 'Explore temples, waterfalls, and iconic Bali experiences with comfortable stays and local highlights.',
     itinerary: ['Round-trip flight', '5 Nights Accommodation', 'Daily breakfast', 'Tibumana waterfall', 'Lempuyang Temple', 'Bali nest', 'Bali Swings', 'Floating breakfast', 'Ubud Market', 'Clubbing'],
@@ -89,6 +101,8 @@ export const TOURS_DATA: Tour[] = [
       'https://images.unsplash.com/photo-1505765052456-7f3b2aedf5d0?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80', // Maldives
     ],
     name: 'Maldives Seaside Retreat',
+    slug: 'maldives-seaside-retreat',
+    flyerUrl: '/flyers/maldives-seaside-retreat.pdf',
     destination: 'Maldives',
     description: 'Luxury island escape — more information and packages coming soon.',
     itinerary: ['More info coming soon'],

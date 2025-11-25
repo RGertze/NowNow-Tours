@@ -7,6 +7,8 @@ export interface Tour {
   priceRange: string;
   upcomingDates?: string[];
   extras?: { [key: string]: string };
+  slug?: string;
+  flyerUrl?: string;
 }
 
 export interface Testimonial {

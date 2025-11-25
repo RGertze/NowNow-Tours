@@ -10,10 +10,10 @@ const TripItinerary: React.FC<Props> = ({ isOpen, onClose, place }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-60 flex items-center justify-center">
-      <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={onClose}></div>
+    <div style={{ zIndex: 9999 }} className="fixed inset-0 flex items-center justify-center">
+      <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={onClose} />
 
-      <div className="relative w-11/12 max-w-3xl bg-white/5 backdrop-blur-md rounded-2xl shadow-2xl overflow-hidden border border-white/8 z-70">
+      <div onClick={(e) => e.stopPropagation()} className="relative w-11/12 max-w-3xl bg-white/5 backdrop-blur-md rounded-2xl shadow-2xl overflow-hidden border border-white/8" style={{ pointerEvents: 'auto' }}>
         <div className="p-6">
           <div className="flex items-start justify-between gap-4">
             <div>

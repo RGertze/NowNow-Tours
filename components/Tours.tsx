@@ -1,9 +1,10 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { FaWhatsapp } from 'react-icons/fa';
 import { TOURS_DATA } from '../constants';
 import type { Tour } from '../types';
 import TourPlanningForm from './TourPlanningForm';
 import UpcomingTours from './UpcomingTours';
+import { useLocation } from 'react-router-dom';
 
 const TourCard: React.FC<{ tour: Tour }> = ({ tour }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -112,15 +113,34 @@ const TourCard: React.FC<{ tour: Tour }> = ({ tour }) => {
           </div>
         </div>
         
-        <a 
-          href="https://wa.me/1234567890" 
-          target="_blank" 
-          rel="noopener noreferrer" 
-          className="mt-auto w-full text-center bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-semibold py-3 px-6 rounded-full transition-all duration-300 flex items-center justify-center gap-2 transform hover:scale-105 shadow-lg hover:shadow-xl"
-        >
-          <FaWhatsapp size={20} />
-          Contact on WhatsApp
-        </a>
+        <div className="flex gap-3 mt-auto">
+          {tour.flyerUrl && tour.flyerUrl !== '#' && (
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                const a = document.createElement('a');
+                a.href = tour.flyerUrl as string;
+                a.target = '_blank';
+                a.rel = 'noopener noreferrer';
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+              }}
+              className="flex-1 text-center bg-white/10 hover:bg-white/20 text-white font-semibold py-3 px-4 rounded-full transition-all duration-300 flex items-center justify-center gap-2"
+            >
+              Download Flyer
+            </button>
+          )}
+          <a 
+            href="https://wa.me/1234567890" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="flex-1 text-center bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-semibold py-3 px-4 rounded-full transition-all duration-300 flex items-center justify-center gap-2"
+          >
+            <FaWhatsapp size={20} />
+            Contact on WhatsApp
+          </a>
+        </div>
       </div>
     </div>
     </div>
@@ -130,6 +150,30 @@ const TourCard: React.FC<{ tour: Tour }> = ({ tour }) => {
 const Tours: React.FC = () => {
   const [isPlanningFormOpen, setIsPlanningFormOpen] = useState(false);
   const scrollRef = useRef<HTMLDivElement | null>(null);
+  const location = useLocation();
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const tourSlug = params.get('tour');
+    if (!tourSlug) return;
+
+    // find the tour index by slug
+    const idx = TOURS_DATA.findIndex((t) => (t.slug ?? t.name.toLowerCase().replace(/[^a-z0-9]+/g, '-')) === tourSlug);
+    if (idx === -1) return;
+
+    // scroll to the tour card
+    requestAnimationFrame(() => {
+      const container = scrollRef.current;
+      if (!container) return;
+      const card = container.children[idx] as HTMLElement | undefined;
+      if (card) card.scrollIntoView({ behavior: 'smooth', inline: 'center' });
+      // open flyer in new tab if available
+      const tour = TOURS_DATA[idx];
+      if (tour?.flyerUrl && tour.flyerUrl !== '#') {
+        window.open(tour.flyerUrl, '_blank', 'noopener');
+      }
+    });
+  }, [location.search]);
 
   const scrollByAmount = (amount: number) => {
     if (!scrollRef.current) return;
