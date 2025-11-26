@@ -1,14 +1,14 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import TourPlanningForm from './TourPlanningForm';
-import PopularPlaces from './PopularPlaces';
 import TripItinerary from './TripItinerary';
+import PinCarousel from './PinCarousel';
 
 const Hero: React.FC = () => {
   const [isPlanningFormOpen, setIsPlanningFormOpen] = useState(false);
   const [itineraryOpen, setItineraryOpen] = useState(false);
   const [selectedPlace, setSelectedPlace] = useState<{ title: string; img: string } | null>(null);
-  const [isHeroVisible, setIsHeroVisible] = useState(true);
+  const [backgroundImage, setBackgroundImage] = useState('/hero-bg.jpg');
   const heroRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
@@ -16,17 +16,13 @@ const Hero: React.FC = () => {
     const obs = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          const visible = entry.isIntersecting && entry.intersectionRatio > 0.25;
-          setIsHeroVisible(visible);
-          if (!visible) {
-            // close any open itinerary when hero scrolls away
+          if (!entry.isIntersecting || entry.intersectionRatio <= 0.25) {
             setItineraryOpen(false);
           }
         });
       },
       { threshold: [0, 0.25, 0.5] }
     );
-
     obs.observe(heroRef.current);
     return () => obs.disconnect();
   }, []);
@@ -72,10 +68,14 @@ const Hero: React.FC = () => {
         animate={{ scale: 1.05 }}
         transition={{ duration: 20, ease: 'easeInOut', repeat: Infinity, repeatType: 'reverse' }}
       >
-        <img
-          src="/hero-bg.jpg"
+        <motion.img
+          key={backgroundImage}
+          src={backgroundImage}
           alt="Hero background"
           className="w-full h-full object-cover"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.6 }}
           onError={(e) => {
             (e.currentTarget as HTMLImageElement).src = 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=2000&auto=format&fit=crop';
           }}
@@ -134,18 +134,13 @@ const Hero: React.FC = () => {
               Plan Your Trip
             </motion.button>
           </motion.div>
+
+          {/* Pin-style 3D stacked carousel placed below CTAs */}
+          <motion.div variants={itemVariants} className="mt-8">
+            <PinCarousel onActiveChange={setBackgroundImage} autoplayInterval={4000} />
+          </motion.div>
         </motion.div>
       </div>
-
-      {/* Right-side stacked popular place cards inside hero - only while visible */}
-      {isHeroVisible && (
-        <PopularPlaces
-          onExplore={(place) => {
-            setSelectedPlace(place);
-            setItineraryOpen(true);
-          }}
-        />
-      )}
 
       <TourPlanningForm isOpen={isPlanningFormOpen} onClose={() => setIsPlanningFormOpen(false)} />
 
