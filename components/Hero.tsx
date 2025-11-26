@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { motion } from 'framer-motion';
 import TourPlanningForm from './TourPlanningForm';
 import PopularPlaces from './PopularPlaces';
 import TripItinerary from './TripItinerary';
@@ -34,49 +35,108 @@ const Hero: React.FC = () => {
     document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
   };
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+        delayChildren: 0.3,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { y: 50, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        duration: 0.8,
+        ease: [0.22, 1, 0.36, 1],
+      },
+    },
+  };
+
+  const buttonVariants = {
+    whileHover: { scale: 1.05 },
+    whileTap: { scale: 0.95 },
+  };
+
   return (
-    <section ref={heroRef} className="relative w-full">
-      {/* Background image placeholder - replace with your asset at /public/hero-bg.jpg */}
-      <div className="relative h-[72vh] md:h-[78vh] lg:h-[88vh] w-full overflow-hidden">
+    <section ref={heroRef} className="relative w-full h-screen overflow-hidden">
+      {/* Ken Burns Background Zoom Effect */}
+      <motion.div
+        className="absolute inset-0 w-full h-full"
+        initial={{ scale: 1 }}
+        animate={{ scale: 1.05 }}
+        transition={{ duration: 20, ease: 'easeInOut', repeat: Infinity, repeatType: 'reverse' }}
+      >
         <img
           src="/hero-bg.jpg"
           alt="Hero background"
-          className="absolute inset-0 w-full h-full object-cover brightness-90"
+          className="w-full h-full object-cover"
+          onError={(e) => {
+            (e.currentTarget as HTMLImageElement).src = 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=2000&auto=format&fit=crop';
+          }}
         />
+      </motion.div>
 
-        <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-black/10 to-black/40"></div>
+      {/* Immersive Gradient Overlay */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent z-10"></div>
 
-        {/* decorative top-left image removed per request */}
+      {/* Main Content Container */}
+      <div className="relative z-40 h-full flex items-center justify-center px-4 md:px-6">
+        <motion.div
+          className="max-w-5xl text-center"
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+        >
+          {/* Massive Headline */}
+          <motion.h1
+            variants={itemVariants}
+            className="text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight text-white drop-shadow-2xl leading-tight"
+          >
+            Unlock Your Travel
+            <br />
+            <span className="bg-gradient-to-r from-sunset-400 via-safari-400 to-sunset-300 bg-clip-text text-transparent">
+              Dreams
+            </span>
+          </motion.h1>
 
-        <div className="relative z-40 h-full flex items-center justify-center px-6">
-          <div className="max-w-4xl text-center">
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-extrabold leading-tight text-white drop-shadow-lg">
-              Unlock Your Travel Dreams
-              <br />
-              <span className="bg-gradient-to-r from-sunset-400 to-safari-400 bg-clip-text text-transparent">With Us!!!</span>
-            </h1>
-            <p className="mt-4 text-base md:text-lg text-white/90 max-w-2xl mx-auto font-light">
-              Discover the world one adventure at a time — life is short, book the trip.
-            </p>
+          {/* Subheadline */}
+          <motion.p
+            variants={itemVariants}
+            className="mt-6 text-lg md:text-xl text-white/80 max-w-3xl mx-auto font-light leading-relaxed"
+          >
+            Discover the world one adventure at a time — life is short, book the trip.
+          </motion.p>
 
-            <div className="mt-8 flex justify-center gap-4">
-              <button
-                onClick={() => scrollToSection('tours')}
-                className="rounded-2xl bg-sunset-500 hover:bg-sunset-600 text-white font-semibold px-6 py-3 shadow-xl text-lg"
-              >
-                Get Started
-              </button>
+          {/* CTA Buttons with Glassmorphism */}
+          <motion.div
+            variants={itemVariants}
+            className="mt-10 flex flex-col md:flex-row justify-center items-center gap-4"
+          >
+            <motion.button
+              {...buttonVariants}
+              onClick={() => scrollToSection('tours')}
+              className="px-8 py-4 bg-gradient-to-r from-sunset-500 to-sunset-600 hover:from-sunset-600 hover:to-sunset-700 text-white font-semibold rounded-full shadow-2xl text-lg"
+            >
+              Get Started
+            </motion.button>
 
-              <button
-                onClick={() => setIsPlanningFormOpen(true)}
-                className="rounded-2xl bg-white/10 backdrop-blur-md text-white font-semibold px-5 py-3 hover:bg-white/20"
-              >
-                Plan Your Trip
-              </button>
-            </div>
-          </div>
-        </div>
+            <motion.button
+              {...buttonVariants}
+              onClick={() => setIsPlanningFormOpen(true)}
+              className="px-8 py-4 backdrop-blur-md bg-white/20 border border-white/30 text-white font-semibold rounded-full shadow-xl hover:bg-white/30 text-lg transition-all"
+            >
+              Plan Your Trip
+            </motion.button>
+          </motion.div>
+        </motion.div>
       </div>
+
       {/* Right-side stacked popular place cards inside hero - only while visible */}
       {isHeroVisible && (
         <PopularPlaces
@@ -90,14 +150,6 @@ const Hero: React.FC = () => {
       <TourPlanningForm isOpen={isPlanningFormOpen} onClose={() => setIsPlanningFormOpen(false)} />
 
       <TripItinerary isOpen={itineraryOpen} onClose={() => setItineraryOpen(false)} place={selectedPlace} />
-
-      <style>{`
-        @keyframes float {
-          0% { transform: translateY(0px); }
-          50% { transform: translateY(-12px); }
-          100% { transform: translateY(0px); }
-        }
-      `}</style>
     </section>
   );
 };
