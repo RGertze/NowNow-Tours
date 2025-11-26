@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { motion, useMotionValue } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { TOURS_DATA } from '../constants';
 import type { Tour } from '../types';
 
@@ -14,33 +14,33 @@ const PinCarousel: React.FC<Props> = ({ onActiveChange, autoplayInterval = 4000 
   const tours: Tour[] = TOURS_DATA;
   const [current, setCurrent] = useState(0);
   const containerRef = useRef<HTMLDivElement | null>(null);
-  const dragX = useMotionValue(0);
-  const [cardWidth, setCardWidth] = useState(300);
   const [paused, setPaused] = useState(false);
   const autoplayRef = useRef<number | null>(null);
+  const isDraggingRef = useRef(false);
 
-  useEffect(() => {
-    const resize = () => {
-      const w = containerRef.current?.clientWidth ?? 900;
-      setCardWidth(Math.min(420, Math.max(220, Math.floor(w / 3.6))));
-    };
-    resize();
-    window.addEventListener('resize', resize);
-    return () => window.removeEventListener('resize', resize);
-  }, []);
+  const prev = () => {
+    setCurrent((c) => (c - 1 + tours.length) % tours.length);
+  };
 
-  const prev = () => setCurrent((c) => clamp(c - 1, 0, tours.length - 1));
-  const next = () => setCurrent((c) => clamp(c + 1, 0, tours.length - 1));
+  const next = () => {
+    setCurrent((c) => (c + 1) % tours.length);
+  };
 
-  const onDragEnd = (_: any, info: { offset: { x: number }; velocity: { x: number } }) => {
+  const handleDragEnd = (_: any, info: { offset: { x: number }; velocity: { x: number } }) => {
+    isDraggingRef.current = false;
     const { offset, velocity } = info;
-    const threshold = cardWidth * 0.35;
-    if (offset.x > threshold || velocity.x > 500) {
+    const threshold = 50;
+
+    if (offset.x > threshold || velocity.x > 300) {
       prev();
-    } else if (offset.x < -threshold || velocity.x < -500) {
+    } else if (offset.x < -threshold || velocity.x < -300) {
       next();
     }
-    dragX.set(0);
+  };
+
+  const handleDragStart = () => {
+    isDraggingRef.current = true;
+    setPaused(true);
   };
 
   useEffect(() => {
@@ -48,13 +48,12 @@ const PinCarousel: React.FC<Props> = ({ onActiveChange, autoplayInterval = 4000 
   }, [current, onActiveChange, tours]);
 
   useEffect(() => {
-    if (paused) return;
+    if (paused || isDraggingRef.current) return;
     autoplayRef.current = window.setInterval(() => {
       setCurrent((c) => (c + 1) % tours.length);
     }, autoplayInterval);
     return () => {
       if (autoplayRef.current) window.clearInterval(autoplayRef.current);
-      autoplayRef.current = null;
     };
   }, [paused, autoplayInterval, tours.length]);
 
@@ -67,41 +66,100 @@ const PinCarousel: React.FC<Props> = ({ onActiveChange, autoplayInterval = 4000 
     return () => window.removeEventListener('keydown', onKey);
   }, []);
 
+  const getCardStyles = (pos: number) => {
+    const maxDistance = 2;
+    const normalizedPos = Math.max(-maxDistance, Math.min(maxDistance, pos));
+
+    return {
+      x: normalizedPos * 120,
+      y: Math.abs(normalizedPos) * 40,
+      scale: Math.max(0.7, 1 - Math.abs(normalizedPos) * 0.15),
+      rotateY: normalizedPos * -25,
+      opacity: Math.max(0.5, 1 - Math.abs(normalizedPos) * 0.3),
+      zIndex: Math.round(100 - Math.abs(normalizedPos) * 10),
+    };
+  };
+
   return (
-    <div className="w-full flex flex-col items-center mt-8">
-      <div ref={containerRef} className="relative w-full max-w-5xl px-4" style={{ perspective: 1500 }}>
-        <div className="relative h-64 md:h-80 lg:h-96 flex items-center justify-center">
+    <div className="w-full flex flex-col items-center mt-16 mb-4">
+      {/* Carousel Container */}
+      <div
+        ref={containerRef}
+        className="relative w-full px-8 md:px-12"
+        style={{
+          perspective: 2000,
+          height: '480px',
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        {/* Card Stack */}
+        <div
+          style={{
+            position: 'relative',
+            width: '100%',
+            maxWidth: '500px',
+            height: '100%',
+          }}
+        >
           {tours.map((tour, i) => {
             const pos = i - current;
-            if (Math.abs(pos) > 4) return null;
+            if (Math.abs(pos) > 3) return null;
 
-            const x = pos * (cardWidth * 0.55);
-            const scale = clamp(1 - Math.abs(pos) * 0.12, 0.6, 1);
-            const rotateY = clamp(-pos * 12, -30, 30);
-            const zIndex = 100 - Math.abs(pos);
+            const styles = getCardStyles(pos);
 
             return (
               <motion.div
                 key={tour.name}
-                className="absolute top-0 bottom-0 flex flex-col bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl overflow-hidden shadow-xl max-w-xs md:max-w-md"
+                layout
                 drag="x"
-                dragConstraints={{ left: 0, right: 0 }}
-                onDragEnd={onDragEnd}
-                style={{ x: dragX, transformStyle: 'preserve-3d', zIndex }}
-                animate={{ x, scale, rotateY }}
-                transition={{ type: 'spring', stiffness: 220, damping: 30 }}
-                initial={false}
-                whileTap={{ scale: pos === 0 ? 0.98 : scale }}
-                aria-hidden={pos !== 0}
-                title={tour.name}
+                dragElastic={0.2}
+                dragConstraints={{ left: -100, right: 100 }}
+                onDragStart={handleDragStart}
+                onDragEnd={handleDragEnd}
+                animate={{
+                  x: styles.x,
+                  y: styles.y,
+                  scale: styles.scale,
+                  rotateY: styles.rotateY,
+                  opacity: styles.opacity,
+                }}
+                transition={{
+                  type: 'spring',
+                  stiffness: 300,
+                  damping: 35,
+                  mass: 1,
+                }}
+                style={{
+                  position: 'absolute',
+                  top: '50%',
+                  left: '50%',
+                  translateX: '-50%',
+                  translateY: '-50%',
+                  transformStyle: 'preserve-3d',
+                  zIndex: styles.zIndex,
+                  cursor: pos === 0 ? 'grab' : 'default',
+                }}
+                whileHover={pos === 0 ? { scale: 1.05 } : {}}
+                whileTap={pos === 0 ? { scale: 0.98 } : {}}
                 onMouseEnter={() => setPaused(true)}
                 onMouseLeave={() => setPaused(false)}
+                className="flex flex-col bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl border border-white/20 rounded-3xl overflow-hidden shadow-2xl w-full max-w-md"
               >
-                <div className="w-full h-40 md:h-56 lg:h-64 bg-gray-200 relative">
-                  <img
+                {/* Image Section */}
+                <div className="relative w-full h-56 md:h-64 bg-gray-900 overflow-hidden">
+                  <motion.img
                     src={tour.image || '/hero-bg.jpg'}
                     alt={tour.name}
-                    className={`w-full h-full object-cover ${pos === 0 ? '' : 'filter grayscale-50 blur-sm'}`}
+                    className="w-full h-full object-cover"
+                    animate={{
+                      filter:
+                        pos === 0
+                          ? 'grayscale(0%) brightness(1)'
+                          : 'grayscale(80%) brightness(0.7)',
+                    }}
+                    transition={{ duration: 0.3 }}
                     onClick={() => {
                       setCurrent(i);
                       onActiveChange?.(tour.image || '/hero-bg.jpg');
@@ -112,61 +170,110 @@ const PinCarousel: React.FC<Props> = ({ onActiveChange, autoplayInterval = 4000 
                   />
                 </div>
 
-                <div className="p-4 flex-1 flex flex-col justify-between">
+                {/* Content Section */}
+                <motion.div
+                  className="p-5 flex-1 flex flex-col justify-between"
+                  animate={{ opacity: pos === 0 ? 1 : 0.7 }}
+                >
                   <div>
-                    <h3 className="text-xl md:text-2xl font-semibold text-white">{tour.name}</h3>
-                    <p className="mt-2 text-sm text-white/80 line-clamp-3">{tour.description}</p>
+                    <motion.h3
+                      className="text-2xl font-bold text-white"
+                      animate={{ fontSize: pos === 0 ? 24 : 18 }}
+                    >
+                      {tour.name}
+                    </motion.h3>
+                    <motion.p
+                      className="mt-2 text-sm text-white/80 line-clamp-2"
+                      animate={{ opacity: pos === 0 ? 1 : 0.6 }}
+                    >
+                      {tour.description}
+                    </motion.p>
                   </div>
 
-                  <div className="mt-4 flex items-center justify-between">
-                    <button
+                  <div className="mt-4 flex items-center justify-between gap-2">
+                    <motion.button
                       onClick={() => window.open(tour.flyerUrl || '#', '_blank')}
-                      className="px-3 py-2 bg-sunset-500 hover:bg-sunset-600 text-white rounded-lg text-sm"
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      className="px-4 py-2 bg-gradient-to-r from-sunset-500 to-sunset-600 hover:from-sunset-600 hover:to-sunset-700 text-white rounded-xl text-sm font-semibold shadow-lg"
                     >
-                      Download Flyer
-                    </button>
+                      Flyer
+                    </motion.button>
 
-                    <button
-                      onClick={() => {
-                        setCurrent(i);
-                      }}
-                      className="text-white/90 underline text-sm"
+                    <motion.button
+                      onClick={() => setCurrent(i)}
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      className={`px-4 py-2 rounded-xl text-sm font-semibold transition-all ${
+                        pos === 0
+                          ? 'bg-white/20 text-white border border-white/30'
+                          : 'text-white/70'
+                      }`}
                     >
                       View
-                    </button>
+                    </motion.button>
                   </div>
-                </div>
+                </motion.div>
               </motion.div>
             );
           })}
         </div>
 
-        <button
+        {/* Navigation Arrows */}
+        <motion.button
           onClick={prev}
-          aria-label="Previous"
-          className="absolute left-2 top-1/2 -translate-y-1/2 z-50 bg-black/40 hover:bg-black/60 text-white p-2 rounded-full"
+          whileHover={{ scale: 1.1, backgroundColor: 'rgba(0, 0, 0, 0.7)' }}
+          whileTap={{ scale: 0.95 }}
+          className="absolute left-0 top-1/2 -translate-y-1/2 z-50 bg-black/40 hover:bg-black/60 text-white p-3 rounded-full transition-all"
+          aria-label="Previous card"
         >
-          ‹
-        </button>
-        <button
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+          </svg>
+        </motion.button>
+
+        <motion.button
           onClick={next}
-          aria-label="Next"
-          className="absolute right-2 top-1/2 -translate-y-1/2 z-50 bg-black/40 hover:bg-black/60 text-white p-2 rounded-full"
+          whileHover={{ scale: 1.1, backgroundColor: 'rgba(0, 0, 0, 0.7)' }}
+          whileTap={{ scale: 0.95 }}
+          className="absolute right-0 top-1/2 -translate-y-1/2 z-50 bg-black/40 hover:bg-black/60 text-white p-3 rounded-full transition-all"
+          aria-label="Next card"
         >
-          ›
-        </button>
+          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+          </svg>
+        </motion.button>
       </div>
 
-      <div className="mt-4 flex items-center gap-2">
+      {/* Dot Indicators */}
+      <motion.div className="mt-8 flex items-center gap-2" layout>
         {tours.map((_, i) => (
-          <button
+          <motion.button
             key={i}
             onClick={() => setCurrent(i)}
-            className={`w-3 h-3 rounded-full ${i === current ? 'bg-white' : 'bg-white/30'}`}
+            animate={{
+              scale: i === current ? 1.4 : 1,
+              backgroundColor:
+                i === current ? 'rgba(255, 255, 255, 1)' : 'rgba(255, 255, 255, 0.3)',
+            }}
+            whileHover={{ scale: i === current ? 1.4 : 1.2 }}
+            className="w-2.5 h-2.5 rounded-full transition-all"
             aria-label={`Go to slide ${i + 1}`}
           />
         ))}
-      </div>
+      </motion.div>
+
+      {/* Autoplay Indicator */}
+      {!paused && (
+        <motion.div
+          className="mt-3 text-xs text-white/60"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+        >
+          Hover to pause
+        </motion.div>
+      )}
     </div>
   );
 };
