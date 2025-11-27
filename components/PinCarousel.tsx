@@ -44,7 +44,7 @@ const PinCarousel: React.FC<Props> = ({ onActiveChange, autoplayInterval = 4000 
   };
 
   useEffect(() => {
-    onActiveChange?.(tours[current]?.image || '/hero-bg.jpg');
+    onActiveChange?.(tours[current]?.images?.[0] || '/hero-bg.jpg');
   }, [current, onActiveChange, tours]);
 
   useEffect(() => {
@@ -145,12 +145,12 @@ const PinCarousel: React.FC<Props> = ({ onActiveChange, autoplayInterval = 4000 
                 whileTap={pos === 0 ? { scale: 0.98 } : {}}
                 onMouseEnter={() => setPaused(true)}
                 onMouseLeave={() => setPaused(false)}
-                className="flex flex-col bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl border border-white/20 rounded-3xl overflow-hidden shadow-2xl w-full max-w-md"
+                className="flex flex-col bg-gradient-to-br from-white/95 to-white/90 backdrop-blur-xl border border-white/40 rounded-3xl overflow-hidden shadow-2xl w-full max-w-md"
               >
                 {/* Image Section */}
-                <div className="relative w-full h-56 md:h-64 bg-gray-900 overflow-hidden">
+                <div className="relative w-full h-56 md:h-64 bg-gray-200 overflow-hidden">
                   <motion.img
-                    src={tour.image || '/hero-bg.jpg'}
+                    src={tour.images?.[0] || '/hero-bg.jpg'}
                     alt={tour.name}
                     className="w-full h-full object-cover"
                     animate={{
@@ -162,7 +162,7 @@ const PinCarousel: React.FC<Props> = ({ onActiveChange, autoplayInterval = 4000 
                     transition={{ duration: 0.3 }}
                     onClick={() => {
                       setCurrent(i);
-                      onActiveChange?.(tour.image || '/hero-bg.jpg');
+                      onActiveChange?.(tour.images?.[0] || '/hero-bg.jpg');
                     }}
                     onError={(e) => {
                       (e.currentTarget as HTMLImageElement).src = '/hero-bg.jpg';
@@ -177,13 +177,13 @@ const PinCarousel: React.FC<Props> = ({ onActiveChange, autoplayInterval = 4000 
                 >
                   <div>
                     <motion.h3
-                      className="text-2xl font-bold text-white"
+                      className="text-2xl font-bold text-gray-900"
                       animate={{ fontSize: pos === 0 ? 24 : 18 }}
                     >
                       {tour.name}
                     </motion.h3>
                     <motion.p
-                      className="mt-2 text-sm text-white/80 line-clamp-2"
+                      className="mt-2 text-sm text-gray-700 line-clamp-2"
                       animate={{ opacity: pos === 0 ? 1 : 0.6 }}
                     >
                       {tour.description}
@@ -206,8 +206,8 @@ const PinCarousel: React.FC<Props> = ({ onActiveChange, autoplayInterval = 4000 
                       whileTap={{ scale: 0.95 }}
                       className={`px-4 py-2 rounded-xl text-sm font-semibold transition-all ${
                         pos === 0
-                          ? 'bg-white/20 text-white border border-white/30'
-                          : 'text-white/70'
+                          ? 'bg-gray-200 text-gray-800 border border-gray-300'
+                          : 'text-gray-600'
                       }`}
                     >
                       View
@@ -254,10 +254,10 @@ const PinCarousel: React.FC<Props> = ({ onActiveChange, autoplayInterval = 4000 
             animate={{
               scale: i === current ? 1.4 : 1,
               backgroundColor:
-                i === current ? 'rgba(255, 255, 255, 1)' : 'rgba(255, 255, 255, 0.3)',
+                i === current ? 'rgba(255, 140, 50, 1)' : 'rgba(255, 255, 255, 0.5)',
             }}
             whileHover={{ scale: i === current ? 1.4 : 1.2 }}
-            className="w-2.5 h-2.5 rounded-full transition-all"
+            className="w-2.5 h-2.5 rounded-full transition-all shadow-lg"
             aria-label={`Go to slide ${i + 1}`}
           />
         ))}
