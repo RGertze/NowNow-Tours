@@ -4,15 +4,15 @@ import { FaWhatsapp } from 'react-icons/fa';
 import { TOURS_DATA } from '../constants';
 import type { Tour } from '../types';
 
-// Country flag emojis
+// Country flag images
 const COUNTRY_FLAGS: Record<string, string> = {
-  'Tanzania': '🇹🇿',
-  'South Africa': '🇿🇦',
-  'Angola': '🇦🇴',
-  'Zambia': '🇿🇲',
-  'Lesotho': '🇱🇸',
-  'Indonesia': '🇮🇩',
-  'Maldives': '🇲🇻',
+  'Tanzania': '/flags/Tanzania National Flag.jpg',
+  'South Africa': '/flags/South Africa National Flag.jpg',
+  'Angola': '/flags/Angola national Flag.jpg',
+  'Zambia': '/flags/Zamibia National Flag.jpg',
+  'Lesotho': '/flags/lesotho National Flag.jpg',
+  'Indonesia': '/flags/Indonesia National Flag.jpg',
+  'Maldives': '/flags/Maldives National Flag.jpg',
 };
 
 // Smart filter categories
@@ -70,7 +70,7 @@ const TourCard: React.FC<TourCardProps> = ({ tour, onViewDetails, showComingSoon
   }, [tour.images.length]);
 
   const price = tour.priceRange.split('·')[0].trim();
-  const flag = COUNTRY_FLAGS[tour.destination] || '🌍';
+  const flag = COUNTRY_FLAGS[tour.destination] || '/flags/default.png';
 
   return (
     <motion.div
@@ -96,8 +96,13 @@ const TourCard: React.FC<TourCardProps> = ({ tour, onViewDetails, showComingSoon
         </AnimatePresence>
         
         {/* Country Flag (top-right, circular) */}
-        <div className="absolute top-3 right-3 w-10 h-10 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center shadow-md text-2xl">
-          {flag}
+        <div className="absolute top-3 right-3 w-10 h-10 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center shadow-md overflow-hidden">
+          <img
+            src={flag}
+            alt={`${tour.destination} flag`}
+            className="w-full h-full object-cover"
+            onError={(e) => { (e.currentTarget as HTMLImageElement).src = 'https://via.placeholder.com/40?text=Flag'; }}
+          />
         </div>
         
         {/* Coming Soon Badge */}
