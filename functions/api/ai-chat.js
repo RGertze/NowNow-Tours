@@ -1,4 +1,4 @@
-// Cloudflare Workers API endpoint for AI chat using Google Gemini
+// Cloudflare Workers API endpoint for AI chat using OpenAI GPT-4.0-mini
 export async function onRequestPost(context) {
   const { request, env } = context;
   
@@ -71,61 +71,50 @@ export async function onRequestPost(context) {
       });
     }
 
-    const prompt = `${tourContext}${conversationContext}\n\nUser: ${message}\n\nAssistant:`;
+    const systemPrompt = tourContext.trim();
 
-    // Get API key from environment
-    const apiKey = env.GOOGLE_AI_API_KEY || 'AIzaSyA__Y0VTZFyfCBS3VdNEPQFj5v9w1oy7Iw';
-    
-    // Call Google Gemini API
-    const geminiResponse = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=${apiKey}`, {
+    // Get OpenAI API key from environment (set via Wrangler secrets)
+    const apiKey = env.OPENAI_API_KEY;
+    if (!apiKey) {
+      throw new Error('Missing OPENAI_API_KEY in environment');
+    }
+
+    // Build messages for OpenAI Chat Completions
+    const messages = [
+      { role: 'system', content: systemPrompt },
+      ...(conversationHistory || []).map(msg => ({
+        role: msg.isUser ? 'user' : 'assistant',
+        content: msg.text
+      })),
+      { role: 'user', content: message }
+    ];
+
+    // Call OpenAI Chat Completions API
+    const openaiResponse = await fetch('https://api.openai.com/v1/chat/completions', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        'Authorization': `Bearer ${apiKey}`
       },
       body: JSON.stringify({
-        contents: [{
-          parts: [{
-            text: prompt
-          }]
-        }],
-        generationConfig: {
-          temperature: 0.7,
-          topK: 40,
-          topP: 0.95,
-          maxOutputTokens: 1024,
-        },
-        safetySettings: [
-          {
-            category: "HARM_CATEGORY_HARASSMENT",
-            threshold: "BLOCK_MEDIUM_AND_ABOVE"
-          },
-          {
-            category: "HARM_CATEGORY_HATE_SPEECH",
-            threshold: "BLOCK_MEDIUM_AND_ABOVE"
-          },
-          {
-            category: "HARM_CATEGORY_SEXUALLY_EXPLICIT",
-            threshold: "BLOCK_MEDIUM_AND_ABOVE"
-          },
-          {
-            category: "HARM_CATEGORY_DANGEROUS_CONTENT",
-            threshold: "BLOCK_MEDIUM_AND_ABOVE"
-          }
-        ]
+        model: 'gpt-4.0-mini',
+        messages,
+        temperature: 0.7,
+        top_p: 0.95,
+        max_tokens: 1024
       })
     });
 
-    if (!geminiResponse.ok) {
-      throw new Error(`Gemini API error: ${geminiResponse.status}`);
+    if (!openaiResponse.ok) {
+      const errText = await openaiResponse.text();
+      throw new Error(`OpenAI API error: ${openaiResponse.status} ${errText}`);
     }
 
-    const geminiData = await geminiResponse.json();
-    
-    if (!geminiData.candidates || geminiData.candidates.length === 0) {
-      throw new Error('No response from Gemini API');
+    const openaiData = await openaiResponse.json();
+    const aiResponse = openaiData.choices?.[0]?.message?.content?.trim();
+    if (!aiResponse) {
+      throw new Error('No response from OpenAI API');
     }
-
-    const aiResponse = geminiData.candidates[0].content.parts[0].text;
 
     return new Response(JSON.stringify({
       success: true,

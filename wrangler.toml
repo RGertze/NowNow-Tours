@@ -10,7 +10,7 @@ database_id = "bf32ad51-3976-4ee5-9940-d245999f170b"
 # Environment variables
 [vars]
 ENVIRONMENT = "production"
-GOOGLE_AI_API_KEY = "AIzaSyA__Y0VTZFyfCBS3VdNEPQFj5v9w1oy7Iw"
+# OPENAI_API_KEY will be provided via Wrangler secrets; do not hardcode secrets here.
  
 # Pages build output directory (used by `wrangler pages deploy`)
 pages_build_output_dir = "dist"

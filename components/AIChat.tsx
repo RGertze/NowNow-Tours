@@ -119,7 +119,7 @@ const AIChat: React.FC = () => {
 
       {/* Chat Window */}
       {isOpen && (
-        <div className="fixed bottom-6 right-6 z-50 w-80 h-96 max-w-[calc(100vw-3rem)] max-h-[calc(100vh-3rem)] bg-white rounded-lg shadow-2xl border border-gray-200 flex flex-col sm:w-80 sm:h-96">
+        <div className="fixed bottom-6 right-6 z-50 w-[28rem] h-[32rem] max-w-[calc(100vw-3rem)] max-h-[calc(100vh-3rem)] bg-white rounded-lg shadow-2xl border border-gray-200 flex flex-col sm:w-[28rem] sm:h-[32rem]">
           {/* Header */}
           <div className="bg-gradient-to-r from-orange-500 to-orange-600 text-white p-4 rounded-t-lg flex items-center justify-between">
             <div className="flex items-center space-x-2">
@@ -216,14 +216,14 @@ const AIChat: React.FC = () => {
                 onChange={(e) => setInputMessage(e.target.value)}
                 onKeyPress={handleKeyPress}
                 placeholder="Ask about tours, destinations, pricing..."
-                className="flex-1 resize-none border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500"
-                rows={1}
+                className="flex-1 resize-none border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 min-h-[2.5rem]"
+                rows={2}
                 disabled={isLoading}
               />
               <button
                 onClick={sendMessage}
                 disabled={!inputMessage.trim() || isLoading}
-                className="bg-orange-500 hover:bg-orange-600 disabled:bg-gray-300 text-white rounded-lg p-2 transition-colors"
+                className="bg-orange-500 hover:bg-orange-600 disabled:bg-gray-300 text-white rounded-lg px-3 py-2 transition-colors"
                 aria-label="Send message"
               >
                 <Send className="w-4 h-4" />
