@@ -103,7 +103,7 @@ export async function onRequestPost(context) {
         'anthropic-version': '2023-06-01'
       },
       body: JSON.stringify({
-        model: 'claude-3-5-haiku-latest',
+        model: 'claude-4-5-haiku-latest',
         max_tokens: 1024,
         temperature: 0.7,
         system: systemPrompt,
