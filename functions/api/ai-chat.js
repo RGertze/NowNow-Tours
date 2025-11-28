@@ -113,19 +113,11 @@ export async function onRequestPost(context) {
 
     if (!anthropicResponse.ok) {
       const errText = await anthropicResponse.text();
-      const errorMessage = `Anthropic API error: ${anthropicResponse.status} ${errText}`;
-      console.error(errorMessage);
-      return new Response(JSON.stringify({
-        success: false,
-        error: errorMessage,
-        debug: {
-          status: anthropicResponse.status,
-          statusText: anthropicResponse.statusText,
-          response: errText
-        }
-      }), {
+      console.error('Anthropic API error:', anthropicResponse.status, errText);
+      const fallback = "I'm having trouble answering right now. Want brief highlights for our top tours?";
+      return new Response(JSON.stringify({ success: true, response: fallback }), {
         status: 200,
-        headers: { 
+        headers: {
           'Content-Type': 'application/json',
           'Access-Control-Allow-Origin': '*',
           'Access-Control-Allow-Methods': 'POST, OPTIONS',
@@ -135,18 +127,14 @@ export async function onRequestPost(context) {
     }
 
     const anthropicData = await anthropicResponse.json();
-    console.log('Anthropic response:', JSON.stringify(anthropicData));
+    // Minimal logging only in case debugging is needed
     const aiResponse = anthropicData?.content?.[0]?.text?.trim();
     if (!aiResponse) {
-      const errorMsg = 'No response text from Anthropic API';
-      console.error(errorMsg, 'Response data:', anthropicData);
-      return new Response(JSON.stringify({
-        success: false,
-        error: errorMsg,
-        debug: { anthropicData }
-      }), {
+      console.error('No response text from Anthropic API');
+      const fallback = "I didn't catch that. Would you like a short summary of our tours?";
+      return new Response(JSON.stringify({ success: true, response: fallback }), {
         status: 200,
-        headers: { 
+        headers: {
           'Content-Type': 'application/json',
           'Access-Control-Allow-Origin': '*',
           'Access-Control-Allow-Methods': 'POST, OPTIONS',
@@ -169,21 +157,11 @@ export async function onRequestPost(context) {
     });
 
   } catch (error) {
-    const errorMessage = error.message || 'Unknown error';
-    console.error('AI Chat error:', errorMessage, error);
-    
-    // Return actual error instead of fallback
-    return new Response(JSON.stringify({
-      success: false,
-      error: errorMessage,
-      debug: {
-        name: error.name,
-        message: error.message,
-        stack: error.stack
-      }
-    }), {
+    console.error('AI Chat unexpected error:', error);
+    const fallback = "I'm temporarily unavailable. Want me to list our top destinations?";
+    return new Response(JSON.stringify({ success: true, response: fallback }), {
       status: 200,
-      headers: { 
+      headers: {
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*',
         'Access-Control-Allow-Methods': 'POST, OPTIONS',

@@ -49,7 +49,10 @@ const PinCarousel: React.FC<Props> = ({ onActiveChange, autoplayInterval = 4000 
 
   // keep background in sync and harden image fallback
   useEffect(() => {
-    const bg = tours[current]?.images?.[0] || tours[current]?.image || '/hero-bg.jpg';
+    const bg =
+      tours[current]?.images?.[0] ||
+      tours[current]?.image ||
+      'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=2000&auto=format&fit=crop';
     onActiveChange?.(bg);
   }, [current, onActiveChange, tours]);
 
@@ -129,13 +132,13 @@ const PinCarousel: React.FC<Props> = ({ onActiveChange, autoplayInterval = 4000 
                 >
                   <div className="w-full h-[210px] md:h-[230px] lg:h-[250px] bg-gray-100 overflow-hidden">
                     <img
-                      src={(tour.images && tour.images[0]) || tour.image || '/hero-bg.jpg'}
+                      src={(tour.images && tour.images[0]) || tour.image || 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=1600&auto=format&fit=crop'}
                       alt={tour.name}
                       className="w-full h-full object-cover"
                       onClick={() => setCurrent(i)}
                       onError={(e) => {
                         const target = e.currentTarget as HTMLImageElement;
-                        target.src = '/hero-bg.jpg';
+                        target.src = 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=1600&auto=format&fit=crop';
                       }}
                       loading="eager"
                       decoding="async"

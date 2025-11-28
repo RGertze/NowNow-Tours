@@ -8,7 +8,9 @@ const Hero: React.FC = () => {
   const [isPlanningFormOpen, setIsPlanningFormOpen] = useState(false);
   const [itineraryOpen, setItineraryOpen] = useState(false);
   const [selectedPlace, setSelectedPlace] = useState<{ title: string; img: string } | null>(null);
-  const [backgroundImage, setBackgroundImage] = useState('/hero-bg.jpg');
+  const [backgroundImage, setBackgroundImage] = useState(
+    'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?q=80&w=2000&auto=format&fit=crop'
+  );
   const heroRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
