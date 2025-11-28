@@ -1,4 +1,4 @@
-// Cloudflare Workers API endpoint for AI chat using OpenAI GPT-4.0-mini
+// Cloudflare Workers API endpoint for AI chat using OpenAI GPT-4o-mini
 export async function onRequestPost(context) {
   const { request, env } = context;
   
@@ -97,7 +97,7 @@ export async function onRequestPost(context) {
         'Authorization': `Bearer ${apiKey}`
       },
       body: JSON.stringify({
-        model: 'gpt-4.0-mini',
+        model: 'gpt-4o-mini',
         messages,
         temperature: 0.7,
         top_p: 0.95,
