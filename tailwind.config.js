@@ -1,5 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
+  darkMode: 'class',
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
@@ -106,7 +107,45 @@ module.exports = {
           '0%, 100%': { transform: 'translateY(0px)' },
           '50%': { transform: 'translateY(-10px)' },
         }
-      }
+      },
+      typography: (theme) => ({
+        baobab: {
+          css: {
+            '--tw-prose-body': theme('colors.baobab.800'),
+            '--tw-prose-headings': theme('colors.baobab.900'),
+            '--tw-prose-links': theme('colors.sunset.600'),
+            '--tw-prose-links-hover': theme('colors.safari.600'),
+            '--tw-prose-bold': theme('colors.baobab.900'),
+            '--tw-prose-counters': theme('colors.baobab.700'),
+            '--tw-prose-bullets': theme('colors.safari.500'),
+            '--tw-prose-hr': theme('colors.baobab.300'),
+            '--tw-prose-quotes': theme('colors.baobab.900'),
+            '--tw-prose-code': theme('colors.sunset.600'),
+            '--tw-prose-pre-bg': theme('colors.baobab.900'),
+            '--tw-prose-pre-code': theme('colors.safari.100'),
+            '--tw-prose-th-borders': theme('colors.baobab.300'),
+            '--tw-prose-td-borders': theme('colors.baobab.200'),
+          }
+        },
+        dark: {
+          css: {
+            '--tw-prose-body': theme('colors.baobab.100'),
+            '--tw-prose-headings': theme('colors.safari.50'),
+            '--tw-prose-links': theme('colors.sunset.400'),
+            '--tw-prose-links-hover': theme('colors.safari.200'),
+            '--tw-prose-bold': theme('colors.safari.50'),
+            '--tw-prose-counters': theme('colors.baobab.300'),
+            '--tw-prose-bullets': theme('colors.safari.400'),
+            '--tw-prose-hr': theme('colors.baobab.600'),
+            '--tw-prose-quotes': theme('colors.safari.100'),
+            '--tw-prose-code': theme('colors.sunset.300'),
+            '--tw-prose-pre-bg': theme('colors.baobab.800'),
+            '--tw-prose-pre-code': theme('colors.safari.100'),
+            '--tw-prose-th-borders': theme('colors.baobab.600'),
+            '--tw-prose-td-borders': theme('colors.baobab.700'),
+          }
+        }
+      }),
     },
   },
   plugins: [require('@tailwindcss/typography')],
