@@ -82,9 +82,10 @@ const Downloads: React.FC = () => {
     acc[cat].push(doc);
     return acc;
   }, {} as Record<string, DownloadableDocument[]>);
-
-  const categoryOrder = ['Trip Brochure', 'Legal Document', 'Travel Guide'];
-  const sortedCategories = categoryOrder.filter(cat => groupedByCategory[cat]);
+  
+  // Compact view: only show Travel Guide + Legal Document
+  const compactCategories = ['Travel Guide', 'Legal Document'];
+  const sortedCategories = compactCategories.filter(cat => groupedByCategory[cat]);
 
   return (
     <section id="downloads" className="py-20 bg-white relative overflow-hidden">
@@ -107,37 +108,38 @@ const Downloads: React.FC = () => {
           </p>
         </div>
         
-        {/* Documents organized by category */}
-        {sortedCategories.map((category, catIdx) => (
-          <div key={category} className={`mb-20 ${catIdx > 0 ? 'pt-16 border-t border-safari-100' : ''}`}>
-            {/* Category header with animation */}
-            <div className="flex items-center gap-4 mb-10 max-w-7xl mx-auto">
-              <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${getCategoryColor(category)} flex items-center justify-center shadow-lg flex-shrink-0`}>
-                {category === 'Trip Brochure' && <FaFilePdf className="text-white text-2xl" />}
-                {category === 'Legal Document' && <FaFileContract className="text-white text-2xl" />}
-                {category === 'Travel Guide' && <FaClipboardList className="text-white text-2xl" />}
-              </div>
-              <div>
-                <h3 className="font-display text-2xl lg:text-3xl font-bold text-baobab-800">
-                  {category}
-                </h3>
-                <div className="flex items-center gap-2 mt-1">
-                  <div className={`h-1 w-8 rounded-full bg-gradient-to-r ${getCategoryColor(category)}`}></div>
-                  <p className="text-sm text-baobab-600">
-                    {groupedByCategory[category]?.length || 0} {groupedByCategory[category]?.length === 1 ? 'item' : 'items'}
-                  </p>
+        {/* Compact documents: Travel Guide + Legal Documents */}
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {sortedCategories.map((category) => (
+              <div key={category}>
+                <div className="flex items-center gap-3 mb-6">
+                  <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${getCategoryColor(category)} flex items-center justify-center shadow-lg`}>
+                    {category === 'Legal Document' && <FaFileContract className="text-white text-xl" />}
+                    {category === 'Travel Guide' && <FaClipboardList className="text-white text-xl" />}
+                  </div>
+                  <h3 className="text-xl font-bold text-baobab-800">{category}</h3>
+                </div>
+                <div className="grid grid-cols-1 gap-6">
+                  {groupedByCategory[category]?.slice(0,3).map((doc, index) => (
+                    <DownloadCard key={index} doc={doc} />
+                  ))}
                 </div>
               </div>
-            </div>
-
-            {/* Documents Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 max-w-7xl mx-auto">
-              {groupedByCategory[category]?.map((doc, index) => (
-                <DownloadCard key={index} doc={doc} />
-              ))}
-            </div>
+            ))}
           </div>
-        ))}
+          {/* See all CTA to Resources page */}
+          <div className="mt-10 flex items-center justify-center">
+            <a
+              href="/resources"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-gradient-to-r from-sunset-500 to-safari-500 hover:from-sunset-600 hover:to-safari-600 text-white font-semibold shadow-md hover:shadow-lg transition"
+            >
+              <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+              See all resources
+            </a>
+          </div>
+          <p className="text-center text-sm text-baobab-600 mt-3">Trip brochures and more are available on the Resources page.</p>
+        </div>
         
         {/* Call to action - improved layout */}
         <div className="mt-20 pt-16 border-t border-safari-100 max-w-4xl mx-auto">

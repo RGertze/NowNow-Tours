@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { motion } from 'framer-motion';
 import { GALLERY_IMAGES } from '../constants';
 import GalleryGrid from '../components/GalleryGrid';
 
@@ -44,33 +45,31 @@ const fetchInstagramPhotos = async (
   });
 };
 
-// Placeholder loader card for Instagram section
-const InstagramPlaceholder: React.FC<{ onLoad: () => void }> = ({
-  onLoad,
-}) => (
-  <div className="w-full rounded-lg bg-gradient-to-br from-sunset-100 to-safari-100 p-8 flex flex-col items-center justify-center gap-4 border-2 border-dashed border-sunset-300 mb-12">
-    <div className="w-16 h-16 bg-gradient-to-br from-sunset-300 to-safari-500 rounded-full animate-pulse" />
-    <div className="text-center">
-      <p className="text-sm font-semibold text-safari-800 mb-2">
-        Instagram Integration Coming Soon
-      </p>
-      <p className="text-xs text-baobab-600 mb-4 max-w-md">
-        We're working to connect our Instagram feed here. Click below to load
-        sample photos.
-      </p>
-    </div>
-    <button
-      onClick={onLoad}
-      className="mt-2 text-xs px-4 py-2 rounded-full bg-sunset-500 hover:bg-sunset-600 text-white font-semibold transition-colors"
-    >
-      Load Sample Photos
-    </button>
-  </div>
-);
+// Instagram integration will be shown inline below the grid when loaded
+
+const PLACEHOLDER_IMAGES: string[] = [
+  'https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?auto=format&fit=crop&w=1600&q=80',
+  'https://images.unsplash.com/photo-1547036967-23d11aacaee0?auto=format&fit=crop&w=1600&q=80',
+  'https://images.unsplash.com/photo-1578662996442-48f60103fc96?auto=format&fit=crop&w=1600&q=80',
+  'https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=1600&q=80',
+  'https://images.unsplash.com/photo-1547471080-7cc2caa01a7e?auto=format&fit=crop&w=1600&q=80',
+  'https://images.unsplash.com/photo-1559827260-dc66d52bef19?auto=format&fit=crop&w=1600&q=80',
+  'https://images.unsplash.com/photo-1571771019784-3ff35f4f4277?auto=format&fit=crop&w=1600&q=80',
+  'https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=1600&q=80',
+  'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=1600&q=80',
+  'https://images.unsplash.com/photo-1580060839134-75a5edca2e99?auto=format&fit=crop&w=1600&q=80',
+  'https://images.unsplash.com/photo-1539650116574-75c0c6d73c6e?auto=format&fit=crop&w=1600&q=80',
+];
 
 const GalleryPage: React.FC = () => {
-  const [images, setImages] = useState<string[]>(GALLERY_IMAGES || []);
-  const [isLoading, setIsLoading] = useState(false);
+  const initialImages = [...PLACEHOLDER_IMAGES, ...(GALLERY_IMAGES || [])];
+  const ensureMinimum = (arr: string[], min = 3) => {
+    if (arr.length >= min) return arr;
+    const extras = PLACEHOLDER_IMAGES.filter((url) => !arr.includes(url));
+    return [...arr, ...extras.slice(0, min - arr.length)];
+  };
+  const [images] = useState<string[]>(ensureMinimum(initialImages, 3));
+  const [isLoading] = useState(false);
 
   const handleLoadInstagram = async () => {
     setIsLoading(true);
@@ -85,28 +84,34 @@ const GalleryPage: React.FC = () => {
   };
 
   return (
-    <main className="min-h-screen py-16 px-6 lg:px-16 bg-gradient-to-br from-safari-50 to-earth-50">
-      <div className="max-w-7xl mx-auto">
-        {/* Instagram Placeholder */}
-        <InstagramPlaceholder onLoad={handleLoadInstagram} />
+    <main className="min-h-screen bg-white">
+      <motion.div
+        initial={{ opacity: 0, scale: 0.98 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.6, ease: 'easeOut' }}
+        className="py-16 px-6 lg:px-12"
+      >
+        <div className="max-w-7xl mx-auto">
+          {/* Gallery Grid with heading retained */}
+          <GalleryGrid
+            images={images}
+            title="Our Journeys & Memories"
+            description="A curated collection of moments from our tours across Africa — landscapes, wildlife, people, and unforgettable experiences. Click any photo to view it in detail."
+          />
 
-        {/* Gallery Grid */}
-        <GalleryGrid
-          images={images}
-          title="Our Journeys & Memories"
-          description="A curated collection of moments from our tours across Africa — landscapes, wildlife, people, and unforgettable experiences. Click any photo to view it in detail."
-        />
+          {/* Instagram integration placeholder removed; using built-in placeholders */}
 
-        {/* Back to Home */}
-        <div className="max-w-7xl mx-auto mt-16 text-center">
-          <a
-            href="/"
-            className="inline-block px-8 py-3 rounded-full bg-gradient-to-r from-sunset-500 to-safari-600 hover:from-sunset-600 hover:to-safari-700 text-white font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
-          >
-            ← Back to Home
-          </a>
+          {/* Back to Home */}
+          <div className="mt-16 text-center">
+            <a
+              href="/"
+              className="inline-block px-8 py-3 rounded-full bg-white text-black hover:bg-gray-100 font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+            >
+              ← Back to Home
+            </a>
+          </div>
         </div>
-      </div>
+      </motion.div>
     </main>
   );
 };

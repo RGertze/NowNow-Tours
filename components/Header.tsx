@@ -61,7 +61,7 @@ const Header: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
 
   const navLinks = [
-    { name: 'Home', id: 'home', type: 'scroll' },
+    { name: 'Home', id: '', type: 'route' },
     { name: 'About', id: 'about', type: 'route' },
     { name: 'Adventures', id: 'adventures', type: 'route' },
     { name: 'Upcoming', id: 'upcoming', type: 'route' },
@@ -72,7 +72,11 @@ const Header: React.FC = () => {
   
   const handleNavigation = (link: (typeof navLinks)[0]) => {
     if (link.type === 'route') {
-      navigate(`/${link.id}`);
+      if (link.name === 'Home') {
+        navigate('/');
+      } else {
+        navigate(`/${link.id}`);
+      }
     } else {
       document.getElementById(link.id)?.scrollIntoView({ behavior: 'smooth' });
     }
