@@ -91,14 +91,14 @@ const Header: React.FC = () => {
     <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
       isScrolled 
         ? 'bg-white/95 shadow-lg backdrop-blur-md border-b border-safari-100' 
-        : 'bg-transparent'
+        : 'bg-white/70 backdrop-blur-md border-b border-white/20'
     }`}>
       <div className="container mx-auto px-6 py-4 flex justify-between items-center">
         <a 
           href="#home" 
           onClick={(e) => { e.preventDefault(); handleNavigation(navLinks[0]); }} 
           className={`flex items-center gap-2 transition-all duration-300 hover:opacity-80 ${
-            isScrolled ? 'text-safari-800' : 'text-white'
+            isScrolled ? 'text-safari-800' : 'text-baobab-800'
           }`}
           title="Now Now Tours & Safaris"
         >
@@ -114,7 +114,7 @@ const Header: React.FC = () => {
               className={`font-medium transition-all duration-300 transform hover:scale-105 relative group ${
                 isScrolled 
                   ? 'text-baobab-700 hover:text-sunset-600' 
-                  : 'text-white/90 hover:text-sunset-300 text-shadow-sm'
+                  : 'text-baobab-800 hover:text-sunset-600'
               }`}
             >
               {link.name}
@@ -127,7 +127,7 @@ const Header: React.FC = () => {
           <button 
             onClick={() => setIsOpen(!isOpen)} 
             className={`focus:outline-none transition-colors duration-300 ${
-              isScrolled ? 'text-baobab-800' : 'text-white'
+              isScrolled ? 'text-baobab-800' : 'text-baobab-800'
             }`}
           >
             {isOpen ? <CloseIcon className="w-7 h-7" /> : <MenuIcon className="w-7 h-7" />}

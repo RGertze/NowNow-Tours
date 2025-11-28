@@ -47,9 +47,10 @@ const PinCarousel: React.FC<Props> = ({ onActiveChange, autoplayInterval = 4000 
     };
   }, [current, trackX]);
 
-  // keep background in sync
+  // keep background in sync and harden image fallback
   useEffect(() => {
-    onActiveChange?.(tours[current]?.images?.[0] || '/hero-bg.jpg');
+    const bg = tours[current]?.images?.[0] || tours[current]?.image || '/hero-bg.jpg';
+    onActiveChange?.(bg);
   }, [current, onActiveChange, tours]);
 
   // autoplay
@@ -109,39 +110,42 @@ const PinCarousel: React.FC<Props> = ({ onActiveChange, autoplayInterval = 4000 
         >
           {tours.map((tour, i) => {
             const pos = i - current;
-            const scale = Math.max(0.75, 1 - Math.abs(pos) * 0.12);
-            const rotateY = pos * -12;
+            const scale = Math.max(0.85, 1 - Math.abs(pos) * 0.08);
+            const rotateY = pos * -8;
             const isActive = i === current;
 
             return (
               <div
                 key={tour.name}
                 ref={i === 0 ? cardRef : null}
-                className={`flex-shrink-0 w-64 md:w-72 lg:w-80 rounded-2xl overflow-hidden shadow-lg ${
-                  isActive ? '' : 'filter grayscale-75 blur-sm'
+                className={`flex-shrink-0 w-72 md:w-80 lg:w-[22rem] h-[380px] rounded-2xl overflow-hidden shadow-lg transition-transform ${
+                  isActive ? '' : 'filter grayscale-[55%]'
                 }`}
               >
                 <motion.div
-                  className="bg-white/5 backdrop-blur-md h-full flex flex-col"
+                  className="bg-white/90 backdrop-blur-sm h-full flex flex-col"
                   animate={{ scale, rotateY }}
                   transition={{ type: 'spring', stiffness: 220, damping: 28 }}
                 >
-                  <div className="w-full h-44 md:h-56 lg:h-64 bg-gray-200 overflow-hidden">
+                  <div className="w-full h-[210px] md:h-[230px] lg:h-[250px] bg-gray-100 overflow-hidden">
                     <img
-                      src={tour.image || '/hero-bg.jpg'}
+                      src={(tour.images && tour.images[0]) || tour.image || '/hero-bg.jpg'}
                       alt={tour.name}
                       className="w-full h-full object-cover"
                       onClick={() => setCurrent(i)}
                       onError={(e) => {
-                        (e.currentTarget as HTMLImageElement).src = '/hero-bg.jpg';
+                        const target = e.currentTarget as HTMLImageElement;
+                        target.src = '/hero-bg.jpg';
                       }}
+                      loading="eager"
+                      decoding="async"
                     />
                   </div>
 
                   <div className="p-4 flex-1 flex flex-col justify-between bg-transparent">
                     <div>
-                      <h3 className="text-lg md:text-xl font-semibold text-white">{tour.name}</h3>
-                      <p className="text-sm text-white/75 mt-2 line-clamp-2">{tour.description}</p>
+                      <h3 className="text-lg md:text-xl font-semibold text-gray-900">{tour.name}</h3>
+                      <p className="text-sm text-gray-700 mt-2 line-clamp-2">{tour.description}</p>
                     </div>
 
                     <div className="mt-4 flex items-center justify-between">
@@ -154,7 +158,7 @@ const PinCarousel: React.FC<Props> = ({ onActiveChange, autoplayInterval = 4000 
 
                       <button
                         onClick={() => setCurrent(i)}
-                        className={`text-white/90 underline text-sm`}
+                        className={`text-gray-800 underline text-sm`}
                       >
                         View
                       </button>
@@ -188,12 +192,12 @@ const PinCarousel: React.FC<Props> = ({ onActiveChange, autoplayInterval = 4000 
         </div>
 
         {/* Dots */}
-        <div className="mt-4 flex items-center justify-center gap-2">
+        <div className="mt-3 flex items-center justify-center gap-2">
           {tours.map((_, i) => (
             <button
               key={i}
               onClick={() => setCurrent(i)}
-              className={`w-3 h-3 rounded-full ${i === current ? 'bg-white' : 'bg-white/30'}`}
+              className={`w-3 h-3 rounded-full ${i === current ? 'bg-sunset-500' : 'bg-white/50'}`}
               aria-label={`Go to slide ${i + 1}`}
             />
           ))}
