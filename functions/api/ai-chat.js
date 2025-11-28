@@ -1,4 +1,4 @@
-// Cloudflare Workers API endpoint for AI chat using OpenAI GPT-4o-mini
+// Cloudflare Pages Functions API endpoint for AI chat using Anthropic Claude 3.5 Haiku
 export async function onRequestPost(context) {
   const { request, env } = context;
   
@@ -73,15 +73,14 @@ export async function onRequestPost(context) {
 
     const systemPrompt = tourContext.trim();
 
-    // Get OpenAI API key from environment (set via Wrangler secrets)
-    const apiKey = env.OPENAI_API_KEY;
+    // Get Anthropic API key from environment (set via Pages secrets)
+    const apiKey = env.ANTHROPIC_API_KEY;
     if (!apiKey) {
-      throw new Error('Missing OPENAI_API_KEY in environment');
+      throw new Error('Missing ANTHROPIC_API_KEY in environment');
     }
 
-    // Build messages for OpenAI Chat Completions
+    // Build messages for Anthropic Messages API
     const messages = [
-      { role: 'system', content: systemPrompt },
       ...(conversationHistory || []).map(msg => ({
         role: msg.isUser ? 'user' : 'assistant',
         content: msg.text
@@ -89,34 +88,33 @@ export async function onRequestPost(context) {
       { role: 'user', content: message }
     ];
 
-    // Call OpenAI Chat Completions API
-    const openaiResponse = await fetch('https://api.openai.com/v1/chat/completions', {
+    // Call Anthropic Messages API
+    const anthropicResponse = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${apiKey}`
+        'x-api-key': apiKey,
+        'anthropic-version': '2023-06-01'
       },
       body: JSON.stringify({
-        model: 'gpt-4o-mini',
-        messages,
+        model: 'claude-3-5-haiku-latest',
+        max_tokens: 1024,
         temperature: 0.7,
-        top_p: 0.95,
-        max_tokens: 1024
+        system: systemPrompt,
+        messages
       })
     });
 
-    if (!openaiResponse.ok) {
-      const errText = await openaiResponse.text();
-      const errorMessage = `OpenAI API error: ${openaiResponse.status} ${errText}`;
+    if (!anthropicResponse.ok) {
+      const errText = await anthropicResponse.text();
+      const errorMessage = `Anthropic API error: ${anthropicResponse.status} ${errText}`;
       console.error(errorMessage);
-      
-      // Return actual error to help debug
       return new Response(JSON.stringify({
         success: false,
         error: errorMessage,
         debug: {
-          status: openaiResponse.status,
-          statusText: openaiResponse.statusText,
+          status: anthropicResponse.status,
+          statusText: anthropicResponse.statusText,
           response: errText
         }
       }), {
@@ -130,18 +128,16 @@ export async function onRequestPost(context) {
       });
     }
 
-    const openaiData = await openaiResponse.json();
-    console.log('OpenAI response:', JSON.stringify(openaiData));
-    
-    const aiResponse = openaiData.choices?.[0]?.message?.content?.trim();
+    const anthropicData = await anthropicResponse.json();
+    console.log('Anthropic response:', JSON.stringify(anthropicData));
+    const aiResponse = anthropicData?.content?.[0]?.text?.trim();
     if (!aiResponse) {
-      const errorMsg = 'No response from OpenAI API';
-      console.error(errorMsg, 'Response data:', openaiData);
-      
+      const errorMsg = 'No response text from Anthropic API';
+      console.error(errorMsg, 'Response data:', anthropicData);
       return new Response(JSON.stringify({
         success: false,
         error: errorMsg,
-        debug: { openaiData }
+        debug: { anthropicData }
       }), {
         status: 200,
         headers: { 
