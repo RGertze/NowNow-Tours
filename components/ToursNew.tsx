@@ -186,8 +186,15 @@ interface DetailModalProps {
 }
 
 const DetailModal: React.FC<DetailModalProps> = ({ tour, onClose }) => {
+  const [selectedDate, setSelectedDate] = useState<string | null>(null);
   const price = tour.priceRange.split('·')[0].trim();
   const deposit = tour.priceRange.split('·')[1]?.trim();
+
+  const whatsappMessage = selectedDate
+    ? `Hi! I'm interested in booking ${tour.name} for the dates: ${selectedDate}. ${price}`
+    : `Hi! I'm interested in ${tour.name}. ${price}`;
+  
+  const whatsappLink = `https://wa.me/264812297409?text=${encodeURIComponent(whatsappMessage)}`;
 
   return (
     <motion.div
@@ -248,17 +255,40 @@ const DetailModal: React.FC<DetailModalProps> = ({ tour, onClose }) => {
           {/* Upcoming Dates */}
           {tour.upcomingDates && tour.upcomingDates.length > 0 && (
             <div className="mb-6">
-              <h3 className="text-xl font-bold text-baobab-900 mb-4">Upcoming Dates</h3>
+              <h3 className="text-xl font-bold text-baobab-900 mb-4">Select Your Travel Date</h3>
               <div className="grid grid-cols-2 gap-3">
                 {tour.upcomingDates.map((date, idx) => (
-                  <div key={idx} className="bg-safari-50 border border-safari-200 rounded-lg px-4 py-3 text-center">
-                    <svg className="w-5 h-5 text-safari-600 mx-auto mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <button
+                    key={idx}
+                    onClick={() => setSelectedDate(date)}
+                    className={`relative rounded-lg px-4 py-3 text-center transition-all duration-300 transform hover:scale-105 ${
+                      selectedDate === date
+                        ? 'bg-gradient-to-br from-safari-500 to-sunset-500 border-2 border-sunset-600 shadow-lg'
+                        : 'bg-safari-50 border-2 border-safari-200 hover:border-safari-400'
+                    }`}
+                  >
+                    {selectedDate === date && (
+                      <div className="absolute -top-2 -right-2 bg-green-500 text-white rounded-full p-1">
+                        <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                        </svg>
+                      </div>
+                    )}
+                    <svg className={`w-5 h-5 mx-auto mb-1 ${selectedDate === date ? 'text-white' : 'text-safari-600'}`} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                     </svg>
-                    <span className="text-sm font-medium text-baobab-900">{date}</span>
-                  </div>
+                    <span className={`text-sm font-medium ${selectedDate === date ? 'text-white' : 'text-baobab-900'}`}>{date}</span>
+                  </button>
                 ))}
               </div>
+              {selectedDate && (
+                <p className="text-center text-sm text-safari-700 font-medium mt-3 flex items-center justify-center gap-2">
+                  <svg className="w-4 h-4 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                  </svg>
+                  Selected: {selectedDate}
+                </p>
+              )}
             </div>
           )}
 
@@ -279,13 +309,13 @@ const DetailModal: React.FC<DetailModalProps> = ({ tour, onClose }) => {
           {/* Actions */}
           <div className="flex gap-4">
             <a
-              href="https://wa.me/1234567890"
+              href={whatsappLink}
               target="_blank"
               rel="noopener noreferrer"
               className="flex-1 bg-gradient-to-r from-green-500 to-green-600 hover:from-green-600 hover:to-green-700 text-white font-bold py-4 px-6 rounded-full transition-all duration-300 flex items-center justify-center gap-2 shadow-lg hover:shadow-xl transform hover:scale-105"
             >
               <FaWhatsapp size={24} />
-              Book Now on WhatsApp
+              {selectedDate ? 'Book Selected Date' : 'Book Now on WhatsApp'}
             </a>
           </div>
         </div>
