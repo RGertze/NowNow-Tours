@@ -49,7 +49,7 @@ const PinCarousel: React.FC<Props> = ({ onActiveChange, autoplayInterval = 4000 
 
   // keep background in sync
   useEffect(() => {
-    onActiveChange?.(tours[current]?.image || '/hero-bg.jpg');
+    onActiveChange?.(tours[current]?.images?.[0] || '/hero-bg.jpg');
   }, [current, onActiveChange, tours]);
 
   // autoplay
