@@ -69,7 +69,7 @@ const Resources: React.FC = () => {
             Download helpful guides, packing lists, and travel resources for your African adventure
           </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 prose prose-baobab dark:prose-dark max-w-none">
             {RESOURCES.map((resource, index) => {
               const Icon = resource.icon;
               return (

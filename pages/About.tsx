@@ -14,7 +14,7 @@ const AboutPage: React.FC = () => {
             About Now Now Tours
           </h1>
           
-          <div className="prose prose-lg max-w-none">
+          <div className="prose prose-baobab dark:prose-dark max-w-none">
             <p className="text-lg text-gray-700 mb-6">
               We are a Namibia-based travel company specializing in curated group tours across Southern Africa. 
               Our goal is to make travel safe, affordable and memorable for everyone.
