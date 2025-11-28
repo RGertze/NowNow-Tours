@@ -29,7 +29,7 @@ const Footer: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 mb-12">
           {/* Brand Section */}
           <div className="text-center lg:text-left">
-            <h3 className="font-display text-3xl font-bold text-white mb-4">
+            <h3 className="font-display text-3xl font-semibold text-white mb-4">
               Now Now Tours & Safaris
             </h3>
             <p className="text-white/80 mb-6 leading-relaxed">
@@ -44,7 +44,7 @@ const Footer: React.FC = () => {
           
           {/* Quick Links */}
           <div className="text-center lg:text-left">
-            <h4 className="font-display text-xl font-bold text-white mb-6">Quick Links</h4>
+            <h4 className="font-display text-xl font-semibold text-white mb-6">Quick Links</h4>
             <ul className="space-y-3">
               <li>
                 <Link to="/about" className="text-white/70 hover:text-sunset-300 transition-colors duration-300 hover:underline">
@@ -81,7 +81,7 @@ const Footer: React.FC = () => {
           
           {/* Contact Info */}
           <div className="text-center lg:text-left">
-            <h4 className="font-display text-xl font-bold text-white mb-6">Contact Info</h4>
+            <h4 className="font-display text-xl font-semibold text-white mb-6">Contact Info</h4>
             <div className="space-y-4">
               <div className="flex items-center justify-center lg:justify-start gap-3">
                 <div className="w-8 h-8 bg-sunset-500 rounded-full flex items-center justify-center">

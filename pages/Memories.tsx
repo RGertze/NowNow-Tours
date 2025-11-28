@@ -22,7 +22,7 @@ const Memories: React.FC = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <h1 className="text-4xl md:text-5xl font-bold text-baobab-800 mb-4">
+          <h1 className="text-baobab-800 mb-4">
             Memories from Our Adventures
           </h1>
           <p className="text-lg text-gray-700 mb-12">

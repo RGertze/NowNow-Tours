@@ -61,7 +61,7 @@ const Reviews: React.FC = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <h1 className="text-4xl md:text-5xl font-bold text-baobab-800 mb-4">
+          <h1 className="text-baobab-800 mb-4">
             What Our Travelers Say
           </h1>
           <p className="text-lg text-gray-700 mb-12">
@@ -82,7 +82,7 @@ const Reviews: React.FC = () => {
                     {review.name.charAt(0)}
                   </div>
                   <div>
-                    <h3 className="font-bold text-lg text-baobab-800">{review.name}</h3>
+                    <h3 className="text-lg text-baobab-800 font-semibold">{review.name}</h3>
                     <p className="text-sm text-gray-500">{review.location}</p>
                   </div>
                 </div>
@@ -104,7 +104,7 @@ const Reviews: React.FC = () => {
             transition={{ duration: 0.6, delay: 0.8 }}
             className="mt-16 bg-gradient-to-r from-sunset-500 to-sunset-600 rounded-2xl p-8 text-white text-center"
           >
-            <h2 className="text-3xl font-bold mb-4">Ready to Create Your Own Story?</h2>
+            <h2 className="mb-4 font-semibold">Ready to Create Your Own Story?</h2>
             <p className="text-lg mb-6">Join thousands of happy travelers and experience Africa like never before</p>
             <a
               href="https://wa.me/264812297409?text=Hi! I want to book a tour"

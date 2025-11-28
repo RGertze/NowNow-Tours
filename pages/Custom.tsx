@@ -79,7 +79,7 @@ ${formData.additionalInfo}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <h1 className="text-4xl md:text-5xl font-bold text-baobab-800 mb-4">
+          <h1 className="text-baobab-800 mb-4">
             Create Your Custom Adventure
           </h1>
           <p className="text-lg text-gray-700 mb-12">
@@ -120,7 +120,7 @@ ${formData.additionalInfo}
                   transition={{ duration: 0.4 }}
                   className="space-y-6"
                 >
-                  <h2 className="text-2xl font-bold text-baobab-800 mb-4">
+                  <h2 className="text-2xl text-baobab-800 mb-4 font-semibold">
                     Tell Us About Yourself
                   </h2>
 
@@ -201,7 +201,7 @@ ${formData.additionalInfo}
                   transition={{ duration: 0.4 }}
                   className="space-y-6"
                 >
-                  <h2 className="text-2xl font-bold text-baobab-800 mb-4">
+                  <h2 className="text-2xl text-baobab-800 mb-4 font-semibold">
                     Your Dream Trip Details
                   </h2>
 
@@ -306,7 +306,7 @@ ${formData.additionalInfo}
                   transition={{ duration: 0.4 }}
                   className="space-y-6"
                 >
-                  <h2 className="text-2xl font-bold text-baobab-800 mb-4">
+                  <h2 className="text-2xl text-baobab-800 mb-4 font-semibold">
                     Your Preferences
                   </h2>
 

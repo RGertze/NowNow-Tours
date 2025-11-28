@@ -4,6 +4,7 @@ module.exports = {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
     "./components/**/*.{js,ts,jsx,tsx}",
+    "./pages/**/*.{js,ts,jsx,tsx}",
     "./*.{js,ts,jsx,tsx}"
   ],
   theme: {
@@ -60,9 +61,32 @@ module.exports = {
         }
       },
       fontFamily: {
-        'display': ['Cormorant Garamond', 'serif'],
-        'body': ['Inter', 'system-ui', 'sans-serif'],
-        'trip': ['Poppins', 'sans-serif'],
+        display: ['Raleway', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        body: ['Raleway', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        trip: ['Raleway', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        sans: ['Raleway', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+      },
+      fontSize: {
+        xs: ['0.75rem', { lineHeight: '1.25rem' }],
+        sm: ['0.875rem', { lineHeight: '1.4rem' }],
+        base: ['1rem', { lineHeight: '1.6rem' }],
+        lg: ['1.125rem', { lineHeight: '1.75rem' }],
+        xl: ['1.25rem', { lineHeight: '1.85rem' }],
+        '2xl': ['1.5rem', { lineHeight: '2.1rem' }],
+        '3xl': ['1.875rem', { lineHeight: '2.3rem' }],
+        '4xl': ['2.25rem', { lineHeight: '2.5rem' }],
+        '5xl': ['3rem', { lineHeight: '1.05' }],
+        '6xl': ['3.75rem', { lineHeight: '1.05' }],
+      },
+      letterSpacing: {
+        tight: '-0.01em',
+        normal: '0',
+        wide: '0.02em',
+      },
+      lineHeight: {
+        snug: '1.3',
+        relaxed: '1.6',
+        loose: '1.85',
       },
       animation: {
         'fade-in': 'fadeIn 0.5s ease-in-out',
@@ -85,5 +109,5 @@ module.exports = {
       }
     },
   },
-  plugins: [],
+  plugins: [require('@tailwindcss/typography')],
 }

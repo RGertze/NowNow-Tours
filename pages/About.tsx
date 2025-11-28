@@ -10,7 +10,7 @@ const AboutPage: React.FC = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <h1 className="text-4xl md:text-5xl font-bold text-baobab-800 mb-6">
+          <h1 className="text-baobab-800 mb-6">
             About Now Now Tours
           </h1>
           
@@ -22,7 +22,7 @@ const AboutPage: React.FC = () => {
 
             <div className="grid md:grid-cols-2 gap-8 mt-12">
               <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg">
-                <h3 className="text-2xl font-bold text-baobab-800 mb-4">Our Mission</h3>
+                <h3 className="text-baobab-800 mb-4 font-semibold">Our Mission</h3>
                 <p className="text-gray-700">
                   To provide exceptional travel experiences that showcase the beauty, culture, and adventure 
                   of Southern Africa while ensuring safety, affordability, and unforgettable memories.
@@ -30,7 +30,7 @@ const AboutPage: React.FC = () => {
               </div>
 
               <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-lg">
-                <h3 className="text-2xl font-bold text-baobab-800 mb-4">Our Vision</h3>
+                <h3 className="text-baobab-800 mb-4 font-semibold">Our Vision</h3>
                 <p className="text-gray-700">
                   To become Southern Africa's most trusted travel partner, connecting travelers with authentic 
                   experiences and creating lasting memories across the continent.
@@ -39,7 +39,7 @@ const AboutPage: React.FC = () => {
             </div>
 
             <div className="mt-12 bg-gradient-to-r from-sunset-500 to-sunset-600 rounded-2xl p-8 text-white">
-              <h3 className="text-2xl font-bold mb-4">Why Choose Us?</h3>
+              <h3 className="mb-4 font-semibold">Why Choose Us?</h3>
               <ul className="space-y-3">
                 <li className="flex items-start">
                   <span className="mr-3">✓</span>

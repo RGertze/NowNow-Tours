@@ -11,7 +11,7 @@ const Upcoming: React.FC = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <h1 className="text-4xl md:text-5xl font-bold text-baobab-800 mb-4">
+          <h1 className="text-baobab-800 mb-4">
             Upcoming Tour Dates
           </h1>
           <p className="text-lg text-gray-700 mb-12">
@@ -42,7 +42,7 @@ const Upcoming: React.FC = () => {
                   <div className="md:w-2/3 p-6">
                     <div className="flex flex-col md:flex-row md:items-start md:justify-between mb-4">
                       <div>
-                        <h3 className="text-2xl font-bold text-baobab-800 mb-2">{tour.name}</h3>
+                        <h3 className="text-baobab-800 mb-2 font-semibold">{tour.name}</h3>
                         <p className="text-gray-600 mb-3 line-clamp-2">{tour.description}</p>
                       </div>
                       <div className="text-right">

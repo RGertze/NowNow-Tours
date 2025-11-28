@@ -64,12 +64,12 @@ const Contact: React.FC = () => {
                     <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                 </div>
-                <h3 className="font-display text-3xl font-bold text-safari-800 mb-4">Asante Sana!</h3>
+                <h3 className="font-display text-3xl font-semibold text-safari-800 mb-4">Asante Sana!</h3>
                 <p className="text-baobab-600 text-lg">Your message has been sent. We'll get back to you within 24 hours.</p>
               </div>
             ) : (
               <form onSubmit={handleSubmit} className="space-y-6">
-                <h3 className="font-display text-2xl font-bold text-safari-800 mb-6">Send us a Message</h3>
+                <h3 className="font-display text-2xl font-semibold text-safari-800 mb-6">Send us a Message</h3>
                 
                 <div>
                   <label htmlFor="name" className="block text-baobab-700 font-semibold mb-2">Full Name</label>
@@ -117,7 +117,7 @@ const Contact: React.FC = () => {
           {/* Contact Info & Map */}
           <div className="lg:w-1/2 space-y-8">
             <div className="bg-white/90 backdrop-blur-sm p-8 rounded-2xl shadow-xl border border-safari-100">
-              <h3 className="font-display text-2xl font-bold text-safari-800 mb-6">Get in Touch</h3>
+              <h3 className="font-display text-2xl font-semibold text-safari-800 mb-6">Get in Touch</h3>
               <div className="space-y-6">
                 <div className="flex items-center gap-4">
                   <div className="w-12 h-12 bg-gradient-to-br from-sunset-500 to-safari-600 rounded-full flex items-center justify-center">

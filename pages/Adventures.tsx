@@ -11,7 +11,7 @@ const Adventures: React.FC = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <h1 className="text-4xl md:text-5xl font-bold text-baobab-800 mb-4">
+          <h1 className="text-baobab-800 mb-4">
             Our African Adventures
           </h1>
           <p className="text-lg text-gray-700 mb-12">
@@ -43,7 +43,7 @@ const Adventures: React.FC = () => {
                 </div>
 
                 <div className="p-6">
-                  <h3 className="text-2xl font-bold text-baobab-800 mb-2">{tour.name}</h3>
+                  <h3 className="text-baobab-800 mb-2 font-semibold">{tour.name}</h3>
                   <p className="text-gray-600 mb-4 line-clamp-3">{tour.description}</p>
 
                   <div className="flex flex-wrap gap-2 mb-4">

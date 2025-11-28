@@ -62,7 +62,7 @@ const Resources: React.FC = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <h1 className="text-4xl md:text-5xl font-bold text-baobab-800 mb-4">
+          <h1 className="text-baobab-800 mb-4">
             Resource Hub
           </h1>
           <p className="text-lg text-gray-700 mb-12">
@@ -86,7 +86,7 @@ const Resources: React.FC = () => {
                     </div>
                     
                     <div className="flex-1">
-                      <h3 className="text-xl font-bold text-baobab-800 mb-2">
+                      <h3 className="text-xl text-baobab-800 mb-2 font-semibold">
                         {resource.title}
                       </h3>
                       <p className="text-gray-600 text-sm mb-4">
@@ -119,7 +119,7 @@ const Resources: React.FC = () => {
             transition={{ duration: 0.6, delay: 0.8 }}
             className="mt-16 bg-gradient-to-r from-safari-500 to-earth-500 rounded-2xl p-8 text-white"
           >
-            <h2 className="text-2xl font-bold mb-3">Need More Information?</h2>
+            <h2 className="text-2xl mb-3 font-semibold">Need More Information?</h2>
             <p className="text-lg mb-6">
               Can't find what you're looking for? Contact us on WhatsApp and we'll send you any additional resources you need.
             </p>

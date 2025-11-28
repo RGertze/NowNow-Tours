@@ -52,7 +52,7 @@ ${formData.message}
           className="max-w-md text-center"
         >
           <div className="text-6xl mb-4">✅</div>
-          <h2 className="text-3xl font-bold text-baobab-800 mb-4">Request Sent!</h2>
+          <h2 className="text-baobab-800 mb-4 font-semibold">Request Sent!</h2>
           <p className="text-gray-700 mb-6">
             Your tour request has been sent via WhatsApp. Our team will get back to you shortly.
           </p>
@@ -75,7 +75,7 @@ ${formData.message}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
         >
-          <h1 className="text-4xl md:text-5xl font-bold text-baobab-800 mb-4">
+          <h1 className="text-baobab-800 mb-4">
             Request a Custom Tour
           </h1>
           <p className="text-lg text-gray-700 mb-8">

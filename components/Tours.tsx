@@ -75,7 +75,7 @@ const TourCard: React.FC<{ tour: Tour }> = ({ tour }) => {
       </div>
       <div className="p-6 flex flex-col flex-grow">
         <div className="mb-4">
-          <h3 className="font-trip text-2xl font-bold text-safari-800 mb-2">{tour.name}</h3>
+          <h3 className="font-trip text-2xl font-semibold text-safari-800 mb-2">{tour.name}</h3>
           <p className="text-sm font-semibold text-sunset-600 uppercase tracking-wide">{tour.destination}</p>
         </div>
         
