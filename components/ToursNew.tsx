@@ -54,9 +54,10 @@ const categorizeTour = (tour: Tour): string[] => {
 interface TourCardProps {
   tour: Tour;
   onViewDetails: () => void;
+  showComingSoon?: boolean;
 }
 
-const TourCard: React.FC<TourCardProps> = ({ tour, onViewDetails }) => {
+const TourCard: React.FC<TourCardProps> = ({ tour, onViewDetails, showComingSoon }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   // Auto-slide images every 3 seconds
@@ -98,6 +99,13 @@ const TourCard: React.FC<TourCardProps> = ({ tour, onViewDetails }) => {
         <div className="absolute top-3 right-3 w-10 h-10 rounded-full bg-white/90 backdrop-blur-sm flex items-center justify-center shadow-md text-2xl">
           {flag}
         </div>
+        
+        {/* Coming Soon Badge */}
+        {showComingSoon && (
+          <div className="absolute top-3 left-3 bg-sunset-500 text-white px-3 py-1.5 rounded-full text-xs font-bold uppercase shadow-lg">
+            Coming Soon
+          </div>
+        )}
 
         {/* Image indicators */}
         {tour.images.length > 1 && (
@@ -286,7 +294,13 @@ const DetailModal: React.FC<DetailModalProps> = ({ tour, onClose }) => {
   );
 };
 
-const ToursNew: React.FC = () => {
+interface ToursNewProps {
+  showAll?: boolean;
+  showFilters?: boolean;
+  maxCards?: number;
+}
+
+const ToursNew: React.FC<ToursNewProps> = ({ showAll = false, showFilters = true, maxCards }) => {
   const [activeFilter, setActiveFilter] = useState('all');
   const [selectedTour, setSelectedTour] = useState<Tour | null>(null);
 
@@ -295,6 +309,8 @@ const ToursNew: React.FC = () => {
     const categories = categorizeTour(tour);
     return categories.includes(activeFilter);
   });
+
+  const displayedTours = maxCards && !showAll ? filteredTours.slice(0, maxCards) : filteredTours;
 
   return (
     <section className="py-24 bg-gradient-to-br from-white via-safari-50 to-earth-50 relative overflow-hidden">
@@ -314,6 +330,7 @@ const ToursNew: React.FC = () => {
         </div>
 
         {/* Filter Buttons */}
+        {showFilters && (
         <div className="flex flex-wrap justify-center gap-3 mb-12">
           {FILTER_CATEGORIES.map((cat) => (
             <button
@@ -329,6 +346,7 @@ const ToursNew: React.FC = () => {
             </button>
           ))}
         </div>
+        )}
 
         {/* Tour Grid */}
         <motion.div
@@ -336,18 +354,31 @@ const ToursNew: React.FC = () => {
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
         >
           <AnimatePresence mode="popLayout">
-            {filteredTours.map((tour) => (
+            {displayedTours.map((tour) => (
               <TourCard
                 key={tour.slug}
                 tour={tour}
                 onViewDetails={() => setSelectedTour(tour)}
+                showComingSoon={showAll && tour.destination === 'Maldives'}
               />
             ))}
           </AnimatePresence>
         </motion.div>
 
+        {/* Show More Button */}
+        {!showAll && maxCards && filteredTours.length > maxCards && (
+          <div className="text-center mt-12">
+            <a
+              href="/adventures"
+              className="inline-block bg-gradient-to-r from-safari-500 to-sunset-500 hover:from-safari-600 hover:to-sunset-600 text-white font-bold py-4 px-10 rounded-full transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl"
+            >
+              Show More Destinations
+            </a>
+          </div>
+        )}
+
         {/* Empty State */}
-        {filteredTours.length === 0 && (
+        {displayedTours.length === 0 && (
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}

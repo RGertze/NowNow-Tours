@@ -32,7 +32,7 @@ const Home: React.FC = () => (
       <About />
     </div>
     <div id="tours">
-      <ToursNew />
+      <ToursNew maxCards={6} showFilters={true} />
     </div>
     <Testimonials />
     <Gallery />
