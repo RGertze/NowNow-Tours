@@ -97,12 +97,16 @@ const Header: React.FC = () => {
         <a 
           href="#home" 
           onClick={(e) => { e.preventDefault(); handleNavigation(navLinks[0]); }} 
-          className={`flex items-center gap-2 transition-all duration-300 hover:opacity-80 ${
+          className={`flex items-center gap-3 transition-all duration-300 hover:opacity-80 ${
             isScrolled ? 'text-safari-800' : 'text-baobab-800'
           }`}
           title="Now Now Tours & Safaris"
         >
           <Logo className="w-14 h-14" isDark={isScrolled} />
+          <div className="flex flex-col leading-tight">
+            <span className="text-xl font-bold tracking-tight">NowNowTours</span>
+            <span className="text-xs opacity-80">Tours &amp; Safaris</span>
+          </div>
         </a>
         
         <nav className="hidden md:flex items-center space-x-8">

@@ -59,6 +59,12 @@ export async function onRequestPost(context) {
     - Safety and comfort
     - Personalized service
 
+    STYLE & TONE:
+    - Be concise by default: answer in 1–3 short sentences.
+    - If the user asks for details or says "tell me more", then expand with specifics.
+    - When ambiguous, ask one brief clarifying question before giving a full answer.
+    - Use plain language and optional short bullet points when listing options.
+
     Always be helpful, enthusiastic about African travel, and encourage users to book tours or contact the company for more information. If asked about topics outside of travel/tours, politely redirect to travel-related topics.
     `;
 
