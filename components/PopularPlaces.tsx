@@ -30,7 +30,8 @@ const PopularPlaces: React.FC<Props> = () => {
 
   const onExplore = (tour: Tour) => {
     const slug = tour.slug ?? createSlug(tour.name);
-    navigate(`/tours?tour=${encodeURIComponent(slug)}`);
+    // navigate to home with query so the Tours section will handle scrolling and flyer opening
+    navigate(`/?tour=${encodeURIComponent(slug)}#tours`);
   };
 
   return (

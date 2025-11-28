@@ -46,22 +46,34 @@ const Footer: React.FC = () => {
           <div className="text-center lg:text-left">
             <h4 className="font-display text-xl font-bold text-white mb-6">Quick Links</h4>
             <ul className="space-y-3">
-              {['About Us', 'Our Tours', 'Contact', 'Downloads'].map((link) => (
-                <li key={link}>
-                  <a 
-                    href={`#${link.toLowerCase().replace(' ', '')}`} 
-                    className="text-white/70 hover:text-sunset-300 transition-colors duration-300 hover:underline"
-                  >
-                    {link}
-                  </a>
-                </li>
-              ))}
               <li>
-                <Link 
-                  to="/gallery" 
-                  className="text-white/70 hover:text-sunset-300 transition-colors duration-300 hover:underline"
-                >
+                <Link to="/about" className="text-white/70 hover:text-sunset-300 transition-colors duration-300 hover:underline">
+                  About Us
+                </Link>
+              </li>
+              <li>
+                <Link to="/adventures" className="text-white/70 hover:text-sunset-300 transition-colors duration-300 hover:underline">
+                  Adventures
+                </Link>
+              </li>
+              <li>
+                <Link to="/upcoming" className="text-white/70 hover:text-sunset-300 transition-colors duration-300 hover:underline">
+                  Upcoming Tours
+                </Link>
+              </li>
+              <li>
+                <Link to="/gallery" className="text-white/70 hover:text-sunset-300 transition-colors duration-300 hover:underline">
                   Gallery
+                </Link>
+              </li>
+              <li>
+                <Link to="/resources" className="text-white/70 hover:text-sunset-300 transition-colors duration-300 hover:underline">
+                  Resources
+                </Link>
+              </li>
+              <li>
+                <Link to="/request" className="text-white/70 hover:text-sunset-300 transition-colors duration-300 hover:underline">
+                  Request Tour
                 </Link>
               </li>
             </ul>

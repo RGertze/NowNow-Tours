@@ -62,11 +62,12 @@ const Header: React.FC = () => {
 
   const navLinks = [
     { name: 'Home', id: 'home', type: 'scroll' },
-    { name: 'About', id: 'about', type: 'scroll' },
-    { name: 'Tours', id: 'tours', type: 'scroll' },
+    { name: 'About', id: 'about', type: 'route' },
+    { name: 'Adventures', id: 'adventures', type: 'route' },
+    { name: 'Upcoming', id: 'upcoming', type: 'route' },
     { name: 'Gallery', id: 'gallery', type: 'route' },
-    { name: 'Downloads', id: 'downloads', type: 'scroll' },
-    { name: 'Contact', id: 'contact', type: 'scroll' },
+    { name: 'Resources', id: 'resources', type: 'route' },
+    { name: 'Request Tour', id: 'request', type: 'route' },
   ];
   
   const handleNavigation = (link: (typeof navLinks)[0]) => {

@@ -11,7 +11,17 @@ import Contact from './components/Contact';
 import Downloads from './components/Downloads';
 import Footer from './components/Footer';
 import AIChat from './components/AIChat';
+
+// Page imports
 import GalleryPage from './pages/Gallery';
+import AboutPage from './pages/About';
+import Adventures from './pages/Adventures';
+import Upcoming from './pages/Upcoming';
+import RequestTour from './pages/RequestTour';
+import Reviews from './pages/Reviews';
+import Memories from './pages/Memories';
+import Resources from './pages/Resources';
+import Custom from './pages/Custom';
 
 const Home: React.FC = () => (
   <main>
@@ -42,6 +52,14 @@ const App: React.FC = () => {
         <Header />
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/adventures" element={<Adventures />} />
+          <Route path="/upcoming" element={<Upcoming />} />
+          <Route path="/request" element={<RequestTour />} />
+          <Route path="/reviews" element={<Reviews />} />
+          <Route path="/memories" element={<Memories />} />
+          <Route path="/resources" element={<Resources />} />
+          <Route path="/custom" element={<Custom />} />
           <Route path="/gallery" element={<GalleryPage />} />
         </Routes>
         <Footer />

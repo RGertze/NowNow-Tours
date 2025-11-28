@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { motion, useMotionValue, animate } from 'framer-motion';
 import { TOURS_DATA } from '../constants';
 import type { Tour } from '../types';
 
@@ -14,266 +14,191 @@ const PinCarousel: React.FC<Props> = ({ onActiveChange, autoplayInterval = 4000 
   const tours: Tour[] = TOURS_DATA;
   const [current, setCurrent] = useState(0);
   const containerRef = useRef<HTMLDivElement | null>(null);
+  const trackRef = useRef<HTMLDivElement | null>(null);
+  const cardRef = useRef<HTMLDivElement | null>(null);
+  const trackX = useMotionValue(0);
+  const [cardStep, setCardStep] = useState(320); // will be measured
   const [paused, setPaused] = useState(false);
   const autoplayRef = useRef<number | null>(null);
-  const isDraggingRef = useRef(false);
 
-  const prev = () => {
-    setCurrent((c) => (c - 1 + tours.length) % tours.length);
-  };
+  // measure card width + gap
+  useEffect(() => {
+    const measure = () => {
+      const cardRect = cardRef.current?.getBoundingClientRect();
+      const containerRect = containerRef.current?.getBoundingClientRect();
+      if (cardRect && containerRect) {
+        const gap = 16; // matches tailwind gap-4
+        setCardStep(Math.round(cardRect.width + gap));
+        // set track to center current
+        const target = -current * (cardRect.width + gap);
+        trackX.set(target);
+      }
+    };
+    measure();
+    const ro = new ResizeObserver(measure);
+    if (containerRef.current) ro.observe(containerRef.current);
+    if (trackRef.current) ro.observe(trackRef.current);
+    window.addEventListener('load', measure);
+    window.addEventListener('resize', measure);
+    return () => {
+      ro.disconnect();
+      window.removeEventListener('load', measure);
+      window.removeEventListener('resize', measure);
+    };
+  }, [current, trackX]);
 
-  const next = () => {
-    setCurrent((c) => (c + 1) % tours.length);
-  };
-
-  const handleDragEnd = (_: any, info: { offset: { x: number }; velocity: { x: number } }) => {
-    isDraggingRef.current = false;
-    const { offset, velocity } = info;
-    const threshold = 50;
-
-    if (offset.x > threshold || velocity.x > 300) {
-      prev();
-    } else if (offset.x < -threshold || velocity.x < -300) {
-      next();
-    }
-  };
-
-  const handleDragStart = () => {
-    isDraggingRef.current = true;
-    setPaused(true);
-  };
-
+  // keep background in sync
   useEffect(() => {
     onActiveChange?.(tours[current]?.image || '/hero-bg.jpg');
   }, [current, onActiveChange, tours]);
 
+  // autoplay
   useEffect(() => {
-    if (paused || isDraggingRef.current) return;
+    if (paused) return;
     autoplayRef.current = window.setInterval(() => {
       setCurrent((c) => (c + 1) % tours.length);
     }, autoplayInterval);
     return () => {
       if (autoplayRef.current) window.clearInterval(autoplayRef.current);
+      autoplayRef.current = null;
     };
   }, [paused, autoplayInterval, tours.length]);
 
+  // update trackX when current changes
+  useEffect(() => {
+    const target = -current * cardStep;
+    animate(trackX, target, { type: 'spring', stiffness: 260, damping: 30 });
+  }, [current, cardStep, trackX]);
+
+  // keyboard nav
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'ArrowLeft') prev();
-      if (e.key === 'ArrowRight') next();
+      if (e.key === 'ArrowLeft') setCurrent((c) => clamp(c - 1, 0, tours.length - 1));
+      if (e.key === 'ArrowRight') setCurrent((c) => clamp(c + 1, 0, tours.length - 1));
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, []);
+  }, [tours.length]);
 
-  const getCardStyles = (pos: number) => {
-    const maxDistance = 2;
-    const normalizedPos = Math.max(-maxDistance, Math.min(maxDistance, pos));
+  const handleDragEnd = (_: any, info: { offset: { x: number }; velocity: { x: number } }) => {
+    // snap to nearest card
+    const currentX = trackX.get();
+    const rawIndex = Math.round(-currentX / cardStep);
+    const nextIndex = clamp(rawIndex, 0, tours.length - 1);
+    setCurrent(nextIndex);
+    setPaused(false);
+  };
 
-    return {
-      x: normalizedPos * 120,
-      y: Math.abs(normalizedPos) * 40,
-      scale: Math.max(0.7, 1 - Math.abs(normalizedPos) * 0.15),
-      rotateY: normalizedPos * -25,
-      opacity: Math.max(0.5, 1 - Math.abs(normalizedPos) * 0.3),
-      zIndex: Math.round(100 - Math.abs(normalizedPos) * 10),
-    };
+  const handleDragStart = () => {
+    setPaused(true);
   };
 
   return (
-    <div className="w-full flex flex-col items-center mt-16 mb-4">
-      {/* Carousel Container */}
-      <div
-        ref={containerRef}
-        className="relative w-full px-8 md:px-12"
-        style={{
-          perspective: 2000,
-          height: '480px',
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-      >
-        {/* Card Stack */}
-        <div
-          style={{
-            position: 'relative',
-            width: '100%',
-            maxWidth: '500px',
-            height: '100%',
-          }}
+    <div className="w-full max-w-[1200px] mx-auto relative overflow-hidden flex justify-center items-center">
+      <div className="w-full px-4">
+        {/* Track - draggable but contained */}
+        <motion.div
+          ref={trackRef}
+          className="carousel-track flex gap-4 items-center"
+          style={{ x: trackX }}
+          drag="x"
+          dragConstraints={containerRef}
+          dragElastic={0.1}
+          onDragStart={handleDragStart}
+          onDragEnd={handleDragEnd}
         >
           {tours.map((tour, i) => {
             const pos = i - current;
-            if (Math.abs(pos) > 3) return null;
-
-            const styles = getCardStyles(pos);
+            const scale = Math.max(0.75, 1 - Math.abs(pos) * 0.12);
+            const rotateY = pos * -12;
+            const isActive = i === current;
 
             return (
-              <motion.div
+              <div
                 key={tour.name}
-                layout
-                drag="x"
-                dragElastic={0.2}
-                dragConstraints={{ left: -100, right: 100 }}
-                onDragStart={handleDragStart}
-                onDragEnd={handleDragEnd}
-                animate={{
-                  x: styles.x,
-                  y: styles.y,
-                  scale: styles.scale,
-                  rotateY: styles.rotateY,
-                  opacity: styles.opacity,
-                }}
-                transition={{
-                  type: 'spring',
-                  stiffness: 300,
-                  damping: 35,
-                  mass: 1,
-                }}
-                style={{
-                  position: 'absolute',
-                  top: '50%',
-                  left: '50%',
-                  translateX: '-50%',
-                  translateY: '-50%',
-                  transformStyle: 'preserve-3d',
-                  zIndex: styles.zIndex,
-                  cursor: pos === 0 ? 'grab' : 'default',
-                }}
-                whileHover={pos === 0 ? { scale: 1.05 } : {}}
-                whileTap={pos === 0 ? { scale: 0.98 } : {}}
-                onMouseEnter={() => setPaused(true)}
-                onMouseLeave={() => setPaused(false)}
-                className="flex flex-col bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-xl border border-white/20 rounded-3xl overflow-hidden shadow-2xl w-full max-w-md"
+                ref={i === 0 ? cardRef : null}
+                className={`flex-shrink-0 w-64 md:w-72 lg:w-80 rounded-2xl overflow-hidden shadow-lg ${
+                  isActive ? '' : 'filter grayscale-75 blur-sm'
+                }`}
               >
-                {/* Image Section */}
-                <div className="relative w-full h-56 md:h-64 bg-gray-900 overflow-hidden">
-                  <motion.img
-                    src={tour.image || '/hero-bg.jpg'}
-                    alt={tour.name}
-                    className="w-full h-full object-cover"
-                    animate={{
-                      filter:
-                        pos === 0
-                          ? 'grayscale(0%) brightness(1)'
-                          : 'grayscale(80%) brightness(0.7)',
-                    }}
-                    transition={{ duration: 0.3 }}
-                    onClick={() => {
-                      setCurrent(i);
-                      onActiveChange?.(tour.image || '/hero-bg.jpg');
-                    }}
-                    onError={(e) => {
-                      (e.currentTarget as HTMLImageElement).src = '/hero-bg.jpg';
-                    }}
-                  />
-                </div>
-
-                {/* Content Section */}
                 <motion.div
-                  className="p-5 flex-1 flex flex-col justify-between"
-                  animate={{ opacity: pos === 0 ? 1 : 0.7 }}
+                  className="bg-white/5 backdrop-blur-md h-full flex flex-col"
+                  animate={{ scale, rotateY }}
+                  transition={{ type: 'spring', stiffness: 220, damping: 28 }}
                 >
-                  <div>
-                    <motion.h3
-                      className="text-2xl font-bold text-white"
-                      animate={{ fontSize: pos === 0 ? 24 : 18 }}
-                    >
-                      {tour.name}
-                    </motion.h3>
-                    <motion.p
-                      className="mt-2 text-sm text-white/80 line-clamp-2"
-                      animate={{ opacity: pos === 0 ? 1 : 0.6 }}
-                    >
-                      {tour.description}
-                    </motion.p>
+                  <div className="w-full h-44 md:h-56 lg:h-64 bg-gray-200 overflow-hidden">
+                    <img
+                      src={tour.image || '/hero-bg.jpg'}
+                      alt={tour.name}
+                      className="w-full h-full object-cover"
+                      onClick={() => setCurrent(i)}
+                      onError={(e) => {
+                        (e.currentTarget as HTMLImageElement).src = '/hero-bg.jpg';
+                      }}
+                    />
                   </div>
 
-                  <div className="mt-4 flex items-center justify-between gap-2">
-                    <motion.button
-                      onClick={() => window.open(tour.flyerUrl || '#', '_blank')}
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      className="px-4 py-2 bg-gradient-to-r from-sunset-500 to-sunset-600 hover:from-sunset-600 hover:to-sunset-700 text-white rounded-xl text-sm font-semibold shadow-lg"
-                    >
-                      Flyer
-                    </motion.button>
+                  <div className="p-4 flex-1 flex flex-col justify-between bg-transparent">
+                    <div>
+                      <h3 className="text-lg md:text-xl font-semibold text-white">{tour.name}</h3>
+                      <p className="text-sm text-white/75 mt-2 line-clamp-2">{tour.description}</p>
+                    </div>
 
-                    <motion.button
-                      onClick={() => setCurrent(i)}
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
-                      className={`px-4 py-2 rounded-xl text-sm font-semibold transition-all ${
-                        pos === 0
-                          ? 'bg-white/20 text-white border border-white/30'
-                          : 'text-white/70'
-                      }`}
-                    >
-                      View
-                    </motion.button>
+                    <div className="mt-4 flex items-center justify-between">
+                      <button
+                        onClick={() => window.open(tour.flyerUrl || '#', '_blank')}
+                        className="px-3 py-2 bg-sunset-500 hover:bg-sunset-600 text-white rounded-lg text-sm"
+                      >
+                        Download Flyer
+                      </button>
+
+                      <button
+                        onClick={() => setCurrent(i)}
+                        className={`text-white/90 underline text-sm`}
+                      >
+                        View
+                      </button>
+                    </div>
                   </div>
                 </motion.div>
-              </motion.div>
+              </div>
             );
           })}
+        </motion.div>
+
+        {/* Arrows */}
+        <div className="absolute left-4 top-1/2 -translate-y-1/2 z-40">
+          <button
+            onClick={() => setCurrent((c) => clamp(c - 1, 0, tours.length - 1))}
+            className="bg-black/40 hover:bg-black/60 text-white p-2 rounded-full"
+            aria-label="Previous"
+          >
+            ‹
+          </button>
         </div>
 
-        {/* Navigation Arrows */}
-        <motion.button
-          onClick={prev}
-          whileHover={{ scale: 1.1, backgroundColor: 'rgba(0, 0, 0, 0.7)' }}
-          whileTap={{ scale: 0.95 }}
-          className="absolute left-0 top-1/2 -translate-y-1/2 z-50 bg-black/40 hover:bg-black/60 text-white p-3 rounded-full transition-all"
-          aria-label="Previous card"
-        >
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-          </svg>
-        </motion.button>
+        <div className="absolute right-4 top-1/2 -translate-y-1/2 z-40">
+          <button
+            onClick={() => setCurrent((c) => clamp(c + 1, 0, tours.length - 1))}
+            className="bg-black/40 hover:bg-black/60 text-white p-2 rounded-full"
+            aria-label="Next"
+          >
+            ›
+          </button>
+        </div>
 
-        <motion.button
-          onClick={next}
-          whileHover={{ scale: 1.1, backgroundColor: 'rgba(0, 0, 0, 0.7)' }}
-          whileTap={{ scale: 0.95 }}
-          className="absolute right-0 top-1/2 -translate-y-1/2 z-50 bg-black/40 hover:bg-black/60 text-white p-3 rounded-full transition-all"
-          aria-label="Next card"
-        >
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-          </svg>
-        </motion.button>
+        {/* Dots */}
+        <div className="mt-4 flex items-center justify-center gap-2">
+          {tours.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setCurrent(i)}
+              className={`w-3 h-3 rounded-full ${i === current ? 'bg-white' : 'bg-white/30'}`}
+              aria-label={`Go to slide ${i + 1}`}
+            />
+          ))}
+        </div>
       </div>
-
-      {/* Dot Indicators */}
-      <motion.div className="mt-8 flex items-center gap-2" layout>
-        {tours.map((_, i) => (
-          <motion.button
-            key={i}
-            onClick={() => setCurrent(i)}
-            animate={{
-              scale: i === current ? 1.4 : 1,
-              backgroundColor:
-                i === current ? 'rgba(255, 255, 255, 1)' : 'rgba(255, 255, 255, 0.3)',
-            }}
-            whileHover={{ scale: i === current ? 1.4 : 1.2 }}
-            className="w-2.5 h-2.5 rounded-full transition-all"
-            aria-label={`Go to slide ${i + 1}`}
-          />
-        ))}
-      </motion.div>
-
-      {/* Autoplay Indicator */}
-      {!paused && (
-        <motion.div
-          className="mt-3 text-xs text-white/60"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-        >
-          Hover to pause
-        </motion.div>
-      )}
     </div>
   );
 };
