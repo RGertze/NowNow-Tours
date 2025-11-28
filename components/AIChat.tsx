@@ -70,13 +70,23 @@ const AIChat: React.FC = () => {
         };
         setMessages(prev => [...prev, aiMessage]);
       } else {
-        throw new Error(result.error || 'Failed to get AI response');
+        // Log the full error for debugging
+        console.error('AI API Error:', result.error);
+        console.error('Debug info:', result.debug);
+        
+        const errorMessage: Message = {
+          id: (Date.now() + 1).toString(),
+          text: `Error: ${result.error || 'Failed to get AI response'}. Please check the console for details.`,
+          isUser: false,
+          timestamp: new Date()
+        };
+        setMessages(prev => [...prev, errorMessage]);
       }
     } catch (error) {
       console.error('AI Chat error:', error);
       const errorMessage: Message = {
         id: (Date.now() + 1).toString(),
-        text: "I'm sorry, I'm having trouble connecting right now. Please try again or contact us directly for assistance.",
+        text: `I'm sorry, I'm having trouble connecting right now. Error: ${error instanceof Error ? error.message : 'Unknown error'}`,
         isUser: false,
         timestamp: new Date()
       };

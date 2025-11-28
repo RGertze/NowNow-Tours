@@ -107,13 +107,50 @@ export async function onRequestPost(context) {
 
     if (!openaiResponse.ok) {
       const errText = await openaiResponse.text();
-      throw new Error(`OpenAI API error: ${openaiResponse.status} ${errText}`);
+      const errorMessage = `OpenAI API error: ${openaiResponse.status} ${errText}`;
+      console.error(errorMessage);
+      
+      // Return actual error to help debug
+      return new Response(JSON.stringify({
+        success: false,
+        error: errorMessage,
+        debug: {
+          status: openaiResponse.status,
+          statusText: openaiResponse.statusText,
+          response: errText
+        }
+      }), {
+        status: 200,
+        headers: { 
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': 'POST, OPTIONS',
+          'Access-Control-Allow-Headers': 'Content-Type'
+        }
+      });
     }
 
     const openaiData = await openaiResponse.json();
+    console.log('OpenAI response:', JSON.stringify(openaiData));
+    
     const aiResponse = openaiData.choices?.[0]?.message?.content?.trim();
     if (!aiResponse) {
-      throw new Error('No response from OpenAI API');
+      const errorMsg = 'No response from OpenAI API';
+      console.error(errorMsg, 'Response data:', openaiData);
+      
+      return new Response(JSON.stringify({
+        success: false,
+        error: errorMsg,
+        debug: { openaiData }
+      }), {
+        status: 200,
+        headers: { 
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Methods': 'POST, OPTIONS',
+          'Access-Control-Allow-Headers': 'Content-Type'
+        }
+      });
     }
 
     return new Response(JSON.stringify({
@@ -130,21 +167,18 @@ export async function onRequestPost(context) {
     });
 
   } catch (error) {
-    console.error('AI Chat error:', error);
+    const errorMessage = error.message || 'Unknown error';
+    console.error('AI Chat error:', errorMessage, error);
     
-    // Fallback response
-      const fallbackResponses = [
-      "I'd be happy to help you plan your African adventure! Our tours include Zanzibar, Cape Town, Lubango, and Victoria Falls. Which destination interests you most?",
-      "Thank you for your interest in Now Now Tours & Safaris! We offer authentic African experiences with accommodations from budget to luxury. What would you like to know about our tours?",
-      "I'm here to help you discover the beauty of Africa! We have amazing tours to Tanzania, South Africa, Angola, and Zambia. Would you like to hear about our packages?",
-      "Welcome to Now Now Tours & Safaris! I can help you with information about our destinations, pricing, and booking process. What questions do you have about African travel?"
-    ];
-    
-    const randomFallback = fallbackResponses[Math.floor(Math.random() * fallbackResponses.length)];
-    
+    // Return actual error instead of fallback
     return new Response(JSON.stringify({
-      success: true,
-      response: randomFallback
+      success: false,
+      error: errorMessage,
+      debug: {
+        name: error.name,
+        message: error.message,
+        stack: error.stack
+      }
     }), {
       status: 200,
       headers: { 
