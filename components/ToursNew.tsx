@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaWhatsapp } from 'react-icons/fa';
 import { TOURS_DATA } from '../constants';
+import smallCards from '../content/small-cards.json';
 import type { Tour } from '../types';
 
 // Country flag images
@@ -59,6 +60,22 @@ interface TourCardProps {
 
 const TourCard: React.FC<TourCardProps> = ({ tour, onViewDetails, showComingSoon }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const fallbackCards: string[] = Array.isArray((smallCards as any).images)
+    ? (smallCards as any).images.filter((n: string) => typeof n === 'string' && !n.toLowerCase().includes('gitkeep'))
+    : [];
+
+  const cardForDestination = (dest: string): string | null => {
+    const d = (dest || '').toLowerCase();
+    const pick = (keywords: string[]) => fallbackCards.find(fn => keywords.some(k => fn.toLowerCase().includes(k))) || null;
+    if (d.includes('zanzibar') || d.includes('tanzania')) return pick(['zanzibar','nakupenda','jet ski','boat','stone']);
+    if (d.includes('cape') || d.includes('south africa')) return pick(['cape','cpt','camps bay','table','sunset--cruise','capetown']);
+    if (d.includes('lesotho')) return pick(['lesotho']);
+    if (d.includes('angola') || d.includes('lubango')) return pick(['angola','lubango','tunduvala']);
+    if (d.includes('maldives')) return pick(['maldives']);
+    if (d.includes('bali') || d.includes('indonesia')) return pick(['bali']);
+    if (d.includes('zambia') || d.includes('victoria')) return pick(['victoria']);
+    return null;
+  };
 
   // Auto-slide images every 3 seconds
   useEffect(() => {
@@ -85,7 +102,15 @@ const TourCard: React.FC<TourCardProps> = ({ tour, onViewDetails, showComingSoon
         <AnimatePresence mode="wait">
           <motion.img
             key={currentImageIndex}
-            src={tour.images[currentImageIndex]}
+            src={(tour.images && tour.images.length)
+              ? tour.images[currentImageIndex]
+              : (() => {
+                  const match = cardForDestination(tour.destination || tour.name);
+                  if (match) return `/images/small-cards/${match}`;
+                  if (fallbackCards.length) return `/images/small-cards/${fallbackCards[Math.floor(Math.random()*fallbackCards.length)]}`;
+                  return '/images/gallery/placeholder.jpg';
+                })()
+            }
             alt={`${tour.name} ${currentImageIndex + 1}`}
             className="w-full h-full object-cover"
             initial={{ opacity: 0 }}
