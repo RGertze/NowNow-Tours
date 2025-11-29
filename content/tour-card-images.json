@@ -2,9 +2,9 @@
   "notes": "Map specific tour slugs or destination names to small-card filenames or full image paths for deterministic card images.",
   "map": {
     "zanzibar-getaway": [
-      "Zanzibar sunset-boat-cruise.jpg",
-      "Jet Ski Zanzi Bar.jpg",
-      "olga-budko-Zanzibar.jpg"
+      "/images/small-cards/zanzibar-sunset-boat.jpg",
+      "/images/small-cards/Jet Ski Zanzi Bar.jpg",
+      "/images/small-cards/olga-budko-Zanzibar.jpg"
     ],
     "cape-town-adventure": "CPT.jpg",
     "lubango-wonders": "Tunduvala Angola.jpg",
@@ -35,7 +35,7 @@
       "/images/small-cards/olga-budko-Zanzibar.jpg"
     ],
     "Zanzibar": [
-      "/images/small-cards/Zanzibar sunset-boat-cruise.jpg",
+      "/images/small-cards/zanzibar-sunset-boat.jpg",
       "/images/small-cards/Jet Ski Zanzi Bar.jpg"
     ],
     "Stone Town": [
