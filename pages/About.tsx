@@ -3,8 +3,6 @@ import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { FaGlobeAfrica, FaShieldAlt, FaDollarSign, FaSuitcase, FaMobileAlt, FaHeart, FaPlane, FaStar } from 'react-icons/fa';
 import benefitsData from '../content/benefits.json';
-import aboutRaw from '../content/about.md?raw';
-import { marked } from 'marked';
 
 const Logo: React.FC<{ className?: string; isDark?: boolean }> = ({ className = "w-12 h-12", isDark = false }) => (
   <svg className={className} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
@@ -46,14 +44,7 @@ const AboutPage: React.FC = () => {
     description: b.description
   }));
 
-  // Convert markdown to HTML for about content
-  const aboutHtml = useMemo(() => {
-    try {
-      return marked.parse(aboutRaw);
-    } catch {
-      return '<p>Content loading...</p>';
-    }
-  }, [aboutRaw]);
+  // Reverted: remove markdown-driven section for About/Vision to restore original design
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-safari-50 to-earth-50">
@@ -136,16 +127,43 @@ const AboutPage: React.FC = () => {
         </div>
       </section>
 
-      {/* Dynamic About / Vision Section from markdown */}
+      {/* About / Vision Section (restored design) */}
       <section className="bg-white py-16 lg:py-24">
         <div className="container mx-auto px-6">
-          <div className="flex items-start gap-3 mb-8">
+          <div className="text-center mb-10">
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-baobab-100 text-baobab-700 text-sm font-semibold">
               <FaStar className="text-baobab-600" />
-              About Us
+              Our Vision
+            </div>
+            <h2 className="text-3xl lg:text-5xl font-display font-bold text-baobab-900 mt-4">
+              Seamless, Safe, and Unforgettable African Travel
+            </h2>
+            <p className="text-lg text-baobab-700 max-w-3xl mx-auto mt-4">
+              We make travel effortless by handling every detail with care — from planning and flights to local experiences and dedicated guides. Your journey should feel easy, inspiring, and safe from start to finish.
+            </p>
+          </div>
+
+          {/* Scenic image strip */}
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+            <div className="relative rounded-2xl overflow-hidden shadow-lg h-40 sm:h-48">
+              <img src="/images/gallery/75a6ee29-5ce2-4d79-8489-2bb658dc7422.jpg" alt="Coastal escape" className="w-full h-full object-cover" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+            </div>
+            <div className="relative rounded-2xl overflow-hidden shadow-lg h-40 sm:h-48">
+              <img src="/images/gallery/bd5f3fed-9cb0-4cc9-b22f-4684335a0c2b.jpg" alt="Wildlife moment" className="w-full h-full object-cover" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+            </div>
+            <div className="relative rounded-2xl overflow-hidden shadow-lg h-40 sm:h-48">
+              <img src="/images/gallery/738a0df1-5806-40eb-aa3d-14709e2ccf93.jpg" alt="Desert road" className="w-full h-full object-cover" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
             </div>
           </div>
-          <div className="prose prose-lg max-w-none text-baobab-800" dangerouslySetInnerHTML={{ __html: aboutHtml }} />
+
+          <div className="mt-10 text-center">
+            <p className="text-baobab-700 max-w-3xl mx-auto">
+              From the first search to the last goodbye, we take care of the details so your trip feels effortless and personal. Travel with confidence, knowing you’re guided by a team that puts your experience first.
+            </p>
+          </div>
         </div>
       </section>
 
