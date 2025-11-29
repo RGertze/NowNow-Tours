@@ -60,7 +60,7 @@ const Hero: React.FC = () => {
   };
 
   return (
-    <section ref={heroRef} className="relative w-full h-screen overflow-hidden">
+    <section ref={heroRef} className="relative w-full min-h-screen pb-20 overflow-hidden">
       {/* Ken Burns Background Zoom Effect */}
       <motion.div
         className="absolute inset-0 w-full h-full"
@@ -86,7 +86,7 @@ const Hero: React.FC = () => {
       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent z-10"></div>
 
       {/* Main Content Container */}
-      <div className="relative z-40 h-full flex items-start justify-center px-4 md:px-6 pt-32 md:pt-40">
+      <div className="relative z-40 flex items-start justify-center px-4 md:px-6 pt-32 md:pt-40">
         <motion.div
           className="max-w-5xl text-center"
           variants={containerVariants}
@@ -136,7 +136,7 @@ const Hero: React.FC = () => {
           </motion.div>
 
           {/* Pin-style 3D stacked carousel placed below CTAs */}
-          <motion.div variants={itemVariants} className="mt-8">
+          <motion.div variants={itemVariants} className="mt-10 md:mt-12">
             <PinCarousel onActiveChange={setBackgroundImage} autoplayInterval={4000} />
           </motion.div>
         </motion.div>

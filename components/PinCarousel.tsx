@@ -94,7 +94,7 @@ const PinCarousel: React.FC<Props> = ({ onActiveChange, autoplayInterval = 4000 
   };
 
   return (
-    <div className="w-full max-w-[1050px] mx-auto relative overflow-hidden flex justify-center items-center py-4">
+    <div className="w-full max-w-[1100px] mx-auto relative overflow-visible flex justify-center items-center py-2 md:py-4">
       <div className="w-full px-4">
         {/* Track - draggable but contained */}
         <motion.div
@@ -109,47 +109,47 @@ const PinCarousel: React.FC<Props> = ({ onActiveChange, autoplayInterval = 4000 
         >
           {tours.map((tour, i) => {
             const pos = i - current;
-            const scale = Math.max(0.75, 1 - Math.abs(pos) * 0.12);
-            const rotateY = pos * -12;
+            const scale = Math.max(0.85, 1 - Math.abs(pos) * 0.08);
+            const rotateY = pos * -6;
             const isActive = i === current;
 
             return (
               <div
                 key={tour.name}
                 ref={i === 0 ? cardRef : null}
-                className={`flex-shrink-0 w-56 md:w-64 lg:w-72 rounded-xl overflow-hidden shadow-lg ${
-                  isActive ? '' : 'filter grayscale-75 blur-sm'
+                className={`flex-shrink-0 w-56 md:w-64 lg:w-72 rounded-2xl overflow-hidden shadow-lg transition-all duration-300 ${
+                  isActive ? 'ring-2 ring-sunset-500' : 'opacity-80'
                 }`}
               >
                 <motion.div
-                  className="bg-white/5 backdrop-blur-md h-full flex flex-col"
+                  className="bg-white h-full flex flex-col"
                   animate={{ scale, rotateY }}
                   transition={{ type: 'spring', stiffness: 220, damping: 28 }}
                 >
-                  <div className="w-full h-40 md:h-48 lg:h-56 bg-gray-200 overflow-hidden">
+                  <div className="w-full h-40 md:h-48 lg:h-56 bg-gray-100 overflow-hidden">
                     <img
-                      src={tour.image || '/hero-bg.jpg'}
+                      src={tour.image || 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=800&q=80'}
                       alt={tour.name}
                       className="w-full h-full object-cover"
                       onClick={() => setCurrent(i)}
                       onError={(e) => {
-                        (e.currentTarget as HTMLImageElement).src = '/hero-bg.jpg';
+                        (e.currentTarget as HTMLImageElement).src = 'https://images.unsplash.com/photo-1526481280698-8fcc15dd99a0?auto=format&fit=crop&w=800&q=80';
                       }}
                     />
                   </div>
 
                   <div className="p-4 flex-1 flex flex-col justify-between bg-transparent">
                     <div>
-                      <h3 className="text-lg md:text-xl font-semibold text-white">{tour.name}</h3>
-                      <p className="text-sm text-white/75 mt-2 line-clamp-2">{tour.description}</p>
+                        <h3 className="text-lg md:text-xl font-semibold text-baobab-800">{tour.name}</h3>
+                        <p className="text-sm text-baobab-600 mt-2 line-clamp-2">{tour.description}</p>
                     </div>
 
-                    <div className="mt-4 flex items-center justify-end">
+                    <div className="mt-4 flex items-center justify-center">
                       <button
                         onClick={() => setCurrent(i)}
-                        className={`text-white/90 underline text-sm`}
+                        className={`text-sunset-600 hover:text-sunset-700 font-medium text-sm underline`}
                       >
-                        View
+                        View Details
                       </button>
                     </div>
                   </div>
