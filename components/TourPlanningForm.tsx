@@ -188,6 +188,7 @@ const TourPlanningForm: React.FC<TourPlanningFormProps> = ({ isOpen, onClose }) 
                         src={destination.image} 
                         alt={destination.name}
                         className="w-full h-full object-cover"
+                        onError={(e) => { (e.currentTarget as HTMLImageElement).src = '/images/gallery/Lubango.jpg'; }}
                       />
                       <div className="absolute inset-0 bg-black bg-opacity-20"></div>
                       {formData.destinations.includes(destination.id) && (

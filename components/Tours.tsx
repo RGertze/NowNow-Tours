@@ -37,7 +37,13 @@ const TourCard: React.FC<{ tour: Tour }> = ({ tour }) => {
       <div className="relative w-full h-64 overflow-hidden group">
         <div className="flex transition-transform ease-in-out duration-500 h-full" style={{ transform: `translateX(-${currentIndex * 100}%)` }}>
           {tour.images.map((src, index) => (
-            <img key={index} src={src} alt={`${tour.name} view ${index + 1}`} className="w-full h-full object-cover flex-shrink-0" />
+            <img 
+              key={index} 
+              src={src} 
+              alt={`${tour.name} view ${index + 1}`} 
+              className="w-full h-full object-cover flex-shrink-0"
+              onError={(e) => { (e.currentTarget as HTMLImageElement).src = '/images/gallery/Lubango.jpg'; }}
+            />
           ))}
         </div>
         

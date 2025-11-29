@@ -68,6 +68,7 @@ const Gallery: React.FC = () => {
                     src={src} 
                     alt={`Beautiful African travel moment ${index + 1}`} 
                     className="w-full h-full object-cover" 
+                    onError={(e) => { (e.currentTarget as HTMLImageElement).src = '/images/gallery/Lubango.jpg'; }}
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent"></div>
                 </div>

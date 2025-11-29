@@ -101,24 +101,24 @@ const AboutPage: React.FC = () => {
           >
             <div className="space-y-4">
               <div className="relative rounded-2xl overflow-hidden shadow-xl h-48">
-                <img src="https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?auto=format&fit=crop&w=600&q=80" alt="Safari Adventure" className="w-full h-full object-cover" />
+                <img src="https://images.unsplash.com/photo-1516026672322-bc52d61a55d5?auto=format&fit=crop&w=600&q=80" alt="Safari Adventure" className="w-full h-full object-cover" onError={(e) => { (e.currentTarget as HTMLImageElement).src = '/images/gallery/Lubango.jpg'; }} />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
                 <p className="absolute bottom-3 left-3 text-white font-semibold text-sm">Safari Adventures</p>
               </div>
               <div className="relative rounded-2xl overflow-hidden shadow-xl h-64">
-                <img src="https://images.unsplash.com/photo-1547036967-23d11aacaee0?auto=format&fit=crop&w=600&q=80" alt="Beach Escapes" className="w-full h-full object-cover" />
+                <img src="https://images.unsplash.com/photo-1547036967-23d11aacaee0?auto=format&fit=crop&w=600&q=80" alt="Beach Escapes" className="w-full h-full object-cover" onError={(e) => { (e.currentTarget as HTMLImageElement).src = '/images/gallery/Lubango.jpg'; }} />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
                 <p className="absolute bottom-3 left-3 text-white font-semibold text-sm">Beach Escapes</p>
               </div>
             </div>
             <div className="space-y-4 pt-12">
               <div className="relative rounded-2xl overflow-hidden shadow-xl h-64">
-                <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?auto=format&fit=crop&w=600&q=80" alt="City Exploration" className="w-full h-full object-cover" />
+                <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?auto=format&fit=crop&w=600&q=80" alt="City Exploration" className="w-full h-full object-cover" onError={(e) => { (e.currentTarget as HTMLImageElement).src = '/images/gallery/Lubango.jpg'; }} />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
                 <p className="absolute bottom-3 left-3 text-white font-semibold text-sm">City Tours</p>
               </div>
               <div className="relative rounded-2xl overflow-hidden shadow-xl h-48">
-                <img src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=600&q=80" alt="Natural Wonders" className="w-full h-full object-cover" />
+                <img src="https://images.unsplash.com/photo-1512453979798-5ea266f8880c?auto=format&fit=crop&w=600&q=80" alt="Natural Wonders" className="w-full h-full object-cover" onError={(e) => { (e.currentTarget as HTMLImageElement).src = '/images/gallery/Lubango.jpg'; }} />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
                 <p className="absolute bottom-3 left-3 text-white font-semibold text-sm">Natural Wonders</p>
               </div>
@@ -146,15 +146,15 @@ const AboutPage: React.FC = () => {
           {/* Scenic image strip */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
             <div className="relative rounded-2xl overflow-hidden shadow-lg h-40 sm:h-48">
-              <img src="/images/gallery/75a6ee29-5ce2-4d79-8489-2bb658dc7422.jpg" alt="Coastal escape" className="w-full h-full object-cover" />
+              <img src="/images/gallery/75a6ee29-5ce2-4d79-8489-2bb658dc7422.jpg" alt="Coastal escape" className="w-full h-full object-cover" onError={(e) => { (e.currentTarget as HTMLImageElement).src = '/images/gallery/Lubango.jpg'; }} />
               <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
             </div>
             <div className="relative rounded-2xl overflow-hidden shadow-lg h-40 sm:h-48">
-              <img src="/images/gallery/bd5f3fed-9cb0-4cc9-b22f-4684335a0c2b.jpg" alt="Wildlife moment" className="w-full h-full object-cover" />
+              <img src="/images/gallery/bd5f3fed-9cb0-4cc9-b22f-4684335a0c2b.jpg" alt="Wildlife moment" className="w-full h-full object-cover" onError={(e) => { (e.currentTarget as HTMLImageElement).src = '/images/gallery/Lubango.jpg'; }} />
               <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
             </div>
             <div className="relative rounded-2xl overflow-hidden shadow-lg h-40 sm:h-48">
-              <img src="/images/gallery/738a0df1-5806-40eb-aa3d-14709e2ccf93.jpg" alt="Desert road" className="w-full h-full object-cover" />
+              <img src="/images/gallery/738a0df1-5806-40eb-aa3d-14709e2ccf93.jpg" alt="Desert road" className="w-full h-full object-cover" onError={(e) => { (e.currentTarget as HTMLImageElement).src = '/images/gallery/Lubango.jpg'; }} />
               <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
             </div>
           </div>
