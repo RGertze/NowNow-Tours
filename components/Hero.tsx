@@ -90,7 +90,7 @@ const Hero: React.FC = () => {
       {/* Main Content Container */}
       <div className="relative z-40 h-full flex items-start md:items-center justify-center px-4 md:px-6">
         <motion.div
-          className="max-w-5xl text-center"
+          className="max-w-5xl text-center mt-8 md:mt-0"
           variants={containerVariants}
           initial="hidden"
           animate="visible"
@@ -98,7 +98,7 @@ const Hero: React.FC = () => {
           {/* Massive Headline */}
           <motion.h1
             variants={itemVariants}
-            className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight text-white drop-shadow-2xl leading-tight"
+            className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight text-white drop-shadow-2xl leading-tight px-2"
           >
             Unlock Your Travel
             <br />
