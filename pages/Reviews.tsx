@@ -12,11 +12,11 @@ const TESTIMONIALS = [
   },
   {
     id: 2,
-    name: 'Michael Johnson',
-    location: 'Cape Town, South Africa',
+    name: 'Mr & Mrs Nekwaya',
+    location: 'Zanzibar, Tanzania',
     rating: 5,
-    text: 'Loved the itinerary and the guides were exceptional. Every detail was taken care of. Can\'t wait for my next adventure with them!',
-    image: '/testimonials/michael.jpg',
+    text: 'Our Zanzibar escape was unforgettable. Warm service, seamless planning, and beautiful moments captured. Now Now Tours made everything effortless for us – highly recommended!',
+    image: '/testimonials/nekwaya.jpg', // Add this image file under public/testimonials/nekwaya.jpg
   },
   {
     id: 3,
