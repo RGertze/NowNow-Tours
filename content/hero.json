@@ -1,4 +1,16 @@
 {
-  "notes": "List filenames located under public/images/hero or raw names from 'Hero Images' folder; component will prefix if needed.",
-  "images": []
+  "images": [
+    "An aerial view of the victoria falls in zimbabwe.jpg",
+    "Bali.jpg",
+    "capetown Pictures.jpg",
+    "Capetown Tour Views.jpg",
+    "Capetown View Point.jpg",
+    "Head of the Lion Camps Bay.jpg",
+    "pexels-pixabay-259447.jpg",
+    "Prison-Island-Nakupenda-zanzibar.jpg",
+    "Tempat-Tinggal-Terbaik-di-Bali-1-1024x768.jpg",
+    "Victoria Falls.jpg",
+    "Zanzibar Boat trip shot.jpg",
+    "Zanzibar sunset-boat-cruise.jpg"
+  ]
 }
