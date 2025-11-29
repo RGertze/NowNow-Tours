@@ -1,12 +1,54 @@
 {
-  "notes": "Map specific tour slugs to a precise small-card filename for deterministic card images.",
+  "notes": "Map specific tour slugs or destination names to small-card filenames or full image paths for deterministic card images.",
   "map": {
-    "zanzibar-getaway": "olga-budko-Zanzibar.jpg",
+    "zanzibar-getaway": [
+      "Zanzibar sunset-boat-cruise.jpg",
+      "Jet Ski Zanzi Bar.jpg",
+      "olga-budko-Zanzibar.jpg"
+    ],
     "cape-town-adventure": "CPT.jpg",
     "lubango-wonders": "Tunduvala Angola.jpg",
     "victoria-falls": "Victoria Falls.jpg",
     "lesotho-highlands-escape": "Lesotho.jpg",
-    "bali-cultural-adventure": "Bali Top view.jpg",
-    "maldives-seaside-retreat": "sunset--cruise-cape-town.jpg"
+    "bali-cultural-adventure": [
+      "Bali Top view.jpg",
+      "Bali Top view 2.jpg",
+      "Bali Nusa pendia Island.jpg"
+    ],
+    "maldives-seaside-retreat": "sunset--cruise-cape-town.jpg",
+    "Cape Town": [
+      "/images/small-cards/cape-town-sunset-boat-cruise.jpg",
+      "/images/small-cards/table-mountain-cable-car.jpg",
+      "/images/small-cards/capetown-waterfront-yacht.jpg"
+    ],
+    "Zambia": [
+      "/images/small-cards/victoria-falls-aerial.jpg",
+      "/images/small-cards/victoria-falls-bridge-rainbow.jpg"
+    ],
+    "Victoria Falls": [
+      "/images/small-cards/victoria-falls-aerial.jpg",
+      "/images/small-cards/victoria-falls-bridge-rainbow.jpg"
+    ]
+    ,
+    "Tanzania": [
+      "/images/small-cards/Jet Ski Zanzi Bar.jpg",
+      "/images/small-cards/olga-budko-Zanzibar.jpg"
+    ],
+    "Zanzibar": [
+      "/images/small-cards/Zanzibar sunset-boat-cruise.jpg",
+      "/images/small-cards/Jet Ski Zanzi Bar.jpg"
+    ],
+    "Stone Town": [
+      "/images/small-cards/stone-town-zanzibar.jpg"
+    ],
+    "Camps Bay": [
+      "/images/small-cards/camps-bay-wave.jpg"
+    ],
+    "Table Mountain": [
+      "/images/small-cards/table-mountain-cable-car.jpg"
+    ],
+    "Nakupenda": [
+      "/images/small-cards/nakupenda-sandbank.jpg"
+    ]
   }
 }

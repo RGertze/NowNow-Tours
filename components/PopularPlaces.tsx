@@ -25,7 +25,18 @@ const PopularPlaces: React.FC<Props> = () => {
   const fallbackCards: string[] = Array.isArray((smallCards as any).images)
     ? (smallCards as any).images.filter((n: string) => typeof n === 'string' && !n.toLowerCase().includes('gitkeep'))
     : [];
-  const cardMap: Record<string, string> = (cardMapJson as any)?.map || {};
+  const cardMap: Record<string, string | string[]> = (cardMapJson as any)?.map || {};
+  const getSpecific = (slug?: string, destination?: string): string | null => {
+    const key = slug ?? destination;
+    const v = (key ? cardMap[key] : undefined) ?? (destination ? cardMap[destination] : undefined);
+    if (!v) return null;
+    if (Array.isArray(v)) {
+      const name = v[0];
+      if (!name) return null;
+      return name.startsWith('/images/') ? name : `/images/small-cards/${name}`;
+    }
+    return v.startsWith('/images/') ? v : `/images/small-cards/${v}`;
+  };
 
   const cardForDestination = (dest: string): string | null => {
     const d = (dest || '').toLowerCase();
@@ -142,11 +153,12 @@ const PopularPlaces: React.FC<Props> = () => {
                       <p className="text-sm mt-2">{t.description}</p>
                       <ul className="mt-3 text-sm space-y-1">
                         {t.itinerary.slice(0, 3).map((it, idx) => (
-                          <li key={idx} className="opacity-90">• {it}</li>
-                        ))}
-                      </ul>
-                    </div>
-                    <div className="flex justify-end gap-2">
+                          onError={(e) => {
+                            const specific = getSpecific(t.slug, t.destination);
+                            const match = specific ? null : cardForDestination(t.destination || t.name);
+                            const fallback = specific ? specific : (match ? `/images/small-cards/${match}` : (fallbackCards.length ? `/images/small-cards/${fallbackCards[Math.floor(Math.random()*fallbackCards.length)]}` : '/images/gallery/placeholder.jpg'));
+                            (e.currentTarget as HTMLImageElement).src = `${fallback}?q=80&w=1200&auto=format&fit=crop`;
+                          }}
                       <button onClick={(e) => { e.stopPropagation(); onExplore(t); }} className="bg-white/10 hover:bg-white/20 py-2 px-4 rounded-md">Explore</button>
                     </div>
                   </div>
@@ -161,6 +173,13 @@ const PopularPlaces: React.FC<Props> = () => {
                     onClick={(e) => { e.stopPropagation(); onExplore(t); }}
                     className="bg-sunset-500 hover:bg-sunset-600 text-white px-4 py-2 rounded-lg font-medium shadow-lg"
                   >
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
+                      <div className="absolute left-4 bottom-4 right-4 text-white">
+                        <h4 className="text-lg font-semibold drop-shadow">{t.name}</h4>
+                        <p className="text-sm text-white/80 mt-1">{t.destination}</p>
+                      </div>
+                    </div>
                     Explore
                   </button>
                 </div>

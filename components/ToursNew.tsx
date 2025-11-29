@@ -64,7 +64,7 @@ const TourCard: React.FC<TourCardProps> = ({ tour, onViewDetails, showComingSoon
   const fallbackCards: string[] = Array.isArray((smallCards as any).images)
     ? (smallCards as any).images.filter((n: string) => typeof n === 'string' && !n.toLowerCase().includes('gitkeep'))
     : [];
-  const cardMap: Record<string, string> = (cardMapJson as any)?.map || {};
+  const cardMap: Record<string, string | string[]> = (cardMapJson as any)?.map || {};
 
   const cardForDestination = (dest: string): string | null => {
     const d = (dest || '').toLowerCase();
@@ -78,10 +78,18 @@ const TourCard: React.FC<TourCardProps> = ({ tour, onViewDetails, showComingSoon
     if (d.includes('zambia') || d.includes('victoria')) return pick(['victoria']);
     return null;
   };
-  const cardForSlug = (slug?: string): string | null => {
-    if (!slug) return null;
-    const v = cardMap[slug];
-    return v ? v : null;
+  const cardForSlugOrDestination = (slug?: string, destination?: string): string | null => {
+    const key = slug || destination;
+    if (!key) return null;
+    const v = cardMap[key] ?? (destination ? cardMap[destination] : undefined);
+    if (!v) return null;
+    if (Array.isArray(v)) {
+      // choose first image for deterministic card; support full prefixed paths
+      const name = v[0];
+      if (!name) return null;
+      return name.startsWith('/images/') ? name.replace('/images/small-cards/', '') : name;
+    }
+    return v.startsWith('/images/') ? v.replace('/images/small-cards/', '') : v;
   };
 
   // Auto-slide images every 3 seconds
@@ -112,8 +120,8 @@ const TourCard: React.FC<TourCardProps> = ({ tour, onViewDetails, showComingSoon
             src={(tour.images && tour.images.length)
               ? tour.images[currentImageIndex]
               : (() => {
-                  const specific = cardForSlug(tour.slug);
-                  if (specific) return `/images/small-cards/${specific}`;
+                  const specific = cardForSlugOrDestination(tour.slug, tour.destination);
+                  if (specific) return specific.startsWith('/images/') ? specific : `/images/small-cards/${specific}`;
                   const match = cardForDestination(tour.destination || tour.name);
                   if (match) return `/images/small-cards/${match}`;
                   if (fallbackCards.length) return `/images/small-cards/${fallbackCards[Math.floor(Math.random()*fallbackCards.length)]}`;
@@ -123,9 +131,11 @@ const TourCard: React.FC<TourCardProps> = ({ tour, onViewDetails, showComingSoon
             alt={`${tour.name} ${currentImageIndex + 1}`}
             className="w-full h-full object-cover"
             onError={(e) => {
-              const specific = cardForSlug(tour.slug);
+              const specific = cardForSlugOrDestination(tour.slug, tour.destination);
               const match = specific || cardForDestination(tour.destination || tour.name);
-              const fallback = match ? `/images/small-cards/${match}` : (fallbackCards.length ? `/images/small-cards/${fallbackCards[Math.floor(Math.random()*fallbackCards.length)]}` : '/images/gallery/placeholder.jpg');
+              const fallback = match
+                ? (match.startsWith('/images/') ? match : `/images/small-cards/${match}`)
+                : (fallbackCards.length ? `/images/small-cards/${fallbackCards[Math.floor(Math.random()*fallbackCards.length)]}` : '/images/gallery/placeholder.jpg');
               (e.currentTarget as HTMLImageElement).src = fallback;
             }}
             initial={{ opacity: 0 }}
