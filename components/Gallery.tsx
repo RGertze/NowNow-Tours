@@ -1,6 +1,7 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
 import { GALLERY_IMAGES } from '../constants';
+import galleryConfig from '../content/gallery.json';
 
 const ArrowLeft: React.FC<{ onClick: () => void }> = ({ onClick }) => (
   <button onClick={onClick} className="absolute top-1/2 left-4 -translate-y-1/2 bg-white/50 hover:bg-white/80 rounded-full p-2 z-10 transition-colors">
@@ -22,12 +23,16 @@ const ArrowRight: React.FC<{ onClick: () => void }> = ({ onClick }) => (
 const Gallery: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
+  const dynamicImages: string[] = Array.isArray((galleryConfig as any).images) && (galleryConfig as any).images.length > 0
+    ? (galleryConfig as any).images.map((name: string) => name.startsWith('/images/gallery/') ? name : `/images/gallery/${name}`)
+    : GALLERY_IMAGES;
+
   const nextSlide = useCallback(() => {
-    setCurrentIndex((prevIndex) => (prevIndex + 1) % GALLERY_IMAGES.length);
-  }, []);
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % dynamicImages.length);
+  }, [dynamicImages.length]);
 
   const prevSlide = () => {
-    setCurrentIndex((prevIndex) => (prevIndex - 1 + GALLERY_IMAGES.length) % GALLERY_IMAGES.length);
+    setCurrentIndex((prevIndex) => (prevIndex - 1 + dynamicImages.length) % dynamicImages.length);
   };
 
   useEffect(() => {
@@ -54,7 +59,7 @@ const Gallery: React.FC = () => {
         <div className="relative w-full max-w-5xl mx-auto rounded-2xl shadow-2xl overflow-hidden bg-white/10 backdrop-blur-sm border border-safari-100">
           <div className="relative h-96 md:h-[600px] w-full overflow-hidden">
             <div className="flex transition-transform ease-in-out duration-1000" style={{ transform: `translateX(-${currentIndex * 100}%)` }}>
-              {GALLERY_IMAGES.map((src, index) => (
+              {dynamicImages.map((src, index) => (
                 <div key={index} className="w-full h-full flex-shrink-0 relative">
                   <img 
                     src={src} 
@@ -71,7 +76,7 @@ const Gallery: React.FC = () => {
           <ArrowRight onClick={nextSlide} />
           
           <div className="absolute bottom-6 left-1/2 -translate-x-1/2 flex gap-3 bg-black/20 backdrop-blur-sm rounded-full px-4 py-2">
-            {GALLERY_IMAGES.map((_, index) => (
+            {dynamicImages.map((_, index) => (
               <button
                 key={index}
                 className={`w-3 h-3 rounded-full cursor-pointer transition-all duration-300 ${
@@ -85,7 +90,7 @@ const Gallery: React.FC = () => {
           
           {/* Image counter */}
           <div className="absolute top-6 right-6 bg-black/40 backdrop-blur-sm text-white px-3 py-1 rounded-full text-sm font-medium">
-            {currentIndex + 1} / {GALLERY_IMAGES.length}
+            {currentIndex + 1} / {dynamicImages.length}
           </div>
         </div>
         

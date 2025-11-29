@@ -1,0 +1,8 @@
+[
+  {"icon": "globe", "title": "Hassle-Free Travel", "description": "We manage logistics so you can enjoy the journey."},
+  {"icon": "shield", "title": "Safe & Trusted", "description": "Vetted partners, reliable guides, responsive support."},
+  {"icon": "pricing", "title": "Transparent Pricing", "description": "Clear cost breakdowns, flexible deposits, no hidden fees."},
+  {"icon": "suitcase", "title": "Expertly Curated Tours", "description": "Handpicked itineraries balancing culture, adventure, rest."},
+  {"icon": "mobile", "title": "Instant Support", "description": "WhatsApp assistance for changes or emergencies."},
+  {"icon": "community", "title": "Traveler Community", "description": "Shared adventures and lasting friendships."}
+]

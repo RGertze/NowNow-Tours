@@ -1,0 +1,6 @@
+{
+  "expectedImagesPattern": "/images/gallery/<descriptive-name>.jpg",
+  "tagsInfo": "Unnamed originals go into /images/gallery. Use short dashed names e.g. zanzibar-beach.jpg, cape-town-table-mountain.jpg",
+  "notes": "Populate the images array below with filenames placed under public/images/gallery. The Gallery component will prefer this list over constants.",
+  "images": []
+}

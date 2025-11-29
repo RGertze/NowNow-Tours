@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { motion } from 'framer-motion';
 import { useNavigate } from 'react-router-dom';
 import { FaGlobeAfrica, FaShieldAlt, FaDollarSign, FaSuitcase, FaMobileAlt, FaHeart, FaPlane, FaStar } from 'react-icons/fa';
+import benefitsData from '../content/benefits.json';
+import aboutRaw from '../content/about.md?raw';
+import { marked } from 'marked';
 
 const Logo: React.FC<{ className?: string; isDark?: boolean }> = ({ className = "w-12 h-12", isDark = false }) => (
   <svg className={className} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
@@ -27,38 +30,30 @@ const Logo: React.FC<{ className?: string; isDark?: boolean }> = ({ className = 
 const AboutPage: React.FC = () => {
   const navigate = useNavigate();
 
-  const benefits = [
-    {
-      icon: FaGlobeAfrica,
-      title: "Hassle-Free Travel",
-      description: "We handle everything—flights, accommodation, activities—so you can focus on making memories."
-    },
-    {
-      icon: FaShieldAlt,
-      title: "Safe & Trusted",
-      description: "Professional guides, vetted partners, and 24/7 support ensure your safety every step of the way."
-    },
-    {
-      icon: FaDollarSign,
-      title: "Transparent Pricing",
-      description: "No hidden fees. Clear pricing with flexible payment plans and group discounts available."
-    },
-    {
-      icon: FaSuitcase,
-      title: "Expertly Curated Tours",
-      description: "Handpicked destinations, local experiences, and itineraries designed by travel professionals."
-    },
-    {
-      icon: FaMobileAlt,
-      title: "Instant Support",
-      description: "Reach us anytime via WhatsApp for quick responses, changes, or emergency assistance."
-    },
-    {
-      icon: FaHeart,
-      title: "Community of Travelers",
-      description: "Join a vibrant community of adventurers, make new friends, and share unforgettable moments."
+  // Map icon keys from JSON to actual icon components
+  const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
+    globe: FaGlobeAfrica,
+    shield: FaShieldAlt,
+    pricing: FaDollarSign,
+    suitcase: FaSuitcase,
+    mobile: FaMobileAlt,
+    community: FaHeart
+  };
+
+  const benefits = (benefitsData as Array<{ icon: string; title: string; description: string }>).map(b => ({
+    icon: iconMap[b.icon] || FaStar,
+    title: b.title,
+    description: b.description
+  }));
+
+  // Convert markdown to HTML for about content
+  const aboutHtml = useMemo(() => {
+    try {
+      return marked.parse(aboutRaw);
+    } catch {
+      return '<p>Content loading...</p>';
     }
-  ];
+  }, [aboutRaw]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-safari-50 to-earth-50">
@@ -141,7 +136,7 @@ const AboutPage: React.FC = () => {
         </div>
       </section>
 
-      {/* Vision Section */}
+      {/* Dynamic About / Vision Section from markdown */}
       <section className="bg-white py-16 lg:py-24">
         <div className="container mx-auto px-6">
           <div className="flex items-start gap-3 mb-8">
@@ -150,43 +145,7 @@ const AboutPage: React.FC = () => {
               About Us
             </div>
           </div>
-          <div className="grid lg:grid-cols-2 gap-16 items-center">
-            <motion.div
-              initial={{ opacity: 0, x: -30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6 }}
-              viewport={{ once: true }}
-            >
-              <h2 className="text-3xl lg:text-5xl font-display font-bold text-baobab-900 mb-6">
-                Our Vision for Seamless African Travel
-              </h2>
-              <p className="text-lg text-baobab-700 leading-relaxed mb-6">
-                Now Now Tours envisions a world where <strong>exploring Africa is effortless</strong>. We believe every traveler deserves authentic experiences, from the savannahs of Zambia to the beaches of Zanzibar, without the stress of planning.
-              </p>
-              <p className="text-lg text-baobab-700 leading-relaxed">
-                Rooted in Namibia, we combine local expertise with a passion for adventure, creating journeys that connect you with Africa's heart—its landscapes, cultures, and people.
-              </p>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, x: 30 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              viewport={{ once: true }}
-              className="grid grid-cols-2 gap-6"
-            >
-              <div className="relative rounded-2xl overflow-hidden shadow-lg">
-                <img src="https://images.unsplash.com/photo-1539650116574-75c0c6d73c6e?auto=format&fit=crop&w=500&q=80" alt="Tour Leader" className="w-full h-64 object-cover" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                <p className="absolute bottom-4 left-4 text-white font-semibold">Expert Guides</p>
-              </div>
-              <div className="relative rounded-2xl overflow-hidden shadow-lg mt-8">
-                <img src="https://images.unsplash.com/photo-1559827260-dc66d52bef19?auto=format&fit=crop&w=500&q=80" alt="Group Travel" className="w-full h-64 object-cover" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                <p className="absolute bottom-4 left-4 text-white font-semibold">Group Adventures</p>
-              </div>
-            </motion.div>
-          </div>
+          <div className="prose prose-lg max-w-none text-baobab-800" dangerouslySetInnerHTML={{ __html: aboutHtml }} />
         </div>
       </section>
 
@@ -208,23 +167,24 @@ const AboutPage: React.FC = () => {
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
             {benefits.map((benefit, idx) => {
-              const IconComponent = benefit.icon;
+              const IconComponent = benefit.icon as React.ComponentType<{ className?: string }>;
               return (
-              <motion.div
-                key={idx}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: idx * 0.1 }}
-                viewport={{ once: true }}
-                className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-shadow"
-              >
-                <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-sunset-500 to-safari-500 flex items-center justify-center mb-4 shadow-lg">
-                  <IconComponent className="text-white text-2xl" />
-                </div>
-                <h3 className="text-xl font-bold text-baobab-900 mb-3">{benefit.title}</h3>
-                <p className="text-baobab-700 leading-relaxed">{benefit.description}</p>
-              </motion.div>
-            );})}
+                <motion.div
+                  key={benefit.title + idx}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: idx * 0.1 }}
+                  viewport={{ once: true }}
+                  className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-2xl transition-shadow"
+                >
+                  <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-sunset-500 to-safari-500 flex items-center justify-center mb-4 shadow-lg">
+                    <IconComponent className="text-white text-2xl" />
+                  </div>
+                  <h3 className="text-xl font-bold text-baobab-900 mb-3">{benefit.title}</h3>
+                  <p className="text-baobab-700 leading-relaxed">{benefit.description}</p>
+                </motion.div>
+              );
+            })}
           </div>
         </div>
       </section>

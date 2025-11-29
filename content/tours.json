@@ -1,0 +1,44 @@
+[
+  {
+    "slug": "zanzibar-getaway",
+    "expectedImages": ["/images/tours/zanzibar-getaway/1.jpg", "/images/tours/zanzibar-getaway/2.jpg", "/images/tours/zanzibar-getaway/3.jpg"],
+    "tags": ["Zanzibar", "Beach"],
+    "notes": "Place JPG/PNG files matching names above."
+  },
+  {
+    "slug": "cape-town-adventure",
+    "expectedImages": ["/images/tours/cape-town-adventure/1.jpg", "/images/tours/cape-town-adventure/2.jpg", "/images/tours/cape-town-adventure/3.jpg"],
+    "tags": ["CapeTown", "City"],
+    "notes": "Use landscape images: mountain, peninsula, winelands."
+  },
+  {
+    "slug": "lubango-wonders",
+    "expectedImages": ["/images/tours/lubango-wonders/1.jpg", "/images/tours/lubango-wonders/2.jpg", "/images/tours/lubango-wonders/3.jpg"],
+    "tags": ["Angola"],
+    "notes": "Falls, cityscape, wildlife or resort."
+  },
+  {
+    "slug": "victoria-falls",
+    "expectedImages": ["/images/tours/victoria-falls/1.jpg", "/images/tours/victoria-falls/2.jpg", "/images/tours/victoria-falls/3.jpg"],
+    "tags": ["Zambia", "Water"],
+    "notes": "Include falls close-up, sunset cruise."
+  },
+  {
+    "slug": "lesotho-highlands-escape",
+    "expectedImages": ["/images/tours/lesotho-highlands-escape/1.jpg", "/images/tours/lesotho-highlands-escape/2.jpg", "/images/tours/lesotho-highlands-escape/3.jpg"],
+    "tags": ["Lesotho", "Snow"],
+    "notes": "Afriski, canyon view, lodge."
+  },
+  {
+    "slug": "bali-cultural-adventure",
+    "expectedImages": ["/images/tours/bali-cultural-adventure/1.jpg", "/images/tours/bali-cultural-adventure/2.jpg", "/images/tours/bali-cultural-adventure/3.jpg"],
+    "tags": ["Bali", "Island"],
+    "notes": "Temple, waterfall, swing / nest."
+  },
+  {
+    "slug": "maldives-seaside-retreat",
+    "expectedImages": ["/images/tours/maldives-seaside-retreat/1.jpg", "/images/tours/maldives-seaside-retreat/2.jpg", "/images/tours/maldives-seaside-retreat/3.jpg"],
+    "tags": ["Maldives", "Island"],
+    "notes": "Overwater villa, turquoise sea, sunset."
+  }
+]
