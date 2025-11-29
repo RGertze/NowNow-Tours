@@ -161,13 +161,17 @@ const Contact: React.FC = () => {
             </div>
             
             <div className="bg-white rounded-2xl shadow-xl border border-safari-100 overflow-hidden">
-              <div className="w-full h-64 relative flex items-center justify-center bg-gradient-to-br from-safari-50 to-earth-100">
-                <div className="text-center px-6">
-                  <h4 className="text-lg font-semibold text-baobab-800 mb-2">Our Base</h4>
-                  <p className="text-sm text-baobab-600">Windhoek, Namibia</p>
-                  <p className="mt-3 text-xs text-baobab-500">Interactive office map coming soon.</p>
-                </div>
-              </div>
+              <iframe
+                src="https://www.google.com/maps?q=Windhoek,+Namibia&output=embed"
+                width="100%"
+                height="256"
+                style={{ border: 0 }}
+                allowFullScreen
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="Now Now Tours & Safaris - Windhoek, Namibia"
+                className="w-full h-64"
+              ></iframe>
               <div className="p-4 bg-gradient-to-r from-safari-50 to-earth-50">
                 <div className="flex items-center space-x-2">
                   <svg className="w-5 h-5 text-safari-600" fill="currentColor" viewBox="0 0 20 20">
