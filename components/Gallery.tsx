@@ -24,7 +24,10 @@ const Gallery: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const dynamicImages: string[] = Array.isArray((galleryConfig as any).images) && (galleryConfig as any).images.length > 0
-    ? (galleryConfig as any).images.map((name: string) => name.startsWith('/images/gallery/') ? name : `/images/gallery/${name}`)
+    ? (galleryConfig as any).images
+        .filter((name: string) => typeof name === 'string' && !name.toLowerCase().includes('gitkeep'))
+        .sort((a: string, b: string) => a.localeCompare(b))
+        .map((name: string) => name.startsWith('/images/gallery/') ? name : `/images/gallery/${name}`)
     : GALLERY_IMAGES;
 
   const nextSlide = useCallback(() => {

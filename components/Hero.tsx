@@ -14,7 +14,9 @@ const Hero: React.FC = () => {
   const heroImages: string[] = useMemo(() => {
     const cfg = heroConfig as any;
     if (Array.isArray(cfg.images) && cfg.images.length > 0) {
-      return cfg.images.map((name: string) => name.startsWith('/images/hero/') ? name : `/images/hero/${name}`);
+      const names = cfg.images.filter((n: string) => typeof n === 'string' && !n.toLowerCase().includes('gitkeep'));
+      names.sort((a: string, b: string) => a.localeCompare(b));
+      return names.map((name: string) => name.startsWith('/images/hero/') ? name : `/images/hero/${name}`);
     }
     // Fallback to legacy paths
     return [

@@ -10,7 +10,22 @@ const createSlug = (name: string) => name.toLowerCase().replace(/[^a-z0-9]+/g, '
 
 const PopularPlaces: React.FC<Props> = () => {
   const tours = TOURS_DATA as Tour[];
-  const fallbackCards: string[] = Array.isArray((smallCards as any).images) ? (smallCards as any).images : [];
+  const fallbackCards: string[] = Array.isArray((smallCards as any).images)
+    ? (smallCards as any).images.filter((n: string) => typeof n === 'string' && !n.toLowerCase().includes('gitkeep'))
+    : [];
+
+  const cardForDestination = (dest: string): string | null => {
+    const d = (dest || '').toLowerCase();
+    const pick = (keywords: string[]) => fallbackCards.find(fn => keywords.some(k => fn.toLowerCase().includes(k)) ) || null;
+    if (d.includes('zanzibar') || d.includes('tanzania')) return pick(['zanzibar','nakupenda','jet ski','boat','stone']);
+    if (d.includes('cape') || d.includes('south africa')) return pick(['cape','cpt','camps bay','table','sunset--cruise','capetown']);
+    if (d.includes('lesotho')) return pick(['lesotho']);
+    if (d.includes('angola') || d.includes('lubango')) return pick(['angola','lubango','tunduvala']);
+    if (d.includes('maldives')) return pick(['maldives']);
+    if (d.includes('bali') || d.includes('indonesia')) return pick(['bali']);
+    if (d.includes('zambia') || d.includes('victoria')) return pick(['victoria']);
+    return null;
+  };
   const [active, setActive] = useState(0);
   const [flipping, setFlipping] = useState(false);
   const intervalRef = useRef<number | null>(null);
@@ -87,7 +102,15 @@ const PopularPlaces: React.FC<Props> = () => {
                   {/* Front face */}
                   <div style={{ backfaceVisibility: 'hidden' as const }} className="absolute inset-0">
                     <img
-                      src={`${(t.images && t.images[0]) ? t.images[0] : (fallbackCards.length ? `/images/small-cards/${fallbackCards[Math.floor(Math.random()*fallbackCards.length)]}` : '/images/gallery/placeholder.jpg')}?q=80&w=1200&auto=format&fit=crop`}
+                      src={`${(t.images && t.images[0])
+                        ? t.images[0]
+                        : (() => {
+                            const match = cardForDestination(t.destination || t.name);
+                            if (match) return `/images/small-cards/${match}`;
+                            if (fallbackCards.length) return `/images/small-cards/${fallbackCards[Math.floor(Math.random()*fallbackCards.length)]}`;
+                            return '/images/gallery/placeholder.jpg';
+                          })()
+                        }?q=80&w=1200&auto=format&fit=crop`}
                       alt={t.name}
                       className="w-full h-full object-cover"
                       onClick={handleImageClick}
