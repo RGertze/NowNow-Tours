@@ -14,12 +14,24 @@
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
     text-rendering: optimizeLegibility;
+    background: linear-gradient(to bottom right, #fdf8f0, #ede8d8);
+    color: #000; /* Increased contrast: primary body text now black */
   }
 
   h1, h2, h3, h4, h5, h6 {
     font-family: 'Raleway', ui-sans-serif, system-ui, sans-serif;
     font-weight: 700; /* Bold for headings */
     letter-spacing: 0.02em;
+  }
+
+  /* Dark mode base */
+  .dark body {
+    background: linear-gradient(to bottom right, #3c3c31, #533d2c);
+    color: #e7e7e2;
+  }
+  .dark h1, .dark h2, .dark h3, .dark h4, .dark h5, .dark h6 {
+    color: #fdf8f0;
+    letter-spacing: 0.01em;
   }
 
   :root {
@@ -65,4 +77,7 @@
   .text-shadow-sm {
     text-shadow: 1px 1px 4px rgba(0,0,0,0.7);
   }
+  /* Force commonly used brand text shades to black for higher readability */
+  .text-baobab-700 { color: #000 !important; }
+  .text-baobab-600 { color: #000 !important; }
 }

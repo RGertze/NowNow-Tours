@@ -9,27 +9,46 @@ const About: React.FC = () => {
       <div className="absolute bottom-0 left-0 w-48 h-48 bg-gradient-to-tr from-earth-100 to-transparent rounded-full translate-y-24 -translate-x-24 opacity-60"></div>
       
       <div className="container mx-auto px-6 relative z-10">
-        <div className="flex flex-col lg:flex-row items-center gap-16">
-          <div className="lg:w-1/2">
-            <div className="relative">
-              <img 
-                src="/updates-jet-ski.jpg"
-                alt="Couple on a jet ski in turquoise water"
-                loading="lazy"
-                onError={(e) => { (e.currentTarget as HTMLImageElement).src = 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=800&q=80'; }}
-                className="rounded-2xl shadow-2xl w-full object-cover transform hover:scale-105 transition-transform duration-500"
-              />
-              <div className="absolute -bottom-6 -right-6 w-24 h-24 bg-gradient-to-br from-sunset-500 to-safari-600 rounded-2xl flex items-center justify-center shadow-xl">
-                <span className="text-white font-bold text-lg">5★</span>
-              </div>
+        <div className="flex flex-col items-center text-center max-w-5xl mx-auto">
+          <div id="who-we-are" className="w-full space-y-8">
+            {/* Badge */}
+            <div className="inline-flex items-center px-5 py-2 rounded-full bg-baobab-100 text-baobab-700 text-sm font-medium shadow-sm dark:bg-baobab-700/40 dark:text-baobab-100">
+              • Who we are?
             </div>
-          </div>
-          <div className="lg:w-1/2 space-y-6">
-            <div className="space-y-4">
-              <h2 className="font-display text-4xl lg:text-5xl font-bold text-gradient leading-tight">
-                We make travel easy, safe, and unforgettable
-              </h2>
-              <div className="w-24 h-1 bg-gradient-to-r from-sunset-500 to-safari-500 rounded-full"></div>
+            {/* Tagline */}
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold leading-snug tracking-tight text-baobab-800 dark:text-safari-50 max-w-4xl mx-auto">
+              We're a group of travel professionals, local guides, and <span className="font-bold">experience designers</span> working together to create journeys that matter. <span className="font-bold">From the first search to the last goodbye</span>, we take care of the details so your trip feels <span className="font-bold">effortless and personal.</span>
+            </h2>
+            {/* Image strip */}
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-4 max-w-3xl mx-auto">
+              <img
+                src="/about-waterfall.jpg"
+                alt="Traveler near waterfall"
+                loading="lazy"
+                onError={(e) => { (e.currentTarget as HTMLImageElement).src = 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=600&q=80'; }}
+                className="rounded-xl object-cover h-32 w-full shadow-md"
+              />
+              <img
+                src="/about-mountain.jpg"
+                alt="Mountain expedition"
+                loading="lazy"
+                onError={(e) => { (e.currentTarget as HTMLImageElement).src = 'https://images.unsplash.com/photo-1517821099601-1a09678e1a37?auto=format&fit=crop&w=600&q=80'; }}
+                className="rounded-xl object-cover h-32 w-full shadow-md"
+              />
+              <img
+                src="/about-trekking.jpg"
+                alt="Guided trekking group"
+                loading="lazy"
+                onError={(e) => { (e.currentTarget as HTMLImageElement).src = 'https://images.unsplash.com/photo-1525104885119-8806dd94ad58?auto=format&fit=crop&w=600&q=80'; }}
+                className="rounded-xl object-cover h-32 w-full shadow-md"
+              />
+              <img
+                src="/about-jeep.jpg"
+                alt="Safari jeep adventure"
+                loading="lazy"
+                onError={(e) => { (e.currentTarget as HTMLImageElement).src = 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=600&q=80'; }}
+                className="rounded-xl object-cover h-32 w-full shadow-md"
+              />
             </div>
             
             <div className="space-y-6 text-baobab-700">

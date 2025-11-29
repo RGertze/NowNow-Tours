@@ -4,7 +4,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import Hero from './components/Hero';
 import About from './components/About';
-import Tours from './components/Tours';
+import ToursNew from './components/ToursNew';
 import Testimonials from './components/Testimonials';
 import Gallery from './components/Gallery';
 import Contact from './components/Contact';
@@ -32,7 +32,7 @@ const Home: React.FC = () => (
       <About />
     </div>
     <div id="tours">
-      <Tours />
+      <ToursNew maxCards={6} showFilters={true} />
     </div>
     <Testimonials />
     <Gallery />
@@ -48,7 +48,7 @@ const Home: React.FC = () => (
 const App: React.FC = () => {
   return (
     <BrowserRouter>
-      <div className="bg-gradient-to-br from-safari-50 to-earth-50 text-baobab-800 font-body min-h-screen">
+      <div className="bg-gradient-to-br from-safari-50 to-earth-50 text-baobab-800 font-body min-h-screen dark:from-baobab-900 dark:to-earth-900 dark:text-baobab-50 transition-colors duration-300">
         <Header />
         <Routes>
           <Route path="/" element={<Home />} />

@@ -61,7 +61,7 @@ const Header: React.FC = () => {
   const [isScrolled, setIsScrolled] = useState(false);
 
   const navLinks = [
-    { name: 'Home', id: 'home', type: 'scroll' },
+    { name: 'Home', id: '', type: 'route' },
     { name: 'About', id: 'about', type: 'route' },
     { name: 'Adventures', id: 'adventures', type: 'route' },
     { name: 'Upcoming', id: 'upcoming', type: 'route' },
@@ -72,7 +72,11 @@ const Header: React.FC = () => {
   
   const handleNavigation = (link: (typeof navLinks)[0]) => {
     if (link.type === 'route') {
-      navigate(`/${link.id}`);
+      if (link.name === 'Home') {
+        navigate('/');
+      } else {
+        navigate(`/${link.id}`);
+      }
     } else {
       document.getElementById(link.id)?.scrollIntoView({ behavior: 'smooth' });
     }
@@ -156,6 +160,16 @@ const Header: React.FC = () => {
           ))}
         </nav>
       </div>
+      <button
+        onClick={() => {
+        const root = document.documentElement;
+        root.classList.toggle('dark');
+        }}
+        aria-label="Toggle dark mode"
+        className="px-3 py-2 rounded-md text-sm font-medium bg-baobab-800/10 dark:bg-baobab-200/10 text-baobab-800 dark:text-safari-50 hover:bg-baobab-800/20 dark:hover:bg-baobab-200/20 transition-colors"
+      >
+        Dark
+      </button>
     </header>
   );
 };

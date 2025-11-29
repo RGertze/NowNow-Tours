@@ -15,7 +15,8 @@
     "db:create": "wrangler d1 create nownow-tours-db",
     "db:setup": "wrangler d1 execute nownow-tours-db --file=./database/schema.sql",
     "db:query": "wrangler d1 execute nownow-tours-db --command",
-    "deploy": "npm run build && wrangler pages deploy dist"
+    "deploy": "npm run build && wrangler pages deploy dist",
+    "baseline:check": "node scripts/baseline-check.js"
   },
   "dependencies": {
     "@types/react-router-dom": "^5.3.3",
@@ -31,6 +32,7 @@
     "@types/node": "^22.14.0",
     "@vitejs/plugin-react": "^5.0.0",
     "autoprefixer": "^10.4.21",
+    "baseline-browser-mapping": "^2.8.32",
     "postcss": "^8.5.6",
     "tailwindcss": "^3.4.17",
     "typescript": "~5.8.2",

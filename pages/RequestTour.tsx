@@ -78,7 +78,7 @@ ${formData.message}
           <h1 className="text-baobab-800 mb-4">
             Request a Custom Tour
           </h1>
-          <p className="text-lg text-gray-700 mb-8">
+          <p className="text-lg text-gray-700 mb-8 prose prose-baobab dark:prose-dark max-w-none">
             Tell us about your dream African adventure and we'll create a personalized itinerary just for you.
           </p>
 

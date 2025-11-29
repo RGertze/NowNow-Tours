@@ -15,6 +15,10 @@ export interface Testimonial {
   quote: string;
   name: string;
   image: string;
+  tripCountry?: string; // Country of the trip experience
+  tripDate?: string;    // Date or range of the trip
+  rating?: number;      // 1-5 star rating
+  videoUrl?: string;    // Optional future video testimonial
 }
 
 export interface DownloadableDocument {
