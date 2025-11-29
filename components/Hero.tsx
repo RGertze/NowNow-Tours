@@ -96,21 +96,17 @@ const Hero: React.FC = () => {
           {/* Massive Headline */}
           <motion.h1
             variants={itemVariants}
-            className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-white drop-shadow-2xl leading-tight"
+            className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-white drop-shadow-2xl leading-tight"
           >
-            Effortless African
-            <br />
-            <span className="bg-gradient-to-r from-sunset-400 via-safari-400 to-sunset-300 bg-clip-text text-transparent">
-              Adventures
-            </span>
+            Effortless African <span className="bg-gradient-to-r from-sunset-400 via-safari-400 to-sunset-300 bg-clip-text text-transparent">Adventures</span>
           </motion.h1>
 
           {/* Subheadline */}
           <motion.p
             variants={itemVariants}
-            className="mt-6 text-lg md:text-xl text-white/80 max-w-3xl mx-auto font-light leading-relaxed"
+            className="mt-5 text-base md:text-lg text-white/85 max-w-2xl mx-auto font-light leading-relaxed"
           >
-            Plan less. Experience more. Local expertise and seamless support for journeys that matter.
+            Local expertise. Seamless support. Real connections with Africa’s nature, culture and people.
           </motion.p>
 
           {/* CTA Buttons with Glassmorphism */}
