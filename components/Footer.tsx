@@ -37,7 +37,7 @@ const Footer: React.FC = () => {
             </p>
             <div className="flex justify-center lg:justify-start gap-4">
               <SocialIcon href="https://wa.me/264814525199" icon={<FaWhatsapp />} label="WhatsApp" />
-              <SocialIcon href="#instagram" icon={<FaInstagram />} label="Instagram" />
+              <SocialIcon href="https://www.instagram.com/now_now_tours_and_safaris/?hl=en" icon={<FaInstagram />} label="Instagram" />
               <SocialIcon href="#facebook" icon={<FaFacebookF />} label="Facebook" />
             </div>
           </div>
