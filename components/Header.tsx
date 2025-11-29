@@ -101,9 +101,7 @@ const Header: React.FC = () => {
         <a 
           href="#home" 
           onClick={(e) => { e.preventDefault(); handleNavigation(navLinks[0]); }} 
-          className={`flex items-center gap-2 transition-all duration-300 hover:opacity-80 ${
-            isScrolled ? 'text-safari-800' : 'text-white'
-          }`}
+          className={`flex items-center gap-2 transition-all duration-300 hover:opacity-80 text-baobab-800`}
           title="Now Now Tours & Safaris"
         >
           <Logo className="w-14 h-14" isDark={isScrolled} />
@@ -115,11 +113,7 @@ const Header: React.FC = () => {
               key={link.id} 
               href={`#${link.id}`} 
               onClick={(e) => { e.preventDefault(); handleNavigation(link); }} 
-              className={`font-medium transition-all duration-300 transform hover:scale-105 relative group ${
-                isScrolled 
-                  ? 'text-baobab-700 hover:text-sunset-600' 
-                  : 'text-white/90 hover:text-sunset-300 text-shadow-sm'
-              }`}
+              className={`font-medium transition-all duration-300 transform hover:scale-105 relative group text-baobab-800 hover:text-sunset-600`}
             >
               {link.name}
               <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-sunset-500 to-safari-500 transition-all duration-300 group-hover:w-full"></span>
@@ -156,16 +150,7 @@ const Header: React.FC = () => {
           ))}
         </nav>
       </div>
-      <button
-        onClick={() => {
-        const root = document.documentElement;
-        root.classList.toggle('dark');
-        }}
-        aria-label="Toggle dark mode"
-        className="px-3 py-2 rounded-md text-sm font-medium bg-baobab-800/10 dark:bg-baobab-200/10 text-baobab-800 dark:text-safari-50 hover:bg-baobab-800/20 dark:hover:bg-baobab-200/20 transition-colors"
-      >
-        Dark
-      </button>
+      {/* Dark mode removed */}
     </header>
   );
 };

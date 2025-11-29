@@ -114,23 +114,6 @@ const TourCard: React.FC<{ tour: Tour }> = ({ tour }) => {
         </div>
         
         <div className="flex gap-3 mt-auto">
-          {tour.flyerUrl && tour.flyerUrl !== '#' && (
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                const a = document.createElement('a');
-                a.href = tour.flyerUrl as string;
-                a.target = '_blank';
-                a.rel = 'noopener noreferrer';
-                document.body.appendChild(a);
-                a.click();
-                a.remove();
-              }}
-              className="flex-1 text-center bg-white/10 hover:bg-white/20 text-white font-semibold py-3 px-4 rounded-full transition-all duration-300 flex items-center justify-center gap-2"
-            >
-              Download Flyer
-            </button>
-          )}
           <a 
             href="https://wa.me/1234567890" 
             target="_blank" 

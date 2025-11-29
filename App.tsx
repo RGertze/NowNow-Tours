@@ -48,7 +48,7 @@ const Home: React.FC = () => (
 const App: React.FC = () => {
   return (
     <BrowserRouter>
-      <div className="bg-gradient-to-br from-safari-50 to-earth-50 text-baobab-800 font-body min-h-screen dark:from-baobab-900 dark:to-earth-900 dark:text-baobab-50 transition-colors duration-300">
+      <div className="bg-gradient-to-br from-safari-50 to-earth-50 text-black font-body min-h-screen transition-colors duration-300">
         <Header />
         <Routes>
           <Route path="/" element={<Home />} />

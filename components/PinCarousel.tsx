@@ -94,7 +94,7 @@ const PinCarousel: React.FC<Props> = ({ onActiveChange, autoplayInterval = 4000 
   };
 
   return (
-    <div className="w-full max-w-[1200px] mx-auto relative overflow-hidden flex justify-center items-center">
+    <div className="w-full max-w-[1050px] mx-auto relative overflow-hidden flex justify-center items-center py-4">
       <div className="w-full px-4">
         {/* Track - draggable but contained */}
         <motion.div
@@ -117,7 +117,7 @@ const PinCarousel: React.FC<Props> = ({ onActiveChange, autoplayInterval = 4000 
               <div
                 key={tour.name}
                 ref={i === 0 ? cardRef : null}
-                className={`flex-shrink-0 w-64 md:w-72 lg:w-80 rounded-2xl overflow-hidden shadow-lg ${
+                className={`flex-shrink-0 w-56 md:w-64 lg:w-72 rounded-xl overflow-hidden shadow-lg ${
                   isActive ? '' : 'filter grayscale-75 blur-sm'
                 }`}
               >
@@ -126,7 +126,7 @@ const PinCarousel: React.FC<Props> = ({ onActiveChange, autoplayInterval = 4000 
                   animate={{ scale, rotateY }}
                   transition={{ type: 'spring', stiffness: 220, damping: 28 }}
                 >
-                  <div className="w-full h-44 md:h-56 lg:h-64 bg-gray-200 overflow-hidden">
+                  <div className="w-full h-40 md:h-48 lg:h-56 bg-gray-200 overflow-hidden">
                     <img
                       src={tour.image || '/hero-bg.jpg'}
                       alt={tour.name}
@@ -144,14 +144,7 @@ const PinCarousel: React.FC<Props> = ({ onActiveChange, autoplayInterval = 4000 
                       <p className="text-sm text-white/75 mt-2 line-clamp-2">{tour.description}</p>
                     </div>
 
-                    <div className="mt-4 flex items-center justify-between">
-                      <button
-                        onClick={() => window.open(tour.flyerUrl || '#', '_blank')}
-                        className="px-3 py-2 bg-sunset-500 hover:bg-sunset-600 text-white rounded-lg text-sm"
-                      >
-                        Download Flyer
-                      </button>
-
+                    <div className="mt-4 flex items-center justify-end">
                       <button
                         onClick={() => setCurrent(i)}
                         className={`text-white/90 underline text-sm`}
