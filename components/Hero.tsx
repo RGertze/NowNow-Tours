@@ -88,7 +88,7 @@ const Hero: React.FC = () => {
       {/* Main Content Container */}
       <div className="relative z-40 flex items-start justify-center px-4 md:px-6 pt-32 md:pt-40">
         <motion.div
-          className="max-w-5xl text-center"
+          className="max-w-4xl text-center relative mx-auto rounded-2xl px-6 py-8 md:px-8 md:py-10 bg-black/25 backdrop-blur-sm ring-1 ring-white/10"
           variants={containerVariants}
           initial="hidden"
           animate="visible"
@@ -96,7 +96,7 @@ const Hero: React.FC = () => {
           {/* Massive Headline */}
           <motion.h1
             variants={itemVariants}
-            className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight text-white drop-shadow-2xl leading-tight"
+            className="text-3xl md:text-4xl lg:text-5xl font-bold tracking-tight text-white drop-shadow-2xl leading-tight"
           >
             Effortless African <span className="bg-gradient-to-r from-sunset-400 via-safari-400 to-sunset-300 bg-clip-text text-transparent">Adventures</span>
           </motion.h1>
@@ -104,7 +104,7 @@ const Hero: React.FC = () => {
           {/* Subheadline */}
           <motion.p
             variants={itemVariants}
-            className="mt-5 text-base md:text-lg text-white/85 max-w-2xl mx-auto font-light leading-relaxed"
+            className="mt-4 text-sm md:text-base text-white/85 max-w-2xl mx-auto font-light leading-relaxed"
           >
             Local expertise. Seamless support. Real connections with Africa’s nature, culture and people.
           </motion.p>
@@ -112,7 +112,7 @@ const Hero: React.FC = () => {
           {/* CTA Buttons with Glassmorphism */}
           <motion.div
             variants={itemVariants}
-            className="mt-10 flex flex-col md:flex-row justify-center items-center gap-4"
+            className="mt-8 flex flex-col md:flex-row justify-center items-center gap-4"
           >
             <motion.button
               {...buttonVariants}
@@ -132,7 +132,7 @@ const Hero: React.FC = () => {
           </motion.div>
 
           {/* Pin-style 3D stacked carousel placed below CTAs */}
-          <motion.div variants={itemVariants} className="mt-10 md:mt-12">
+          <motion.div variants={itemVariants} className="mt-8 md:mt-10">
             <PinCarousel onActiveChange={setBackgroundImage} autoplayInterval={4000} />
           </motion.div>
         </motion.div>
