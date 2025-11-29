@@ -1,0 +1,12 @@
+{
+  "notes": "Map specific tour slugs to a precise small-card filename for deterministic card images.",
+  "map": {
+    "zanzibar-getaway": "olga-budko-Zanzibar.jpg",
+    "cape-town-adventure": "CPT.jpg",
+    "lubango-wonders": "Tunduvala Angola.jpg",
+    "victoria-falls": "Victoria Falls.jpg",
+    "lesotho-highlands-escape": "Lesotho.jpg",
+    "bali-cultural-adventure": "Bali Top view.jpg",
+    "maldives-seaside-retreat": "sunset--cruise-cape-town.jpg"
+  }
+}

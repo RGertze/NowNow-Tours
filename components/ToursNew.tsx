@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { FaWhatsapp } from 'react-icons/fa';
 import { TOURS_DATA } from '../constants';
 import smallCards from '../content/small-cards.json';
+import cardMapJson from '../content/tour-card-images.json';
 import type { Tour } from '../types';
 
 // Country flag images
@@ -63,6 +64,7 @@ const TourCard: React.FC<TourCardProps> = ({ tour, onViewDetails, showComingSoon
   const fallbackCards: string[] = Array.isArray((smallCards as any).images)
     ? (smallCards as any).images.filter((n: string) => typeof n === 'string' && !n.toLowerCase().includes('gitkeep'))
     : [];
+  const cardMap: Record<string, string> = (cardMapJson as any)?.map || {};
 
   const cardForDestination = (dest: string): string | null => {
     const d = (dest || '').toLowerCase();
@@ -75,6 +77,11 @@ const TourCard: React.FC<TourCardProps> = ({ tour, onViewDetails, showComingSoon
     if (d.includes('bali') || d.includes('indonesia')) return pick(['bali']);
     if (d.includes('zambia') || d.includes('victoria')) return pick(['victoria']);
     return null;
+  };
+  const cardForSlug = (slug?: string): string | null => {
+    if (!slug) return null;
+    const v = cardMap[slug];
+    return v ? v : null;
   };
 
   // Auto-slide images every 3 seconds
@@ -105,6 +112,8 @@ const TourCard: React.FC<TourCardProps> = ({ tour, onViewDetails, showComingSoon
             src={(tour.images && tour.images.length)
               ? tour.images[currentImageIndex]
               : (() => {
+                  const specific = cardForSlug(tour.slug);
+                  if (specific) return `/images/small-cards/${specific}`;
                   const match = cardForDestination(tour.destination || tour.name);
                   if (match) return `/images/small-cards/${match}`;
                   if (fallbackCards.length) return `/images/small-cards/${fallbackCards[Math.floor(Math.random()*fallbackCards.length)]}`;
@@ -113,6 +122,12 @@ const TourCard: React.FC<TourCardProps> = ({ tour, onViewDetails, showComingSoon
             }
             alt={`${tour.name} ${currentImageIndex + 1}`}
             className="w-full h-full object-cover"
+            onError={(e) => {
+              const specific = cardForSlug(tour.slug);
+              const match = specific || cardForDestination(tour.destination || tour.name);
+              const fallback = match ? `/images/small-cards/${match}` : (fallbackCards.length ? `/images/small-cards/${fallbackCards[Math.floor(Math.random()*fallbackCards.length)]}` : '/images/gallery/placeholder.jpg');
+              (e.currentTarget as HTMLImageElement).src = fallback;
+            }}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}

@@ -1,9 +1,14 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { GALLERY_IMAGES } from '../constants';
+import galleryConfig from '../content/gallery.json';
 
 const Memories: React.FC = () => {
-  const images = GALLERY_IMAGES;
+  const images: string[] = Array.isArray((galleryConfig as any).images) && (galleryConfig as any).images.length > 0
+    ? (galleryConfig as any).images
+        .filter((name: string) => typeof name === 'string' && !name.toLowerCase().includes('gitkeep'))
+        .sort((a: string, b: string) => a.localeCompare(b))
+        .map((name: string) => name.startsWith('/images/gallery/') ? name : `/images/gallery/${name}`)
+    : [];
 
   return (
     <div className="min-h-screen py-20 px-4">

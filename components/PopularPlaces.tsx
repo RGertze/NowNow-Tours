@@ -1,11 +1,23 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { TOURS_DATA } from '../constants';
 import smallCards from '../content/small-cards.json';
+import cardMapJson from '../content/tour-card-images.json';
 import type { Tour } from '../types';
 import { useNavigate } from 'react-router-dom';
 
 type Props = {};
 
+                      <img
+                        src={`${(t.images && t.images[0]) ? t.images[0] : (fallbackCards.length ? `/images/small-cards/${fallbackCards[Math.floor(Math.random()*fallbackCards.length)]}` : '/images/gallery/placeholder.jpg')}?q=80&w=1200&auto=format&fit=crop`}
+                        alt={t.name}
+                        className="w-full h-full object-cover"
+                        onClick={handleImageClick}
+                        onError={(e) => {
+                          const match = cardForDestination(t.destination || t.name);
+                          const fallback = match ? `/images/small-cards/${match}` : (fallbackCards.length ? `/images/small-cards/${fallbackCards[Math.floor(Math.random()*fallbackCards.length)]}` : '/images/gallery/placeholder.jpg');
+                          (e.currentTarget as HTMLImageElement).src = `${fallback}?q=80&w=1200&auto=format&fit=crop`;
+                        }}
+                      />
 const createSlug = (name: string) => name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
 
 const PopularPlaces: React.FC<Props> = () => {
@@ -13,6 +25,7 @@ const PopularPlaces: React.FC<Props> = () => {
   const fallbackCards: string[] = Array.isArray((smallCards as any).images)
     ? (smallCards as any).images.filter((n: string) => typeof n === 'string' && !n.toLowerCase().includes('gitkeep'))
     : [];
+  const cardMap: Record<string, string> = (cardMapJson as any)?.map || {};
 
   const cardForDestination = (dest: string): string | null => {
     const d = (dest || '').toLowerCase();
@@ -91,14 +104,14 @@ const PopularPlaces: React.FC<Props> = () => {
               onMouseLeave={() => { pausedRef.current = false; }}
             >
               <div className="relative h-80 w-full overflow-hidden" style={{ perspective: 1200 }}>
-                <div
-                  className="w-full h-full"
+                    <img
+                      src={`${(t.images && t.images[0]) ? t.images[0] : (() => { const specific = cardMap[t.slug ?? '']; if (specific) return `/images/small-cards/${specific}`; return (fallbackCards.length ? `/images/small-cards/${fallbackCards[Math.floor(Math.random()*fallbackCards.length)]}` : '/images/gallery/placeholder.jpg'); })()}?q=80&w=1200&auto=format&fit=crop`}
                   style={{
                     transformStyle: 'preserve-3d',
                     transition: 'transform 700ms ease',
                     transform: isActive && flipping ? 'rotateY(180deg)' : 'rotateY(0deg)'
-                  }}
-                >
+                          const specific = cardMap[t.slug ?? ''] || cardForDestination(t.destination || t.name);
+                          const fallback = specific ? `/images/small-cards/${specific}` : (fallbackCards.length ? `/images/small-cards/${fallbackCards[Math.floor(Math.random()*fallbackCards.length)]}` : '/images/gallery/placeholder.jpg');
                   {/* Front face */}
                   <div style={{ backfaceVisibility: 'hidden' as const }} className="absolute inset-0">
                     <img
