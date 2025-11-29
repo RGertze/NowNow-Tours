@@ -84,12 +84,11 @@ const TourCard: React.FC<TourCardProps> = ({ tour, onViewDetails, showComingSoon
     const v = cardMap[key] ?? (destination ? cardMap[destination] : undefined);
     if (!v) return null;
     if (Array.isArray(v)) {
-      // choose first image for deterministic card; support full prefixed paths
       const name = v[0];
       if (!name) return null;
-      return name.startsWith('/images/') ? name.replace('/images/small-cards/', '') : name;
+      return name.startsWith('/images/') ? name : `/images/small-cards/${name}`;
     }
-    return v.startsWith('/images/') ? v.replace('/images/small-cards/', '') : v;
+    return v.startsWith('/images/') ? v : `/images/small-cards/${v}`;
   };
 
   // Auto-slide images every 3 seconds
@@ -121,22 +120,33 @@ const TourCard: React.FC<TourCardProps> = ({ tour, onViewDetails, showComingSoon
               ? tour.images[currentImageIndex]
               : (() => {
                   const specific = cardForSlugOrDestination(tour.slug, tour.destination);
-                  if (specific) return specific.startsWith('/images/') ? specific : `/images/small-cards/${specific}`;
+                  if (specific) return specific;
                   const match = cardForDestination(tour.destination || tour.name);
                   if (match) return `/images/small-cards/${match}`;
                   if (fallbackCards.length) return `/images/small-cards/${fallbackCards[Math.floor(Math.random()*fallbackCards.length)]}`;
-                  return '/images/gallery/placeholder.jpg';
+                  return '/images/gallery/Lubango.jpg';
                 })()
             }
             alt={`${tour.name} ${currentImageIndex + 1}`}
             className="w-full h-full object-cover"
             onError={(e) => {
+              const img = e.currentTarget as HTMLImageElement;
+              if (img.src.includes('gallery')) return;
               const specific = cardForSlugOrDestination(tour.slug, tour.destination);
-              const match = specific || cardForDestination(tour.destination || tour.name);
-              const fallback = match
-                ? (match.startsWith('/images/') ? match : `/images/small-cards/${match}`)
-                : (fallbackCards.length ? `/images/small-cards/${fallbackCards[Math.floor(Math.random()*fallbackCards.length)]}` : '/images/gallery/placeholder.jpg');
-              (e.currentTarget as HTMLImageElement).src = fallback;
+              if (specific && !img.src.includes(specific)) {
+                img.src = specific;
+                return;
+              }
+              const match = cardForDestination(tour.destination || tour.name);
+              if (match && !img.src.includes(match)) {
+                img.src = `/images/small-cards/${match}`;
+                return;
+              }
+              if (fallbackCards.length) {
+                img.src = `/images/small-cards/${fallbackCards[Math.floor(Math.random()*fallbackCards.length)]}`;
+              } else {
+                img.src = '/images/gallery/Lubango.jpg';
+              }
             }}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}

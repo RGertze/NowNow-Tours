@@ -129,15 +129,36 @@ const PopularPlaces: React.FC<Props> = () => {
                       src={`${(t.images && t.images[0])
                         ? t.images[0]
                         : (() => {
+                            const specific = getSpecific(t.slug, t.destination);
+                            if (specific) return specific;
                             const match = cardForDestination(t.destination || t.name);
                             if (match) return `/images/small-cards/${match}`;
                             if (fallbackCards.length) return `/images/small-cards/${fallbackCards[Math.floor(Math.random()*fallbackCards.length)]}`;
-                            return '/images/gallery/placeholder.jpg';
+                            return '/images/gallery/Lubango.jpg';
                           })()
                         }?q=80&w=1200&auto=format&fit=crop`}
                       alt={t.name}
                       className="w-full h-full object-cover"
                       onClick={handleImageClick}
+                      onError={(e) => {
+                        const img = e.currentTarget as HTMLImageElement;
+                        if (img.src.includes('gallery')) return;
+                        const specific = getSpecific(t.slug, t.destination);
+                        if (specific && !img.src.includes(specific)) {
+                          img.src = `${specific}?q=80&w=1200&auto=format&fit=crop`;
+                          return;
+                        }
+                        const match = cardForDestination(t.destination || t.name);
+                        if (match && !img.src.includes(match)) {
+                          img.src = `/images/small-cards/${match}?q=80&w=1200&auto=format&fit=crop`;
+                          return;
+                        }
+                        if (fallbackCards.length) {
+                          img.src = `/images/small-cards/${fallbackCards[Math.floor(Math.random()*fallbackCards.length)]}?q=80&w=1200&auto=format&fit=crop`;
+                        } else {
+                          img.src = '/images/gallery/Lubango.jpg?q=80&w=1200&auto=format&fit=crop';
+                        }
+                      }}
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent"></div>
                     <div className="absolute left-4 bottom-4 right-4 text-white">
