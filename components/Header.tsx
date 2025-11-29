@@ -17,10 +17,10 @@ const Logo: React.FC<{ className?: string; isDark?: boolean }> = ({ className = 
   <svg className={className} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
     {/* Outer circle */}
     <circle cx="100" cy="100" r="95" stroke={isDark ? "#1a1a1a" : "#000000"} strokeWidth="6" />
-    
+
     {/* Inner arc - top */}
     <path d="M 50 100 A 50 50 0 0 1 150 100" stroke={isDark ? "#1a1a1a" : "#000000"} strokeWidth="6" fill="none" strokeLinecap="round" />
-    
+
     {/* Airplane silhouette */}
     <g transform="translate(100, 85)">
       {/* Fuselage */}
@@ -32,17 +32,17 @@ const Logo: React.FC<{ className?: string; isDark?: boolean }> = ({ className = 
       {/* Tail fin */}
       <path d="M 0 5 L -2 12 L 0 10 L 2 12" fill={isDark ? "#1a1a1a" : "#000000"} />
     </g>
-    
+
     {/* Left "Now" text */}
     <text x="45" y="95" fontFamily="Arial, sans-serif" fontSize="14" fontWeight="bold" fill={isDark ? "#1a1a1a" : "#000000"} textAnchor="middle" letterSpacing="1">
       Now
     </text>
-    
+
     {/* Right "Now" text */}
     <text x="155" y="95" fontFamily="Arial, sans-serif" fontSize="14" fontWeight="bold" fill={isDark ? "#1a1a1a" : "#000000"} textAnchor="middle" letterSpacing="1">
       Now
     </text>
-    
+
     {/* Bottom arc text path for "TOURS & SAFARIS" */}
     <defs>
       <path id="bottomArc" d="M 50 100 A 50 50 0 0 0 150 100" fill="none" />
@@ -69,7 +69,7 @@ const Header: React.FC = () => {
     { name: 'Resources', id: 'resources', type: 'route' },
     { name: 'Request Tour', id: 'request', type: 'route' },
   ];
-  
+
   const handleNavigation = (link: (typeof navLinks)[0]) => {
     if (link.type === 'route') {
       if (link.name === 'Home') {
@@ -92,18 +92,16 @@ const Header: React.FC = () => {
   }, []);
 
   return (
-    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-      isScrolled 
-        ? 'bg-white/95 shadow-lg backdrop-blur-md border-b border-safari-100' 
-        : 'bg-white/70 backdrop-blur-md border-b border-white/20'
-    }`}>
-      <div className="container mx-auto px-6 py-4 flex justify-between items-center">
-        <a 
-          href="#home" 
-          onClick={(e) => { e.preventDefault(); handleNavigation(navLinks[0]); }} 
-          className={`flex items-center gap-3 transition-all duration-300 hover:opacity-80 ${
-            isScrolled ? 'text-safari-800' : 'text-baobab-800'
-          }`}
+    <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${isScrolled
+        ? 'bg-white/80 shadow-lg backdrop-blur-xl border-b border-white/20 py-3'
+        : 'bg-transparent py-5'
+      }`}>
+      <div className="container mx-auto px-6 flex justify-between items-center">
+        <a
+          href="#home"
+          onClick={(e) => { e.preventDefault(); handleNavigation(navLinks[0]); }}
+          className={`flex items-center gap-3 transition-all duration-300 hover:opacity-80 ${isScrolled ? 'text-baobab-800' : 'text-white drop-shadow-md'
+            }`}
           title="Now Now Tours & Safaris"
         >
           <Logo className="w-14 h-14" isDark={isScrolled} />
@@ -112,47 +110,45 @@ const Header: React.FC = () => {
             <span className="text-xs opacity-80">Tours &amp; Safaris</span>
           </div>
         </a>
-        
+
         <nav className="hidden md:flex items-center space-x-8">
           {navLinks.map((link) => (
-            <a 
-              key={link.id} 
-              href={`#${link.id}`} 
-              onClick={(e) => { e.preventDefault(); handleNavigation(link); }} 
-              className={`font-medium transition-all duration-300 transform hover:scale-105 relative group ${
-                isScrolled 
-                  ? 'text-baobab-700 hover:text-sunset-600' 
-                  : 'text-baobab-800 hover:text-sunset-600'
-              }`}
+            <a
+              key={link.id}
+              href={`#${link.id}`}
+              onClick={(e) => { e.preventDefault(); handleNavigation(link); }}
+              className={`font-medium transition-all duration-300 transform hover:scale-105 relative group ${isScrolled
+                  ? 'text-baobab-800 hover:text-sunset-600'
+                  : 'text-white hover:text-sunset-200 text-shadow-sm'
+                }`}
             >
               {link.name}
-              <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-sunset-500 to-safari-500 transition-all duration-300 group-hover:w-full"></span>
+              <span className={`absolute -bottom-1 left-0 w-0 h-0.5 transition-all duration-300 group-hover:w-full ${isScrolled ? 'bg-gradient-to-r from-sunset-500 to-safari-500' : 'bg-white'
+                }`}></span>
             </a>
           ))}
         </nav>
-        
+
         <div className="md:hidden">
-          <button 
-            onClick={() => setIsOpen(!isOpen)} 
-            className={`focus:outline-none transition-colors duration-300 ${
-              isScrolled ? 'text-baobab-800' : 'text-baobab-800'
-            }`}
+          <button
+            onClick={() => setIsOpen(!isOpen)}
+            className={`focus:outline-none transition-colors duration-300 ${isScrolled ? 'text-baobab-800' : 'text-white'
+              }`}
           >
             {isOpen ? <CloseIcon className="w-7 h-7" /> : <MenuIcon className="w-7 h-7" />}
           </button>
         </div>
       </div>
-      
+
       {/* Mobile Menu */}
-      <div className={`md:hidden transition-all duration-300 ease-in-out ${
-        isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
-      } overflow-hidden`}>
+      <div className={`md:hidden transition-all duration-300 ease-in-out ${isOpen ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+        } overflow-hidden`}>
         <nav className="flex flex-col items-center bg-white/98 backdrop-blur-md shadow-xl border-t border-safari-100 py-6">
           {navLinks.map((link) => (
-            <a 
-              key={link.id} 
-              href={`#${link.id}`} 
-              onClick={(e) => { e.preventDefault(); handleNavigation(link); }} 
+            <a
+              key={link.id}
+              href={`#${link.id}`}
+              onClick={(e) => { e.preventDefault(); handleNavigation(link); }}
               className="block py-3 px-6 text-baobab-700 hover:text-sunset-600 w-full text-center font-medium transition-colors duration-300 hover:bg-safari-50 rounded-lg mx-4"
             >
               {link.name}
@@ -162,11 +158,11 @@ const Header: React.FC = () => {
       </div>
       <button
         onClick={() => {
-        const root = document.documentElement;
-        root.classList.toggle('dark');
+          const root = document.documentElement;
+          root.classList.toggle('dark');
         }}
         aria-label="Toggle dark mode"
-        className="px-3 py-2 rounded-md text-sm font-medium bg-baobab-800/10 dark:bg-baobab-200/10 text-baobab-800 dark:text-safari-50 hover:bg-baobab-800/20 dark:hover:bg-baobab-200/20 transition-colors"
+        className="fixed bottom-4 right-4 z-50 px-3 py-2 rounded-md text-sm font-medium bg-baobab-800/10 dark:bg-baobab-200/10 text-baobab-800 dark:text-safari-50 hover:bg-baobab-800/20 dark:hover:bg-baobab-200/20 transition-colors backdrop-blur-sm"
       >
         Dark
       </button>

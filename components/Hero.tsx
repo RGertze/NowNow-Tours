@@ -1,6 +1,5 @@
-```
 import React, { useState, useEffect, useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import TourPlanningForm from './TourPlanningForm';
 import TripItinerary from './TripItinerary';
 
@@ -8,11 +7,27 @@ const Hero: React.FC = () => {
   const [isPlanningFormOpen, setIsPlanningFormOpen] = useState(false);
   const [itineraryOpen, setItineraryOpen] = useState(false);
   const [selectedPlace, setSelectedPlace] = useState<{ title: string; img: string } | null>(null);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const heroRef = useRef<HTMLElement | null>(null);
-  
+
+  const heroImages = [
+    '/images/hero-1.jpg',
+    '/images/hero-2.jpg',
+    '/images/hero-3.jpg',
+    '/images/hero-4.jpg',
+    '/images/hero-5.jpg',
+  ];
+
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, [0, 500], [0, 150]);
   const opacity = useTransform(scrollY, [0, 300], [1, 0]);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentImageIndex((prev) => (prev + 1) % heroImages.length);
+    }, 5000);
+    return () => clearInterval(interval);
+  }, []);
 
   useEffect(() => {
     if (!heroRef.current) return;
@@ -52,7 +67,7 @@ const Hero: React.FC = () => {
       opacity: 1,
       transition: {
         duration: 0.8,
-        ease: [0.22, 1, 0.36, 1],
+        ease: "easeOut",
       },
     },
   };
@@ -60,23 +75,27 @@ const Hero: React.FC = () => {
   return (
     <section ref={heroRef} className="relative w-full h-screen overflow-hidden flex items-center justify-center">
       {/* Parallax Background */}
-      <motion.div 
+      <motion.div
         style={{ y }}
         className="absolute inset-0 w-full h-full"
       >
         <div className="absolute inset-0 bg-black/40 z-10" />
-        <motion.img
-          src="https://images.unsplash.com/photo-1516426122078-c23e76319801?q=80&w=2068&auto=format&fit=crop"
-          alt="African Safari Landscape"
-          className="w-full h-full object-cover scale-110"
-          initial={{ scale: 1.1 }}
-          animate={{ scale: 1.0 }}
-          transition={{ duration: 10, ease: "easeOut" }}
-        />
+        <AnimatePresence mode="wait">
+          <motion.img
+            key={currentImageIndex}
+            src={heroImages[currentImageIndex]}
+            alt="African Safari Landscape"
+            className="absolute inset-0 w-full h-full object-cover"
+            initial={{ opacity: 0, scale: 1.1 }}
+            animate={{ opacity: 1, scale: 1.0 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 1.5, ease: "easeOut" }}
+          />
+        </AnimatePresence>
       </motion.div>
 
       {/* Content */}
-      <motion.div 
+      <motion.div
         style={{ opacity }}
         className="relative z-20 container mx-auto px-4 text-center text-white"
         variants={containerVariants}
@@ -89,47 +108,40 @@ const Hero: React.FC = () => {
           </span>
         </motion.div>
 
-        <motion.h1 
+        <motion.h1
           variants={itemVariants}
           className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-8 leading-tight"
         >
-          Wilderness <br/>
+          Travel Better. <br />
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-sunset-300 to-safari-300">
-            Reimagined
-          </span>
+            Travel Smarter.
+          </span> <br />
+          Travel Now Now.
         </motion.h1>
 
-        <motion.p 
+        <motion.p
           variants={itemVariants}
           className="text-lg md:text-xl text-white/90 max-w-2xl mx-auto mb-12 font-light leading-relaxed"
         >
-          Curated safaris and adventures tailored to your wildest dreams. 
-          Immerse yourself in the untamed beauty of Africa.
+          Unforgettable adventures, expertly curated for the modern explorer.
         </motion.p>
 
-        <motion.div 
+        <motion.div
           variants={itemVariants}
           className="flex flex-col sm:flex-row items-center justify-center gap-6"
         >
           <button
             onClick={() => scrollToSection('tours')}
-            className="group relative px-8 py-4 bg-white text-baobab-900 font-bold rounded-full overflow-hidden transition-transform hover:scale-105 active:scale-95"
+            className="group relative px-8 py-4 bg-white text-baobab-900 font-bold rounded-full overflow-hidden transition-transform hover:scale-105 active:scale-95 shadow-lg hover:shadow-xl"
           >
             <span className="relative z-10">Explore Tours</span>
             <div className="absolute inset-0 bg-sunset-100 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left duration-300" />
-          </button>
-
-          <button
-            onClick={() => setIsPlanningFormOpen(true)}
-            className="group px-8 py-4 bg-transparent border border-white/30 backdrop-blur-sm text-white font-semibold rounded-full hover:bg-white/10 transition-all hover:scale-105 active:scale-95"
-          >
-            Plan Custom Trip
           </button>
         </motion.div>
       </motion.div>
 
       {/* Scroll Indicator */}
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ delay: 1.5, duration: 1 }}
@@ -145,4 +157,3 @@ const Hero: React.FC = () => {
 };
 
 export default Hero;
-```
