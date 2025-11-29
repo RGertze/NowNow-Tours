@@ -1,0 +1,4 @@
+{
+  "notes": "List filenames located under public/images/hero or raw names from 'Hero Images' folder; component will prefix if needed.",
+  "images": []
+}

@@ -1,7 +1,8 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { motion, useScroll, useTransform, AnimatePresence } from 'framer-motion';
 import TourPlanningForm from './TourPlanningForm';
 import TripItinerary from './TripItinerary';
+import heroConfig from '../content/hero.json';
 
 const Hero: React.FC = () => {
   const [isPlanningFormOpen, setIsPlanningFormOpen] = useState(false);
@@ -10,13 +11,20 @@ const Hero: React.FC = () => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const heroRef = useRef<HTMLElement | null>(null);
 
-  const heroImages = [
-    '/images/hero-1.jpg',
-    '/images/hero-2.jpg',
-    '/images/hero-3.jpg',
-    '/images/hero-4.jpg',
-    '/images/hero-5.jpg',
-  ];
+  const heroImages: string[] = useMemo(() => {
+    const cfg = heroConfig as any;
+    if (Array.isArray(cfg.images) && cfg.images.length > 0) {
+      return cfg.images.map((name: string) => name.startsWith('/images/hero/') ? name : `/images/hero/${name}`);
+    }
+    // Fallback to legacy paths
+    return [
+      '/images/hero/1.jpg',
+      '/images/hero/2.jpg',
+      '/images/hero/3.jpg',
+      '/images/hero/4.jpg',
+      '/images/hero/5.jpg',
+    ];
+  }, []);
 
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, [0, 500], [0, 150]);

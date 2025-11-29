@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { TOURS_DATA } from '../constants';
+import smallCards from '../content/small-cards.json';
 import type { Tour } from '../types';
 import { useNavigate } from 'react-router-dom';
 
@@ -9,6 +10,7 @@ const createSlug = (name: string) => name.toLowerCase().replace(/[^a-z0-9]+/g, '
 
 const PopularPlaces: React.FC<Props> = () => {
   const tours = TOURS_DATA as Tour[];
+  const fallbackCards: string[] = Array.isArray((smallCards as any).images) ? (smallCards as any).images : [];
   const [active, setActive] = useState(0);
   const [flipping, setFlipping] = useState(false);
   const intervalRef = useRef<number | null>(null);
@@ -85,7 +87,7 @@ const PopularPlaces: React.FC<Props> = () => {
                   {/* Front face */}
                   <div style={{ backfaceVisibility: 'hidden' as const }} className="absolute inset-0">
                     <img
-                      src={`${t.images[0]}?q=80&w=1200&auto=format&fit=crop`}
+                      src={`${(t.images && t.images[0]) ? t.images[0] : (fallbackCards.length ? `/images/small-cards/${fallbackCards[Math.floor(Math.random()*fallbackCards.length)]}` : '/images/gallery/placeholder.jpg')}?q=80&w=1200&auto=format&fit=crop`}
                       alt={t.name}
                       className="w-full h-full object-cover"
                       onClick={handleImageClick}
