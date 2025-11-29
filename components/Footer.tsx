@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaWhatsapp, FaInstagram, FaFacebookF } from 'react-icons/fa';
+import { FaWhatsapp, FaInstagram, FaFacebookF, FaPhone, FaEnvelope, FaMapMarkerAlt } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 
 const SocialIcon: React.FC<{ href: string; icon: React.ReactNode; label: string }> = ({ href, icon, label }) => (
@@ -36,7 +36,7 @@ const Footer: React.FC = () => {
               Your gateway to authentic African adventures. We create unforgettable journeys that connect you with the heart and soul of Africa.
             </p>
             <div className="flex justify-center lg:justify-start gap-4">
-              <SocialIcon href="https://wa.me/1234567890" icon={<FaWhatsapp />} label="WhatsApp" />
+              <SocialIcon href="https://wa.me/264814525199" icon={<FaWhatsapp />} label="WhatsApp" />
               <SocialIcon href="#instagram" icon={<FaInstagram />} label="Instagram" />
               <SocialIcon href="#facebook" icon={<FaFacebookF />} label="Facebook" />
             </div>
@@ -85,21 +85,25 @@ const Footer: React.FC = () => {
             <div className="space-y-4">
               <div className="flex items-center justify-center lg:justify-start gap-3">
                 <div className="w-8 h-8 bg-sunset-500 rounded-full flex items-center justify-center">
-                  <span className="text-white text-sm">📞</span>
+                  <FaPhone className="text-white text-sm" />
                 </div>
-                <span className="text-white/80">+1 (234) 567-890</span>
+                <div className="text-white/80 text-sm space-y-1">
+                  <div>+264 81 452 5199</div>
+                  <div>+264 81 841 9858</div>
+                  <div>+264 81 861 9533</div>
+                </div>
               </div>
               <div className="flex items-center justify-center lg:justify-start gap-3">
                 <div className="w-8 h-8 bg-safari-500 rounded-full flex items-center justify-center">
-                  <span className="text-white text-sm">✉️</span>
+                  <FaEnvelope className="text-white text-sm" />
                 </div>
-                <span className="text-white/80">contact@nownowtours.com</span>
+                <span className="text-white/80">nownowtands@gmail.com</span>
               </div>
               <div className="flex items-center justify-center lg:justify-start gap-3">
                 <div className="w-8 h-8 bg-earth-500 rounded-full flex items-center justify-center">
-                  <span className="text-white text-sm">🌍</span>
+                  <FaMapMarkerAlt className="text-white text-sm" />
                 </div>
-                <span className="text-white/80">Across Beautiful Africa</span>
+                <span className="text-white/80">Cape Town, South Africa</span>
               </div>
             </div>
           </div>
