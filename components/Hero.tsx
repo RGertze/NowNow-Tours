@@ -86,7 +86,7 @@ const Hero: React.FC = () => {
       <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent z-10"></div>
 
       {/* Main Content Container */}
-      <div className="relative z-40 h-full flex items-center justify-center px-4 md:px-6">
+      <div className="relative z-40 h-full flex items-start justify-center px-4 md:px-6 pt-32 md:pt-40">
         <motion.div
           className="max-w-5xl text-center"
           variants={containerVariants}
@@ -96,12 +96,12 @@ const Hero: React.FC = () => {
           {/* Massive Headline */}
           <motion.h1
             variants={itemVariants}
-            className="text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight text-white drop-shadow-2xl leading-tight"
+            className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-white drop-shadow-2xl leading-tight"
           >
-            Unlock Your Travel
+            Effortless African
             <br />
             <span className="bg-gradient-to-r from-sunset-400 via-safari-400 to-sunset-300 bg-clip-text text-transparent">
-              Dreams
+              Adventures
             </span>
           </motion.h1>
 
@@ -110,7 +110,7 @@ const Hero: React.FC = () => {
             variants={itemVariants}
             className="mt-6 text-lg md:text-xl text-white/80 max-w-3xl mx-auto font-light leading-relaxed"
           >
-            Discover the world one adventure at a time — life is short, book the trip.
+            Plan less. Experience more. Local expertise and seamless support for journeys that matter.
           </motion.p>
 
           {/* CTA Buttons with Glassmorphism */}
