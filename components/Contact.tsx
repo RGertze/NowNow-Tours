@@ -161,17 +161,13 @@ const Contact: React.FC = () => {
             </div>
             
             <div className="bg-white rounded-2xl shadow-xl border border-safari-100 overflow-hidden">
-              <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3310.474!2d18.4241!3d-33.9249!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1dcc5e5b9a0c2329%3A0x801c1b2b0a0c2329!2sV%26A%20Waterfront%2C%20Cape%20Town%2C%20South%20Africa!5e0!3m2!1sen!2sus!4v1640995200000!5m2!1sen!2sus"
-                width="100%"
-                height="256"
-                style={{ border: 0 }}
-                allowFullScreen
-                loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
-                title="Now Now Tours & Safaris - V&A Waterfront, Cape Town"
-                className="w-full h-64"
-              ></iframe>
+              <div className="w-full h-64 relative flex items-center justify-center bg-gradient-to-br from-safari-50 to-earth-100">
+                <div className="text-center px-6">
+                  <h4 className="text-lg font-semibold text-baobab-800 mb-2">Our Base</h4>
+                  <p className="text-sm text-baobab-600">Windhoek, Namibia</p>
+                  <p className="mt-3 text-xs text-baobab-500">Interactive office map coming soon.</p>
+                </div>
+              </div>
               <div className="p-4 bg-gradient-to-r from-safari-50 to-earth-50">
                 <div className="flex items-center space-x-2">
                   <svg className="w-5 h-5 text-safari-600" fill="currentColor" viewBox="0 0 20 20">
@@ -179,7 +175,7 @@ const Contact: React.FC = () => {
                   </svg>
                   <div>
                     <p className="font-semibold text-safari-800">Our Office</p>
-                    <p className="text-sm text-baobab-600">V&A Waterfront, Cape Town, South Africa</p>
+                    <p className="text-sm text-baobab-600">Windhoek, Namibia</p>
                   </div>
                 </div>
               </div>

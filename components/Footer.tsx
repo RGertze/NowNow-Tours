@@ -103,7 +103,7 @@ const Footer: React.FC = () => {
                 <div className="w-8 h-8 bg-earth-500 rounded-full flex items-center justify-center">
                   <FaMapMarkerAlt className="text-white text-sm" />
                 </div>
-                <span className="text-white/80">Cape Town, South Africa</span>
+                <span className="text-white/80">Windhoek, Namibia</span>
               </div>
             </div>
           </div>
