@@ -4,11 +4,11 @@ import { motion } from 'framer-motion';
 const TESTIMONIALS = [
   {
     id: 1,
-    name: 'Asha Mwangi',
-    location: 'Windhoek, Namibia',
+    name: 'Mr & Mrs Nekwaya',
+    location: 'Zanzibar, Tanzania',
     rating: 5,
-    text: 'Best trip ever! The team was professional, the itinerary was perfect, and the memories are priceless. Highly recommend Now Now Tours!',
-    image: '/testimonials/asha.jpg',
+    text: 'This was us in Zanzibar — a truly magical experience. The planning was seamless, and we felt taken care of throughout. Thank you, Now Now Tours!',
+    image: '/testimonials/nekwaya.jpg',
   },
   {
     id: 2,
