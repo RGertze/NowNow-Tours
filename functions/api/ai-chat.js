@@ -94,6 +94,9 @@ export async function onRequestPost(context) {
       { role: 'user', content: message }
     ];
 
+    // Allow model override via env; default to previously working model
+    const model = env.ANTHROPIC_MODEL || 'claude-3-5-haiku-latest';
+
     // Call Anthropic Messages API
     const anthropicResponse = await fetch('https://api.anthropic.com/v1/messages', {
       method: 'POST',
@@ -103,7 +106,7 @@ export async function onRequestPost(context) {
         'anthropic-version': '2023-06-01'
       },
       body: JSON.stringify({
-        model: 'claude-4-5-haiku-latest',
+        model,
         max_tokens: 1024,
         temperature: 0.7,
         system: systemPrompt,
