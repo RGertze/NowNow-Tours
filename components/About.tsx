@@ -12,11 +12,11 @@ const About: React.FC = () => {
         <div className="flex flex-col items-center text-center max-w-5xl mx-auto">
           <div id="who-we-are" className="w-full space-y-8">
             {/* Badge */}
-            <div className="inline-flex items-center px-5 py-2 rounded-full bg-baobab-100 text-baobab-700 text-sm font-medium shadow-sm dark:bg-baobab-700/40 dark:text-baobab-100">
+            <div className="inline-flex items-center px-5 py-2 rounded-full bg-baobab-100 text-baobab-700 text-sm font-medium shadow-sm">
               • Who we are?
             </div>
             {/* Tagline */}
-            <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold leading-snug tracking-tight text-baobab-800 dark:text-safari-50 max-w-4xl mx-auto">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-semibold leading-snug tracking-tight text-baobab-800 max-w-4xl mx-auto">
               We're a group of travel professionals, local guides, and <span className="font-bold">experience designers</span> working together to create journeys that matter. <span className="font-bold">From the first search to the last goodbye</span>, we take care of the details so your trip feels <span className="font-bold">effortless and personal.</span>
             </h2>
             {/* Image strip */}

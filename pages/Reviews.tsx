@@ -68,7 +68,7 @@ const Reviews: React.FC = () => {
             Over 1,000+ happy travelers have experienced the magic of Africa with us
           </p>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 prose prose-baobab dark:prose-dark max-w-none">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 prose prose-baobab max-w-none">
             {TESTIMONIALS.map((review, index) => (
               <motion.div
                 key={review.id}
