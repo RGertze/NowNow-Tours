@@ -22,28 +22,28 @@ const About: React.FC = () => {
             {/* Image strip */}
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-4 max-w-3xl mx-auto">
               <img
-                src="/about-waterfall.jpg"
+                src="/about (1).jpg"
                 alt="Traveler near waterfall"
                 loading="lazy"
                 onError={(e) => { (e.currentTarget as HTMLImageElement).src = 'https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=600&q=80'; }}
                 className="rounded-xl object-cover h-32 w-full shadow-md"
               />
               <img
-                src="/about-mountain.jpg"
+                src="/about (2).jpg"
                 alt="Mountain expedition"
                 loading="lazy"
                 onError={(e) => { (e.currentTarget as HTMLImageElement).src = 'https://images.unsplash.com/photo-1517821099601-1a09678e1a37?auto=format&fit=crop&w=600&q=80'; }}
                 className="rounded-xl object-cover h-32 w-full shadow-md"
               />
               <img
-                src="/about-trekking.jpg"
+                src="/about (3).jpg"
                 alt="Guided trekking group"
                 loading="lazy"
                 onError={(e) => { (e.currentTarget as HTMLImageElement).src = 'https://images.unsplash.com/photo-1525104885119-8806dd94ad58?auto=format&fit=crop&w=600&q=80'; }}
                 className="rounded-xl object-cover h-32 w-full shadow-md"
               />
               <img
-                src="/about-jeep.jpg"
+                src="/about (4).jpg"
                 alt="Safari jeep adventure"
                 loading="lazy"
                 onError={(e) => { (e.currentTarget as HTMLImageElement).src = 'https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=600&q=80'; }}
