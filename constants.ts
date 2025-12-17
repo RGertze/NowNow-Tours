@@ -45,7 +45,7 @@ export const TOURS_DATA: Tour[] = [
     destination: 'South Africa',
     description: 'Experience the vibrant culture and breathtaking landscapes of the Mother City, from Table Mountain to the Cape Winelands.',
     itinerary: ['Table Mountain', 'Daily Breakfast (included)', 'Wine Tasting', 'Soufriere Boat Cruise'],
-    priceRange: 'N$ 6,800 pp · N$ 1,000.00 Non-Refundable Deposit',
+    priceRange: 'N$ 7,000 pp · N$ 1,000.00 Non-Refundable Deposit',
     upcomingDates: ['08 - 13 May', '28 Aug - 02 Sep', '11 - 16 Dec', '30 Dec - 04 Jan 27'],
     extras: { dinner: 'own cost' },
   },
